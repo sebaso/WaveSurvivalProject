@@ -1,0 +1,5 @@
+newmtl Material
+map_Kd post-apocalyptic_texture.png
+Kd 1 1 1
+d 1
+
