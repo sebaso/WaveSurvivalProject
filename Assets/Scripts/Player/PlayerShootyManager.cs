@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerShootyManager : MonoBehaviour
+public class PlayerShootyManager : CustomMonobehaviour
 {
     public GameObject bullet;
     public Transform bulletSpawn;
@@ -15,6 +15,7 @@ public class PlayerShootyManager : MonoBehaviour
     {
         playerCamera = Camera.main;
     }
+
 
     void Update()
     {
@@ -74,5 +75,10 @@ public class PlayerShootyManager : MonoBehaviour
         }
 
         Destroy(bulletInstance, 3f);
+    }
+
+    public override void EditorInit()
+    {
+
     }
 }
