@@ -1,44 +1,72 @@
 using UnityEngine;
 
-public class PlayerShootyManager : CustomMonobehaviour
+[RequireComponent(typeof(WeaponHolder))]
+public class PlayerShootyManager : MonoBehaviour
 {
-    public GameObject bullet;
     public Transform bulletSpawn;
-    public float bulletSpeed = 20f;
-    public float fireRate = 0.2f;
+    private WeaponHolder weaponHolder;
+
+    public static PlayerShootyManager instance;
+
+
 
     private float nextFire = 0f;
     private Camera playerCamera;
     private Vector3 lookTarget;
-
+    public bool canRegenerate = true;
+    public float handlingStaminaRegenRate = 10f;
+    public float handlingStaminaRegenTimer = 0f;
+    public float handlingStamina = 100f;
+    public float handlingStaminaRegenDelay = 1f;
+    private float handlingStaminaDegenRate = 50f;
     void Start()
     {
+        instance = this;
         playerCamera = Camera.main;
+        weaponHolder = GetComponent<WeaponHolder>();
     }
-
 
     void Update()
     {
         Aim();
 
+        if (weaponHolder == null || weaponHolder.CurrentWeapon == null) return;
+
         if (Input.GetMouseButton(0) && Time.time > nextFire)
         {
-            nextFire = Time.time + fireRate;
+            nextFire = Time.time + weaponHolder.CurrentWeapon.fireRate;
             Shoot();
         }
+        HandlingStaminaRegen();
     }
+    void HandlingStaminaRegen()
+    {
+        if (!canRegenerate)
+        {
+            handlingStaminaRegenTimer += Time.deltaTime;
+            if (handlingStaminaRegenTimer >= handlingStaminaRegenDelay)
+            {
+                canRegenerate = true;
+                handlingStaminaRegenTimer = 0;
+            }
+        }
+        if (handlingStamina < 100 && canRegenerate)
+        {
+
+            handlingStamina += handlingStaminaRegenRate * Time.deltaTime;
+        }
+
+    }
+
 
     void Aim()
     {
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-
-        // Raycast to floor layer only
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerMask.GetMask("Floor")))
         {
             lookTarget = hit.point;
         }
 
-        // Rotate player (body) horizontally
         Vector3 playerLookDir = lookTarget - transform.position;
         playerLookDir.y = 0;
         if (playerLookDir.sqrMagnitude > 0.001f)
@@ -46,7 +74,6 @@ public class PlayerShootyManager : CustomMonobehaviour
             transform.rotation = Quaternion.LookRotation(playerLookDir);
         }
 
-        // Point the gun directly at the floor target
         if (bulletSpawn != null)
         {
             Vector3 aimDir = lookTarget - bulletSpawn.position;
@@ -59,26 +86,28 @@ public class PlayerShootyManager : CustomMonobehaviour
 
     void Shoot()
     {
-        if (bullet == null || bulletSpawn == null) return;
+        canRegenerate = false;
+        handlingStaminaRegenTimer = 0;
+        var currentWeapon = weaponHolder.CurrentWeapon;
+        if (currentWeapon == null || currentWeapon.bulletPrefab == null || bulletSpawn == null) return;
 
-        GameObject bulletInstance = Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
+        GameObject bulletInstance = Instantiate(currentWeapon.bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
 
-        // Ensure bullet ignores player collision
-        if (bulletInstance.TryGetComponent<Collider>(out var bCol) && TryGetComponent<Collider>(out var pCol))
+        if (bulletInstance.TryGetComponent<Bullet>(out var bulletScript))
         {
-            Physics.IgnoreCollision(bCol, pCol);
+            bulletScript.damage = currentWeapon.damage;
+            bulletScript.punchThrough = currentWeapon.punchThrough;
+            currentWeapon.ammo -= 1;
+            handlingStamina = Mathf.Lerp(handlingStamina, handlingStamina -= currentWeapon.weaponHandling, handlingStaminaDegenRate * Time.deltaTime);
+            handlingStamina = Mathf.Clamp(handlingStamina, 20, 100);
         }
 
         if (bulletInstance.TryGetComponent<Rigidbody>(out var rb))
         {
-            rb.linearVelocity = bulletSpawn.forward * bulletSpeed;
+            rb.linearVelocity = bulletSpawn.forward * currentWeapon.bulletSpeed;
         }
 
         Destroy(bulletInstance, 3f);
     }
 
-    public override void EditorInit()
-    {
-
-    }
 }

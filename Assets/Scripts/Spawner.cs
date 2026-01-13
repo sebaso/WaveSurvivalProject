@@ -12,6 +12,7 @@ public class Spawner : MonoBehaviour
     private float nextSpawnTime;
     private bool isSpawning = false;
 
+
     private void Start()
     {
         if (spawnPoints.Count == 0)
@@ -27,6 +28,12 @@ public class Spawner : MonoBehaviour
         {
             InitializeWave(currentWave);
         }
+
+    }
+    public void NextWave()
+    {
+        WaveManager.instance.currentWaveIndex++;
+        InitializeWave(WaveManager.instance.waves[WaveManager.instance.currentWaveIndex-1]);
     }
 
     private void Update()
@@ -56,7 +63,6 @@ public class Spawner : MonoBehaviour
         {
             if (group.pureSpawn)
             {
-                // If we have random enemies waiting, shuffle and add them before this pure sequence
                 if (randomPool.Count > 0)
                 {
                     Shuffle(randomPool);
@@ -64,7 +70,6 @@ public class Spawner : MonoBehaviour
                     randomPool.Clear();
                 }
 
-                // Add pureSpawn enemies in their exact group order
                 for (int i = 0; i < group.count; i++)
                 {
                     spawnQueue.Add(group.enemy);
@@ -72,7 +77,6 @@ public class Spawner : MonoBehaviour
             }
             else
             {
-                // Collect non-pureSpawn enemies to be shuffled later
                 for (int i = 0; i < group.count; i++)
                 {
                     randomPool.Add(group.enemy);
@@ -80,7 +84,6 @@ public class Spawner : MonoBehaviour
             }
         }
 
-        // Add any remaining shuffled enemies
         if (randomPool.Count > 0)
         {
             Shuffle(randomPool);

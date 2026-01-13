@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
@@ -8,12 +11,15 @@ public class WaveManager : MonoBehaviour
     public Spawner spawner;
 
     [Header("Wave Settings")]
-    public Wave[] waves;
+    public List<Wave> waves = new();
     public int currentWaveIndex = 0;
 
     [Header("Statistics")]
     public int totalEnemies;
     public int enemiesLeft;
+    public int timeBetweenWaves;
+    public float timer;
+    public bool wavesArePaused;
 
     private void Awake()
     {
@@ -22,21 +28,16 @@ public class WaveManager : MonoBehaviour
 
     void Start()
     {
-        if (waves.Length > 0 && spawner != null)
-        {
-            StartNextWave();
-        }
     }
 
     void Update()
     {
-        // Check if all enemies in the current wave are dead
         if (enemiesLeft <= 0 && spawner != null)
         {
-            currentWaveIndex++;
-            if (currentWaveIndex < waves.Length)
+
+            if (currentWaveIndex < waves.Count && !wavesArePaused)
             {
-                StartNextWave();
+                StartCoroutine(StartNextWave());
             }
             else
             {
@@ -45,11 +46,18 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    void StartNextWave()
+    IEnumerator StartNextWave()
     {
-        if (currentWaveIndex < waves.Length)
+        currentWaveIndex++;
+        wavesArePaused = true;
+        timer = timeBetweenWaves;
+        while (timer > 0)
         {
-            spawner.InitializeWave(waves[currentWaveIndex]);
+            timer -= Time.deltaTime;
+            yield return null;
         }
+        wavesArePaused = false;
+        spawner.NextWave();
     }
+
 }

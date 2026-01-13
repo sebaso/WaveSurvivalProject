@@ -13,14 +13,8 @@ MonoBehaviour:
   m_Name: Wave 1
   m_EditorClassIdentifier: 
   waveName: Wave 1
-  spawnRate: 1
+  spawnRate: 2
   enemies:
   - enemy: {fileID: 6690680711054330374, guid: 04a0d47a1615805449367cf9cce39965, type: 3}
-    count: 15
-    pureSpawn: 0
-  - enemy: {fileID: 5614218197008894055, guid: 7a8c95bfaf193ec4d9c9f64388695cca, type: 3}
-    count: 5
-    pureSpawn: 0
-  - enemy: {fileID: 5614218197008894055, guid: 7a8c95bfaf193ec4d9c9f64388695cca, type: 3}
     count: 10
-    pureSpawn: 1
+    pureSpawn: 0
