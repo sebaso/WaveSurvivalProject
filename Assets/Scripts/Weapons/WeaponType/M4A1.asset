@@ -24,6 +24,6 @@ MonoBehaviour:
   magazineSize: 0
   reloadTime: 0
   ammoCapacity: 0
-  ammo: -5752
+  ammo: -6239
   weaponHandling: 1
-  screenShakeAmount: 2
+  screenShakeAmount: 0.8
