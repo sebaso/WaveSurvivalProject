@@ -21,3 +21,9 @@ MonoBehaviour:
   shootSound: {fileID: 0}
   reloadSound: {fileID: 0}
   weaponIcon: {fileID: 0}
+  magazineSize: 0
+  reloadTime: 0
+  ammoCapacity: 0
+  ammo: -56
+  weaponHandling: 25
+  screenShakeAmount: 3

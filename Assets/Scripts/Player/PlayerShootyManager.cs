@@ -1,12 +1,15 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(WeaponHolder))]
+[RequireComponent(typeof(CinemachineImpulseSource))]
 public class PlayerShootyManager : MonoBehaviour
 {
     public Transform bulletSpawn;
     private WeaponHolder weaponHolder;
 
     public static PlayerShootyManager instance;
+    public CinemachineImpulseSource impulseSource;
 
 
 
@@ -19,11 +22,14 @@ public class PlayerShootyManager : MonoBehaviour
     public float handlingStamina = 100f;
     public float handlingStaminaRegenDelay = 1f;
     private float handlingStaminaDegenRate = 50f;
+    public int maxHandlingStamina = 100;
+    public int minHandlingStamina = 70;
     void Start()
     {
         instance = this;
         playerCamera = Camera.main;
         weaponHolder = GetComponent<WeaponHolder>();
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     void Update()
@@ -86,6 +92,7 @@ public class PlayerShootyManager : MonoBehaviour
 
     void Shoot()
     {
+        impulseSource.GenerateImpulseWithVelocity(Vector3.up * weaponHolder.CurrentWeapon.screenShakeAmount);
         canRegenerate = false;
         handlingStaminaRegenTimer = 0;
         var currentWeapon = weaponHolder.CurrentWeapon;
@@ -99,7 +106,7 @@ public class PlayerShootyManager : MonoBehaviour
             bulletScript.punchThrough = currentWeapon.punchThrough;
             currentWeapon.ammo -= 1;
             handlingStamina = Mathf.Lerp(handlingStamina, handlingStamina -= currentWeapon.weaponHandling, handlingStaminaDegenRate * Time.deltaTime);
-            handlingStamina = Mathf.Clamp(handlingStamina, 20, 100);
+            handlingStamina = Mathf.Clamp(handlingStamina, minHandlingStamina, maxHandlingStamina);
         }
 
         if (bulletInstance.TryGetComponent<Rigidbody>(out var rb))

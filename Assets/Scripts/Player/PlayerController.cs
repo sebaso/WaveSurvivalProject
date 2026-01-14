@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0.0f, vertical).normalized;
-        speed *= (PlayerShootyManager.instance.handlingStamina / 100f);
+        speed = PlayerShootyManager.instance.handlingStamina / maxSpeed;
         rb.linearVelocity = new Vector3(direction.x * speed, rb.linearVelocity.y, direction.z * speed);
     }
 }

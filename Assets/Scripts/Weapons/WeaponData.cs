@@ -16,6 +16,6 @@ public class WeaponData : ScriptableObject
     public float reloadTime;
     public int ammoCapacity;
     public int ammo;
-
     public int weaponHandling;
+    public float screenShakeAmount = 1;
 }

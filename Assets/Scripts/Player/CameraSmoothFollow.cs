@@ -1,20 +1,23 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraSmoothFollow : MonoBehaviour
 {
-    public Camera cam;
+    public CinemachineCamera cam;
+    public float minFov = 70f;
+    public float maxFov = 90f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        cam = Camera.main;
+        cam = GameObject.Find("PlayerCamera").GetComponent<CinemachineCamera>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        cam.fieldOfView = PlayerShootyManager.instance.handlingStamina / 100f * 90f;
+        cam.Lens.FieldOfView = Mathf.Clamp(PlayerShootyManager.instance.handlingStamina / 100f * 90f, minFov, maxFov);
     }
 
 }
