@@ -111,7 +111,29 @@ public class PlayerShootyManager : MonoBehaviour
 
         if (bulletInstance.TryGetComponent<Rigidbody>(out var rb))
         {
-            rb.linearVelocity = bulletSpawn.forward * currentWeapon.bulletSpeed;
+            // Calculate accuracy spread based on base accuracy and handling stamina
+            // handlingStamina ranges from minHandlingStamina to maxHandlingStamina (70-100)
+            // Normalize stamina to 0-1 range where 1 = full stamina = better accuracy
+            float staminaFactor = (handlingStamina - minHandlingStamina) / (maxHandlingStamina - minHandlingStamina);
+
+            // Combine base accuracy with stamina factor
+            // baseAccuracy of 95 means max 5 degrees spread at full stamina
+            // Lower stamina multiplies the spread (up to 3x at minimum stamina)
+            float staminaMultiplier = Mathf.Lerp(3f, 1f, staminaFactor);
+            float maxSpreadAngle = (100f - currentWeapon.baseAccuracy) * staminaMultiplier;
+
+            // Generate random spread within the cone
+            float spreadAngle = Random.Range(0f, maxSpreadAngle);
+            float spreadRotation = Random.Range(0f, 360f);
+
+            // Apply spread to the forward direction
+            Vector3 spreadDirection = Quaternion.Euler(
+                Mathf.Sin(spreadRotation * Mathf.Deg2Rad) * spreadAngle,
+                Mathf.Cos(spreadRotation * Mathf.Deg2Rad) * spreadAngle,
+                0f
+            ) * bulletSpawn.forward;
+
+            rb.linearVelocity = spreadDirection.normalized * currentWeapon.bulletSpeed;
         }
 
         Destroy(bulletInstance, 3f);
