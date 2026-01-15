@@ -15,15 +15,17 @@ MonoBehaviour:
   weaponName: M1 Garand
   bulletPrefab: {fileID: 4742638846563842940, guid: ba4d223cb896fc24e80cca9e200ce590, type: 3}
   damage: 4
-  fireRate: 0.8
+  fireRate: 0.35
+  baseAccuracy: 95
   punchThrough: 1
   bulletSpeed: 400
   shootSound: {fileID: 0}
   reloadSound: {fileID: 0}
   weaponIcon: {fileID: 0}
-  magazineSize: 0
+  clipSize: 8
+  currentAmmoInClip: 5
   reloadTime: 0
-  ammoCapacity: 0
-  ammo: -91
+  ammoCapacity: 80
+  ammo: 0
   weaponHandling: 5
   screenShakeAmount: 4

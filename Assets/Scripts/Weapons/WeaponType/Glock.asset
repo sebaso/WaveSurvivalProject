@@ -15,15 +15,17 @@ MonoBehaviour:
   weaponName: Glock-19
   bulletPrefab: {fileID: 4742638846563842940, guid: ba4d223cb896fc24e80cca9e200ce590, type: 3}
   damage: 1
-  fireRate: 0.4
+  fireRate: 0.25
+  baseAccuracy: 95
   punchThrough: 0
   bulletSpeed: 80
   shootSound: {fileID: 0}
   reloadSound: {fileID: 0}
   weaponIcon: {fileID: 0}
-  magazineSize: 0
+  clipSize: 15
+  currentAmmoInClip: 15
   reloadTime: 0
-  ammoCapacity: 0
-  ammo: -210
-  weaponHandling: 0
+  ammoCapacity: 150
+  ammo: 121
+  weaponHandling: 1
   screenShakeAmount: 1

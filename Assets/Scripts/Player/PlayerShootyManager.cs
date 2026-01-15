@@ -34,14 +34,19 @@ public class PlayerShootyManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
+        }
         Aim();
 
         if (weaponHolder == null || weaponHolder.CurrentWeapon == null) return;
 
-        if (Input.GetMouseButton(0) && Time.time > nextFire)
+        if (Input.GetMouseButton(0) && Time.time > nextFire && weaponHolder.CurrentWeapon.currentAmmoInClip > 0)
         {
             nextFire = Time.time + weaponHolder.CurrentWeapon.fireRate;
             Shoot();
+            weaponHolder.UpdateAmmo();
         }
         HandlingStaminaRegen();
     }
@@ -62,6 +67,10 @@ public class PlayerShootyManager : MonoBehaviour
             handlingStamina += handlingStaminaRegenRate * Time.deltaTime;
         }
 
+    }
+    public void Reload()
+    {
+        weaponHolder.Reload();
     }
 
 
@@ -104,7 +113,7 @@ public class PlayerShootyManager : MonoBehaviour
         {
             bulletScript.damage = currentWeapon.damage;
             bulletScript.punchThrough = currentWeapon.punchThrough;
-            currentWeapon.ammo -= 1;
+            currentWeapon.currentAmmoInClip -= 1;
             handlingStamina = Mathf.Lerp(handlingStamina, handlingStamina -= currentWeapon.weaponHandling, handlingStaminaDegenRate * Time.deltaTime);
             handlingStamina = Mathf.Clamp(handlingStamina, minHandlingStamina, maxHandlingStamina);
         }
@@ -119,7 +128,7 @@ public class PlayerShootyManager : MonoBehaviour
             // Combine base accuracy with stamina factor
             // baseAccuracy of 95 means max 5 degrees spread at full stamina
             // Lower stamina multiplies the spread (up to 3x at minimum stamina)
-            float staminaMultiplier = Mathf.Lerp(3f, 1f, staminaFactor);
+            float staminaMultiplier = Mathf.Lerp(30f, 1f, staminaFactor);
             float maxSpreadAngle = (100f - currentWeapon.baseAccuracy) * staminaMultiplier;
 
             // Generate random spread within the cone
