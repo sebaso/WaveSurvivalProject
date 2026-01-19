@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Wave System/Weapon")]
 public class WeaponData : ScriptableObject
 {
-    
+
     public string weaponName;
     public GameObject bulletPrefab;
     public int damage;
@@ -23,6 +23,6 @@ public class WeaponData : ScriptableObject
     public float screenShakeAmount = 1;
     public int ammoRefillCost;
 
-    
+
 
 }

@@ -11,7 +11,7 @@ public class PlayerShootyManager : MonoBehaviour
 
     public static PlayerShootyManager instance;
     public CinemachineImpulseSource impulseSource;
-    public ObjectPool<Bullet> bulletPool;
+    public static ObjectPool<Bullet> bulletPool;
     public GameObject bulletPrefab;
 
 
@@ -28,11 +28,14 @@ public class PlayerShootyManager : MonoBehaviour
     public int minHandlingStamina = 70;
     void Start()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
         playerCamera = Camera.main;
         weaponHolder = GetComponent<WeaponHolder>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
-        bulletPool = new ObjectPool<Bullet>(CreateBullet, OnGetBullet, OnReleaseBullet, OnDestroyBullet);
+        bulletPool = new ObjectPool<Bullet>(CreateBullet, OnGetBullet, OnReleaseBullet, OnDestroyBullet, true, 10, 10);
     }
     Bullet CreateBullet()
     {
@@ -42,11 +45,18 @@ public class PlayerShootyManager : MonoBehaviour
     }
     void OnGetBullet(Bullet bullet)
     {
+        if (bullet == null)
+        {
+            bullet = CreateBullet();
+        }
         bullet.gameObject.SetActive(true);
+        bullet.transform.SetPositionAndRotation(bulletSpawn.position, bulletSpawn.rotation);
+        bullet.SetPool(bulletPool);
     }
     void OnReleaseBullet(Bullet bullet)
     {
         bullet.gameObject.SetActive(false);
+        bullet.SetPool(null);
     }
     void OnDestroyBullet(Bullet bullet)
     {
@@ -129,10 +139,14 @@ public class PlayerShootyManager : MonoBehaviour
         if (currentWeapon == null || bulletSpawn == null) return;
 
         Bullet bulletScript = bulletPool.Get();
+        if (bulletScript == null)
+        {
+            bulletScript = CreateBullet();
+        }
         GameObject bulletInstance = bulletScript.gameObject;
 
         // Reset position and rotation
-        bulletInstance.transform.position = bulletSpawn.position;
+        bulletInstance.transform.SetPositionAndRotation(bulletSpawn.position, bulletSpawn.rotation);
         if (bulletInstance.TryGetComponent<Rigidbody>(out var rb))
         {
             rb.linearVelocity = Vector3.zero;

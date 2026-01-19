@@ -42,17 +42,14 @@ public class ScoreManager : MonoBehaviour
     {
         if (_displayedScore != _targetScore)
         {
-            // Move displayedScore towards targetScore
             if (_displayedScore < _targetScore)
             {
                 _displayedScore += _scoreStep;
-                // Clamp to target to avoid overshooting
                 if (_displayedScore > _targetScore) _displayedScore = _targetScore;
             }
             else if (_displayedScore > _targetScore)
             {
                 _displayedScore -= _scoreStep;
-                // Clamp to target to avoid overshooting
                 if (_displayedScore < _targetScore) _displayedScore = _targetScore;
             }
 
