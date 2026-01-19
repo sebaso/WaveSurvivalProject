@@ -23,9 +23,10 @@ MonoBehaviour:
   reloadSound: {fileID: 0}
   weaponIcon: {fileID: 0}
   clipSize: 30
-  currentAmmoInClip: 0
+  currentAmmoInClip: 21
   reloadTime: 0
   ammoCapacity: 300
-  ammo: 0
+  ammo: 283
   weaponHandling: 1
   screenShakeAmount: 0.8
+  ammoRefillCost: 500

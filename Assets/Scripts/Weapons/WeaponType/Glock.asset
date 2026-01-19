@@ -26,6 +26,7 @@ MonoBehaviour:
   currentAmmoInClip: 15
   reloadTime: 0
   ammoCapacity: 150
-  ammo: 121
+  ammo: 150
   weaponHandling: 1
   screenShakeAmount: 1
+  ammoRefillCost: 15

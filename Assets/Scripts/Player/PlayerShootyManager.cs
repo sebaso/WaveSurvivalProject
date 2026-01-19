@@ -1,5 +1,6 @@
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Pool;
 
 [RequireComponent(typeof(WeaponHolder))]
 [RequireComponent(typeof(CinemachineImpulseSource))]
@@ -10,7 +11,8 @@ public class PlayerShootyManager : MonoBehaviour
 
     public static PlayerShootyManager instance;
     public CinemachineImpulseSource impulseSource;
-
+    public ObjectPool<Bullet> bulletPool;
+    public GameObject bulletPrefab;
 
 
     private float nextFire = 0f;
@@ -30,6 +32,25 @@ public class PlayerShootyManager : MonoBehaviour
         playerCamera = Camera.main;
         weaponHolder = GetComponent<WeaponHolder>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
+        bulletPool = new ObjectPool<Bullet>(CreateBullet, OnGetBullet, OnReleaseBullet, OnDestroyBullet);
+    }
+    Bullet CreateBullet()
+    {
+        Bullet bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation).GetComponent<Bullet>();
+        bullet.SetPool(bulletPool);
+        return bullet;
+    }
+    void OnGetBullet(Bullet bullet)
+    {
+        bullet.gameObject.SetActive(true);
+    }
+    void OnReleaseBullet(Bullet bullet)
+    {
+        bullet.gameObject.SetActive(false);
+    }
+    void OnDestroyBullet(Bullet bullet)
+    {
+        Destroy(bullet.gameObject);
     }
 
     void Update()
@@ -105,37 +126,37 @@ public class PlayerShootyManager : MonoBehaviour
         canRegenerate = false;
         handlingStaminaRegenTimer = 0;
         var currentWeapon = weaponHolder.CurrentWeapon;
-        if (currentWeapon == null || currentWeapon.bulletPrefab == null || bulletSpawn == null) return;
+        if (currentWeapon == null || bulletSpawn == null) return;
 
-        GameObject bulletInstance = Instantiate(currentWeapon.bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+        Bullet bulletScript = bulletPool.Get();
+        GameObject bulletInstance = bulletScript.gameObject;
 
-        if (bulletInstance.TryGetComponent<Bullet>(out var bulletScript))
-        {
-            bulletScript.damage = currentWeapon.damage;
-            bulletScript.punchThrough = currentWeapon.punchThrough;
-            currentWeapon.currentAmmoInClip -= 1;
-            handlingStamina = Mathf.Lerp(handlingStamina, handlingStamina -= currentWeapon.weaponHandling, handlingStaminaDegenRate * Time.deltaTime);
-            handlingStamina = Mathf.Clamp(handlingStamina, minHandlingStamina, maxHandlingStamina);
-        }
-
+        // Reset position and rotation
+        bulletInstance.transform.position = bulletSpawn.position;
         if (bulletInstance.TryGetComponent<Rigidbody>(out var rb))
         {
-            // Calculate accuracy spread based on base accuracy and handling stamina
-            // handlingStamina ranges from minHandlingStamina to maxHandlingStamina (70-100)
-            // Normalize stamina to 0-1 range where 1 = full stamina = better accuracy
-            float staminaFactor = (handlingStamina - minHandlingStamina) / (maxHandlingStamina - minHandlingStamina);
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
 
-            // Combine base accuracy with stamina factor
-            // baseAccuracy of 95 means max 5 degrees spread at full stamina
-            // Lower stamina multiplies the spread (up to 3x at minimum stamina)
+        bulletScript.damage = currentWeapon.damage;
+        bulletScript.punchThrough = currentWeapon.punchThrough;
+        currentWeapon.currentAmmoInClip -= 1;
+
+        // Update handling stamina
+        handlingStamina = Mathf.Lerp(handlingStamina, handlingStamina - currentWeapon.weaponHandling, handlingStaminaDegenRate * Time.deltaTime);
+        handlingStamina = Mathf.Clamp(handlingStamina, minHandlingStamina, maxHandlingStamina);
+
+        if (rb != null)
+        {
+            // Calculate accuracy spread
+            float staminaFactor = (handlingStamina - minHandlingStamina) / (maxHandlingStamina - minHandlingStamina);
             float staminaMultiplier = Mathf.Lerp(30f, 1f, staminaFactor);
             float maxSpreadAngle = (100f - currentWeapon.baseAccuracy) * staminaMultiplier;
 
-            // Generate random spread within the cone
             float spreadAngle = Random.Range(0f, maxSpreadAngle);
             float spreadRotation = Random.Range(0f, 360f);
 
-            // Apply spread to the forward direction
             Vector3 spreadDirection = Quaternion.Euler(
                 Mathf.Sin(spreadRotation * Mathf.Deg2Rad) * spreadAngle,
                 Mathf.Cos(spreadRotation * Mathf.Deg2Rad) * spreadAngle,
@@ -144,8 +165,6 @@ public class PlayerShootyManager : MonoBehaviour
 
             rb.linearVelocity = spreadDirection.normalized * currentWeapon.bulletSpeed;
         }
-
-        Destroy(bulletInstance, 3f);
     }
 
 }

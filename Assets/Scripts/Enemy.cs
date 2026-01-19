@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public Transform player;
     private NavMeshAgent nav;
     public float timeBetweenFetches;
+    public float scoreMultiplier = 1f;
     public int hp;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,7 +29,7 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
         WaveManager.instance.enemiesLeft--;
-        ScoreManager.instance.AddScore(30);
+        ScoreManager.instance.AddScore((int)(30f * scoreMultiplier));
     }
 
     private IEnumerator ChasePlayer()
@@ -44,7 +45,7 @@ public class Enemy : MonoBehaviour
             if (collision.gameObject.TryGetComponent<Bullet>(out var bullet))
             {
                 hp -= bullet.damage;
-                ScoreManager.instance.AddScore(10);
+                ScoreManager.instance.AddScore((int)(10f * scoreMultiplier));
             }
             if (hp <= 0)
             {

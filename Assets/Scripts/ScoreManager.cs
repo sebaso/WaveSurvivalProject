@@ -1,49 +1,86 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
-    [SerializeField]
-    private int _score;
 
-    public float textLerpSpeed = 1f;
+    [SerializeField] private int _targetScore;
+    [SerializeField] private int _displayedScore;
+    [SerializeField] private int _scoreStep = 1; // Amount to increment per frame/step
+    public GameObject scorePopupPrefab;
+    public TextMeshProUGUI scoreDisplay;
+    public Transform scorePopupSpawnPoint;
+    public Transform canvasTransform;
 
     public int Score
     {
-        get => _score;
-        set
+        get => _targetScore;
+        set => _targetScore = value;
+    }
+
+    void Awake()
+    {
+        if (instance == null)
         {
-            _score = value;
-            SmoothScore();
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    public TextMeshProUGUI scoreDisplay;
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        instance = this;
-        UpdateScore();
+        _displayedScore = _targetScore;
+        UpdateUI();
     }
 
-    void SmoothScore()
+    void Update()
     {
-        scoreDisplay.text = Mathf.Lerp(float.Parse(scoreDisplay.text), Score, textLerpSpeed * Time.deltaTime).ToString();
+        if (_displayedScore != _targetScore)
+        {
+            // Move displayedScore towards targetScore
+            if (_displayedScore < _targetScore)
+            {
+                _displayedScore += _scoreStep;
+                // Clamp to target to avoid overshooting
+                if (_displayedScore > _targetScore) _displayedScore = _targetScore;
+            }
+            else if (_displayedScore > _targetScore)
+            {
+                _displayedScore -= _scoreStep;
+                // Clamp to target to avoid overshooting
+                if (_displayedScore < _targetScore) _displayedScore = _targetScore;
+            }
+
+            UpdateUI();
+        }
     }
 
     public void AddScore(int amount)
     {
-        this.Score += amount;
-        UpdateScore();
+        _targetScore += amount;
+        SpawnScorePopup(amount);
 
     }
 
-    public void UpdateScore()
+    public void SpawnScorePopup(int scoreAmount)
     {
-        scoreDisplay.text = Score.ToString();
+        GameObject scorePopup = Instantiate(scorePopupPrefab, scorePopupSpawnPoint.position, Quaternion.identity);
+        scorePopup.transform.SetParent(canvasTransform);
+        TextMeshProUGUI text = scorePopup.GetComponent<TextMeshProUGUI>();
+        text.text = scoreAmount.ToString();
+        text.color = Color.yellow;
+        scorePopup.GetComponent<ScorePopup>().Setup(scoreAmount);
+    }
+    private void UpdateUI()
+    {
+        if (scoreDisplay != null)
+        {
+            scoreDisplay.text = _displayedScore.ToString();
+        }
     }
 }

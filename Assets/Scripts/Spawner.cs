@@ -104,7 +104,6 @@ public class Spawner : MonoBehaviour
     {
         if (spawnQueue.Count == 0 || spawnPoints.Count == 0) return;
 
-        // Filter for points not visible to the main camera
         List<Transform> validPoints = new List<Transform>();
         foreach (Transform pt in spawnPoints)
         {
@@ -114,7 +113,6 @@ public class Spawner : MonoBehaviour
             }
         }
 
-        // If no points are hidden, skip this spawn attempt (nextSpawnTime will cause a retry)
         if (validPoints.Count == 0)
         {
             Debug.LogWarning("All spawn points are visible! Skipping spawn until a point is hidden.");
@@ -133,12 +131,7 @@ public class Spawner : MonoBehaviour
         if (Camera.main == null) return false;
 
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(position);
-
-        // Viewport coordinates are 0-1 if on screen
         bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-
-        // Raycast check to ensure no obstacles (optional but good, though basic viewport check is usually what "visible" means in this context)
-        // For now, simple viewport check as requested ("not spawn enemies from thin air")
         return onScreen;
     }
 

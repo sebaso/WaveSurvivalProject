@@ -8,12 +8,14 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float deceleration = 1.0f;
     private Rigidbody rb;
+    public static PlayerController instance;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        instance = this;
     }
 
     void FixedUpdate()

@@ -21,5 +21,8 @@ public class WeaponData : ScriptableObject
     public int ammo;
     public int weaponHandling;
     public float screenShakeAmount = 1;
+    public int ammoRefillCost;
+
+    
 
 }
