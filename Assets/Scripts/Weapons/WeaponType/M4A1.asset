@@ -16,17 +16,17 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4742638846563842940, guid: ba4d223cb896fc24e80cca9e200ce590, type: 3}
   damage: 1
   fireRate: 0.1
-  baseAccuracy: 90
+  baseAccuracy: 95
   punchThrough: 0
   bulletSpeed: 80
   shootSound: {fileID: 0}
   reloadSound: {fileID: 0}
   weaponIcon: {fileID: 0}
   clipSize: 30
-  currentAmmoInClip: 21
+  currentAmmoInClip: 30
   reloadTime: 0
   ammoCapacity: 300
-  ammo: 283
+  ammo: 300
   weaponHandling: 1
   screenShakeAmount: 0.8
   ammoRefillCost: 500

@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,54 +7,66 @@ public class Enemy : MonoBehaviour
 {
     public Transform player;
     private NavMeshAgent nav;
-    public float timeBetweenFetches;
+    public float timeBetweenFetches = 0.5f;
     public float scoreMultiplier = 1f;
+    public int maxHp = 3;
     public int hp;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    // The prefab this enemy was instantiated from, used for pooling
+    [HideInInspector] public GameObject originPrefab;
+
+    private Coroutine chaseCoroutine;
+    private int initialHp;
+
+    void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
-        if (!player)
-        {
-            player = GameObject.FindWithTag("Player").transform;
-        }
-        else
-        {
-            print("No player.");
-        }
-        StartCoroutine(ChasePlayer());
+        initialHp = hp;
     }
+
+    private void OnEnable()
+    {
+        // Reset state when reused from pool
+        hp = initialHp > 0 ? initialHp : maxHp;
+
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindWithTag("Player");
+            if (playerObj != null) player = playerObj.transform;
+        }
+
+        if (chaseCoroutine != null) StopCoroutine(chaseCoroutine);
+        chaseCoroutine = StartCoroutine(ChasePlayer());
+    }
+
     public void Die()
     {
-        Destroy(gameObject);
         WaveManager.instance.enemiesLeft--;
         ScoreManager.instance.AddScore((int)(30f * scoreMultiplier));
+        transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+        WaveManager.instance.ReturnEnemyToPool(gameObject);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        hp -= damage;
+        ScoreManager.instance.AddScore((int)(10f * scoreMultiplier));
+
+        if (hp <= 0)
+        {
+            Die();
+        }
     }
 
     private IEnumerator ChasePlayer()
     {
-        nav.SetDestination(player.position);
-        yield return new WaitForSeconds(timeBetweenFetches);
-        StartCoroutine(ChasePlayer());
-    }
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Bullet"))
+        while (gameObject.activeSelf)
         {
-            if (collision.gameObject.TryGetComponent<Bullet>(out var bullet))
+            if (player != null && nav.isOnNavMesh)
             {
-                hp -= bullet.damage;
-                ScoreManager.instance.AddScore((int)(10f * scoreMultiplier));
+                nav.SetDestination(player.position);
             }
-            if (hp <= 0)
-            {
-                Die();
-            }
-            Destroy(collision.gameObject);
-        }
-        else
-        {
-            Destroy(collision.gameObject);
+            yield return new WaitForSeconds(timeBetweenFetches);
         }
     }
 }

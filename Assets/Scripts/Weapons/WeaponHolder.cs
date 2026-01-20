@@ -15,6 +15,7 @@ public class WeaponHolder : MonoBehaviour
         instance = this;
         CurrentWeapon.currentAmmoInClip = CurrentWeapon.clipSize;
         CurrentWeapon.ammo = CurrentWeapon.ammoCapacity;
+         UpdateWeaponHUD();
     }
 
     public WeaponData CurrentWeapon

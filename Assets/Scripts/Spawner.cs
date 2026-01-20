@@ -5,10 +5,10 @@ public class Spawner : MonoBehaviour
 {
     [Header("Wave Configuration")]
     public Wave currentWave;
-    public List<Transform> spawnPoints = new List<Transform>();
+    public List<Transform> spawnPoints = new();
 
     [Header("Internal State")]
-    private List<GameObject> spawnQueue = new List<GameObject>();
+    private List<GameObject> spawnQueue = new();
     private float nextSpawnTime;
     private bool isSpawning = false;
 
@@ -57,7 +57,7 @@ public class Spawner : MonoBehaviour
         currentWave = wave;
         spawnQueue.Clear();
 
-        List<GameObject> randomPool = new List<GameObject>();
+        List<GameObject> randomPool = new();
 
         foreach (var group in wave.enemies)
         {
@@ -104,7 +104,7 @@ public class Spawner : MonoBehaviour
     {
         if (spawnQueue.Count == 0 || spawnPoints.Count == 0) return;
 
-        List<Transform> validPoints = new List<Transform>();
+        List<Transform> validPoints = new();
         foreach (Transform pt in spawnPoints)
         {
             if (!IsPointVisible(pt.position))
@@ -122,8 +122,16 @@ public class Spawner : MonoBehaviour
         GameObject enemyPrefab = spawnQueue[0];
         spawnQueue.RemoveAt(0);
 
+        if (enemyPrefab == null) return;
+
         Transform spawnPoint = validPoints[Random.Range(0, validPoints.Count)];
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+
+        GameObject enemyInstance = WaveManager.instance.GetEnemyFromPool(enemyPrefab);
+        if (enemyInstance != null)
+        {
+            enemyInstance.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+            enemyInstance.SetActive(true);
+        }
     }
 
     private bool IsPointVisible(Vector3 position)

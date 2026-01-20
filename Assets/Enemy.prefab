@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6210747107735149191}
   - component: {fileID: 4650866116092487213}
   - component: {fileID: 393046238127739379}
+  - component: {fileID: 397475113851646945}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -150,4 +151,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   timeBetweenFetches: 0.1
+  scoreMultiplier: 1
   hp: 2
+--- !u!65 &397475113851646945
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690680711054330374}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

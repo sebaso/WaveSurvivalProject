@@ -143,42 +143,34 @@ public class PlayerShootyManager : MonoBehaviour
         {
             bulletScript = CreateBullet();
         }
-        GameObject bulletInstance = bulletScript.gameObject;
 
-        // Reset position and rotation
-        bulletInstance.transform.SetPositionAndRotation(bulletSpawn.position, bulletSpawn.rotation);
-        if (bulletInstance.TryGetComponent<Rigidbody>(out var rb))
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
+        // Setup initial position (visual only, real movement starts in Bullet.Update)
+        bulletScript.transform.position = bulletSpawn.position;
 
-        bulletScript.damage = currentWeapon.damage;
-        bulletScript.punchThrough = currentWeapon.punchThrough;
         currentWeapon.currentAmmoInClip -= 1;
 
         // Update handling stamina
         handlingStamina = Mathf.Lerp(handlingStamina, handlingStamina - currentWeapon.weaponHandling, handlingStaminaDegenRate * Time.deltaTime);
         handlingStamina = Mathf.Clamp(handlingStamina, minHandlingStamina, maxHandlingStamina);
 
-        if (rb != null)
-        {
-            // Calculate accuracy spread
-            float staminaFactor = (handlingStamina - minHandlingStamina) / (maxHandlingStamina - minHandlingStamina);
-            float staminaMultiplier = Mathf.Lerp(30f, 1f, staminaFactor);
-            float maxSpreadAngle = (100f - currentWeapon.baseAccuracy) * staminaMultiplier;
+        // Calculate accuracy spread
+        float staminaFactor = (handlingStamina - minHandlingStamina) / (maxHandlingStamina - minHandlingStamina);
+        float staminaMultiplier = Mathf.Lerp(30f, 1f, staminaFactor);
+        float maxSpreadAngle = (100f - currentWeapon.baseAccuracy) * staminaMultiplier;
 
-            float spreadAngle = Random.Range(0f, maxSpreadAngle);
-            float spreadRotation = Random.Range(0f, 360f);
+        // Apply random yaw spread (flat distribution)
+        float currentSpread = Random.Range(-maxSpreadAngle * 0.5f, maxSpreadAngle * 0.5f);
 
-            Vector3 spreadDirection = Quaternion.Euler(
-                Mathf.Sin(spreadRotation * Mathf.Deg2Rad) * spreadAngle,
-                Mathf.Cos(spreadRotation * Mathf.Deg2Rad) * spreadAngle,
-                0f
-            ) * bulletSpawn.forward;
+        // Get flat forward direction
+        Vector3 flatForward = bulletSpawn.forward;
+        flatForward.y = 0;
+        flatForward.Normalize();
 
-            rb.linearVelocity = spreadDirection.normalized * currentWeapon.bulletSpeed;
-        }
+        Vector3 spreadDirection = Quaternion.Euler(0, currentSpread, 0) * flatForward;
+
+        // Initialize the new SphereCast-based bullet
+        bulletScript.Initialize(spreadDirection, currentWeapon.bulletSpeed, currentWeapon.damage, currentWeapon.punchThrough);
     }
+
 
 }

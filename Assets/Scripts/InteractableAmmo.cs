@@ -1,22 +1,52 @@
 using UnityEngine;
+using TMPro;
 
 public class InteractableAmmo : MonoBehaviour
 {
-    public int interactionDistance = 5;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float interactionDistance = 5f;
+    public TextMeshProUGUI ammoText;
+
+    private float sqrInteractionDistance;
+    private Transform playerTransform;
+    private bool isInRange = false;
+    private int cachedCost = -1;
+
     void Start()
     {
-
+        ammoText = GameObject.FindGameObjectWithTag("MainText").GetComponent<TextMeshProUGUI>();
+        ammoText.enabled = false;
+        sqrInteractionDistance = interactionDistance * interactionDistance;
+        playerTransform = PlayerController.instance.transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Vector3.Distance(transform.position, PlayerController.instance.transform.position) < interactionDistance && WeaponHolder.instance.CurrentWeapon.ammo < WeaponHolder.instance.CurrentWeapon.ammoCapacity && ScoreManager.instance.Score >= WeaponHolder.instance.CurrentWeapon.ammoRefillCost)
+        float sqrDistance = (transform.position - playerTransform.position).sqrMagnitude;
+        bool nowInRange = sqrDistance < sqrInteractionDistance;
+
+        if (nowInRange != isInRange)
         {
-            ScoreManager.instance.AddScore(-WeaponHolder.instance.CurrentWeapon.ammoRefillCost);
-            WeaponHolder.instance.CurrentWeapon.ammo = WeaponHolder.instance.CurrentWeapon.ammoCapacity;
-            WeaponHolder.instance.UpdateAmmo();
+            isInRange = nowInRange;
+            ammoText.enabled = isInRange;
+        }
+
+        if (isInRange)
+        {
+            var weapon = WeaponHolder.instance.CurrentWeapon;
+
+            if (cachedCost != weapon.ammoRefillCost)
+            {
+                cachedCost = weapon.ammoRefillCost;
+                ammoText.text = "Press E to pay " + cachedCost + " to refill ammo.";
+            }
+
+            if (Input.GetKeyDown(KeyCode.E) && weapon.ammo < weapon.ammoCapacity && ScoreManager.instance.Score >= weapon.ammoRefillCost)
+            {
+                ScoreManager.instance.AddScore(-weapon.ammoRefillCost);
+                weapon.ammo = weapon.ammoCapacity;
+                WeaponHolder.instance.UpdateAmmo();
+                cachedCost = -1;
+            }
         }
     }
 }
