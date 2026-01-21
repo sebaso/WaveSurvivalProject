@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Spawner
   - MainText
+  - DoorBoard
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Bullet
   - Enemy
   - MainText
-  - 
+  - BoardedDoor
   - 
   - 
   - 
