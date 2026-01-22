@@ -20,7 +20,7 @@ public class BoardedDoor : MonoBehaviour
     private NavMeshObstacle navMeshObstacle;
     public TextMeshProUGUI repairText;
 
-    private bool isDestroyed;
+    public bool isDestroyed;
     public bool isFullHealth;
     private int maxBoards;
     private int currIndex;

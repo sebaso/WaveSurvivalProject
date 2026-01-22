@@ -47,7 +47,7 @@ public class EnemyAttack : MonoBehaviour
         {
             nextAttack = Time.time + attackRate;
             BoardedDoor boardedDoor = target.GetComponent<BoardedDoor>();
-            if (boardedDoor != null)
+            if (boardedDoor != null && !boardedDoor.isDestroyed)
             {
                 boardedDoor.TakeDamage();
             }
