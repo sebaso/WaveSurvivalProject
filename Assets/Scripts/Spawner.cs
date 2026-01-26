@@ -107,7 +107,7 @@ public class Spawner : MonoBehaviour
         List<Transform> validPoints = new();
         foreach (Transform pt in spawnPoints)
         {
-            if (!IsPointVisible(pt.position))
+            if (!IsPointVisible(pt.position) && pt.gameObject.activeInHierarchy)
             {
                 validPoints.Add(pt);
             }
@@ -125,6 +125,7 @@ public class Spawner : MonoBehaviour
         if (enemyPrefab == null) return;
 
         Transform spawnPoint = validPoints[Random.Range(0, validPoints.Count)];
+
 
         GameObject enemyInstance = WaveManager.instance.GetEnemyFromPool(enemyPrefab);
         if (enemyInstance != null)
