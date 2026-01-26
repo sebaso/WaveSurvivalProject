@@ -8,7 +8,7 @@ using TMPro;
 public class UnlockableRoom : MonoBehaviour
 {
     public List<BoardedDoor> barriers = new List<BoardedDoor>();
-    public List<Transform> spawners = new List<Transform>();
+    public List<Transform> enemySpawnPoints = new List<Transform>();
     public GameObject roomDoor;
     public RoomFlags flags;
     public TextMeshProUGUI buyText;
@@ -27,17 +27,21 @@ public class UnlockableRoom : MonoBehaviour
 
     void Start()
     {
+        foreach (Transform spawner in enemySpawnPoints)
+        {
+            print(spawner.name);
+            spawner.gameObject.SetActive(false);
+        }
         RoomManager.instance.unlockableRooms.Add(this);
 
-        if (barriers.Count == 0 && spawners.Count == 0)
+        if (barriers.Count == 0 && enemySpawnPoints.Count == 0)
         {
             Debug.LogError(gameObject.name + " has no barriers or spawners.");
         }
-        foreach (Transform spawner in spawners)
+        foreach (Transform spawner in enemySpawnPoints)
         {
             spawner.gameObject.SetActive(false);
         }
-        UnlockRoom();
 
     }
     void Update()
@@ -53,11 +57,11 @@ public class UnlockableRoom : MonoBehaviour
         {
             barrier.gameObject.SetActive(true);
         }
-        foreach (Transform spawner in spawners)
-        {
 
+        foreach (Transform spawner in enemySpawnPoints)
+        {
             spawner.gameObject.SetActive(true);
-            spawner.parent = null;
+            WaveManager.instance.spawner.AddSpawnPoint(spawner);
         }
         flags |= RoomFlags.Unlocked;
 
@@ -74,7 +78,7 @@ public class UnlockableRoom : MonoBehaviour
             buyText = null;
         }
 
-        if (isInRange)
+        if (isInRange && flags != RoomFlags.Unlocked)
         {
             if (buyText == null)
             {

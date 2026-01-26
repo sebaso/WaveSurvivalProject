@@ -154,4 +154,39 @@ public class Spawner : MonoBehaviour
             list[randomIndex] = temp;
         }
     }
+
+    /// <summary>
+    /// Safely adds multiple spawn points to the list.
+    /// Filters out null entries and duplicates.
+    /// </summary>
+    public void AddSpawnPoints(List<Transform> newPoints)
+    {
+        if (newPoints == null) return;
+
+        foreach (Transform point in newPoints)
+        {
+            AddSpawnPoint(point);
+        }
+    }
+
+    /// <summary>
+    /// Safely adds a single spawn point to the list.
+    /// Ignores null or duplicate entries.
+    /// </summary>
+    public void AddSpawnPoint(Transform point)
+    {
+        if (point == null) return;
+        if (spawnPoints.Contains(point)) return;
+
+        spawnPoints.Add(point);
+    }
+
+    /// <summary>
+    /// Removes a spawn point from the list.
+    /// </summary>
+    public void RemoveSpawnPoint(Transform point)
+    {
+        if (point == null) return;
+        spawnPoints.Remove(point);
+    }
 }
