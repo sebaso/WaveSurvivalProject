@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable<int>
 {
     public float speed = 10.0f;
     public float acceleration = 1.0f;
@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
     public int hp = 5;
     public int maxHp = 5;
+    public bool IsDead => hp <= 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (IsDead) return;
         hp -= damage;
         if (hp <= 0)
         {
