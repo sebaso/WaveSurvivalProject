@@ -15,6 +15,7 @@ public class UnlockableRoom : MonoBehaviour
     public int roomCost;
     public int buyTextDistance;
     public bool isInRange;
+    public bool isUnlocked;
     [Flags]
     public enum RoomFlags
     {
@@ -34,7 +35,7 @@ public class UnlockableRoom : MonoBehaviour
         }
         RoomManager.instance.unlockableRooms.Add(this);
 
-        if (barriers.Count == 0 && enemySpawnPoints.Count == 0)
+        if (barriers.Count == 0 || enemySpawnPoints.Count == 0)
         {
             Debug.LogError(gameObject.name + " has no barriers or spawners.");
         }
@@ -53,6 +54,7 @@ public class UnlockableRoom : MonoBehaviour
     public void UnlockRoom()
     {
         roomDoor.SetActive(false);
+        isUnlocked = true;
         foreach (BoardedDoor barrier in barriers)
         {
             barrier.gameObject.SetActive(true);
@@ -63,7 +65,6 @@ public class UnlockableRoom : MonoBehaviour
             spawner.gameObject.SetActive(true);
             WaveManager.instance.spawner.AddSpawnPoint(spawner);
         }
-        flags |= RoomFlags.Unlocked;
 
     }
     public bool IsInRange()
@@ -72,13 +73,19 @@ public class UnlockableRoom : MonoBehaviour
     }
     public void DisplayBuyMessage()
     {
+        if (isUnlocked && buyText != null)
+        {
+            buyText.enabled = false;
+            buyText = null;
+            return;
+        }
         if (!isInRange && buyText != null)
         {
             buyText.enabled = false;
             buyText = null;
         }
 
-        if (isInRange && flags != RoomFlags.Unlocked)
+        if (isInRange && !isUnlocked)
         {
             if (buyText == null)
             {

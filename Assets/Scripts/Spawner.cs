@@ -11,10 +11,13 @@ public class Spawner : MonoBehaviour
     private List<GameObject> spawnQueue = new();
     private float nextSpawnTime;
     private bool isSpawning = false;
+    public Transform player;
 
 
     private void Start()
     {
+        if (PlayerController.instance != null && PlayerController.instance.transform != null)
+            player = PlayerController.instance.transform;
         if (spawnPoints.Count == 0)
         {
             GameObject[] points = GameObject.FindGameObjectsWithTag("Spawner");

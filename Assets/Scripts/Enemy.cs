@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
     {
         nav = GetComponent<NavMeshAgent>();
         initialHp = hp;
+        if (PlayerController.instance != null && PlayerController.instance.transform != null)
+            player = PlayerController.instance.transform;
     }
 
     private void OnEnable()

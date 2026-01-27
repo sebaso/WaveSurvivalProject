@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public static PlayerController instance;
     public int hp = 5;
+    public int maxHp = 5;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+        HealthBar.instance.UpdateHealthBar();
     }
 
     public void Die()

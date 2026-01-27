@@ -71,6 +71,13 @@ public class BoardedDoor : MonoBehaviour
                 repairText.enabled = false;
             }
         }
+        if (!IsInRange() && repairText != null)
+        {
+
+            repairText.enabled = false;
+            repairText = null;
+            return;
+        }
 
         if (IsInRange() && repairText == null)
         {
@@ -85,12 +92,7 @@ public class BoardedDoor : MonoBehaviour
             if (Input.GetKey(KeyCode.E))
                 Repair();
         }
-        if (!IsInRange() && repairText != null)
-        {
 
-            repairText.enabled = false;
-            repairText = null;
-        }
     }
 
     public void TakeDamage()

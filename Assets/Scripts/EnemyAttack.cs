@@ -22,8 +22,12 @@ public class EnemyAttack : MonoBehaviour
             RaycastHit[] hits = Physics.SphereCastAll(transform.position, sphereCastRadius, Vector3.down, 10f, LayerMask.GetMask("BoardedDoor"));
             foreach (RaycastHit hit in hits)
             {
-                enemy.nav.SetDestination(hit.collider.gameObject.transform.position);
-                DestroyBoardedDoor(hit.collider.gameObject);
+                if (hit.transform.GetComponent<BoardedDoor>().enabled)
+                {
+                    enemy.nav.SetDestination(hit.collider.gameObject.transform.position);
+                    DestroyBoardedDoor(hit.collider.gameObject);
+                    break;
+                }
             }
 
 
