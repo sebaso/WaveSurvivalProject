@@ -11,7 +11,7 @@ public class HealthBar : MonoBehaviour
     void Start()
     {
         if (player == null)
-            player = FindObjectOfType<PlayerController>();
+            player = FindFirstObjectByType<PlayerController>();
         instance = this;
         UpdateHealthBar();
     }
