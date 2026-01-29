@@ -416,6 +416,7 @@ MonoBehaviour:
   - {fileID: 1617752110}
   - {fileID: 985479389}
   - {fileID: 784810914}
+  spawnQueue: []
   player: {fileID: 0}
 --- !u!4 &68461737
 Transform:
