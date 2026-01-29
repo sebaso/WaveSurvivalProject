@@ -45,6 +45,10 @@ public class Enemy : MonoBehaviour
         ScoreManager.instance.AddScore((int)(30f * scoreMultiplier));
         transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         WaveManager.instance.ReturnEnemyToPool(gameObject);
+        if (ObjectiveManager.instance.objectiveType == ObjectiveManager.ObjectiveType.DefendLocation)
+        {
+            ObjectiveManager.instance.DefenseObjectiveLogic();
+        }
     }
 
     public void TakeDamage(int damage)

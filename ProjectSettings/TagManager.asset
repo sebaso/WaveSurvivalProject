@@ -9,6 +9,7 @@ TagManager:
   - Spawner
   - MainText
   - DoorBoard
+  - DefenceTag
   layers:
   - Default
   - TransparentFX

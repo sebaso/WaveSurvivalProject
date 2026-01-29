@@ -13,6 +13,7 @@ public class WaveManager : MonoBehaviour
 
     [Header("Wave Settings")]
     public List<Wave> waves = new();
+    public List<Wave> objectiveWaves = new();
     public int currentWaveIndex = 0;
 
     [Header("Statistics")]
@@ -134,10 +135,6 @@ public class WaveManager : MonoBehaviour
             if (currentWaveIndex < waves.Count && !wavesArePaused)
             {
                 StartCoroutine(StartNextWave());
-            }
-            else
-            {
-                Debug.Log("All waves complete!");
             }
         }
     }

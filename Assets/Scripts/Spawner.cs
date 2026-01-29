@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     public List<Transform> spawnPoints = new();
 
     [Header("Internal State")]
-    private List<GameObject> spawnQueue = new();
+    public List<GameObject> spawnQueue = new();
     private float nextSpawnTime;
     private bool isSpawning = false;
     public Transform player;
@@ -41,6 +41,10 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
+        if (WaveManager.instance.wavesArePaused)
+        {
+            return;
+        }
         if (isSpawning && spawnQueue.Count > 0)
         {
             if (Time.time >= nextSpawnTime)
@@ -191,5 +195,11 @@ public class Spawner : MonoBehaviour
     {
         if (point == null) return;
         spawnPoints.Remove(point);
+    }
+    public void SpawnObjectiveWave()
+    {
+        currentWave = WaveManager.instance.objectiveWaves[0];
+        InitializeWave(currentWave);
+        WaveManager.instance.wavesArePaused = false;
     }
 }
