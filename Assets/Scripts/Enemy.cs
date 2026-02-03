@@ -41,14 +41,20 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        WaveManager.instance.ReturnEnemyToPool(gameObject);
         WaveManager.instance.enemiesLeft--;
         ScoreManager.instance.AddScore((int)(30f * scoreMultiplier));
         transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-        WaveManager.instance.ReturnEnemyToPool(gameObject);
         if (ObjectiveManager.instance.objectiveType == ObjectiveManager.ObjectiveType.DefendLocation)
         {
             ObjectiveManager.instance.DefenseObjectiveLogic();
         }
+    }
+    public void ObjectiveDelete()
+    {
+        transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+        WaveManager.instance.ReturnEnemyToPool(gameObject);
+        WaveManager.instance.enemiesLeft--;
     }
 
     public void TakeDamage(int damage)

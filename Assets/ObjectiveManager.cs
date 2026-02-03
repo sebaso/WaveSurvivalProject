@@ -22,7 +22,8 @@ public class ObjectiveManager : MonoBehaviour
     {
         DefendLocation,
         TransportItem,
-        CollectItems
+        CollectItems,
+        None
     }
     public ObjectiveType objectiveType;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -132,12 +133,14 @@ public class ObjectiveManager : MonoBehaviour
 
     public void DeactivateObjective()
     {
+        objectiveType = ObjectiveType.None;
+        Debug.Log("Objective Deactivated");
         isObjectiveActive = false;
         objectiveMarker.SetActive(false);
         waveManager.wavesArePaused = false;
+        waveManager.timer = 10;
+        waveManager.spawner.KillAllEnemies();
         currentObjective = null;
-        waveManager.spawner.currentWave = null;
-        waveManager.spawner.spawnQueue.Clear();
         waveManager.spawner.NextWave();
     }
 }

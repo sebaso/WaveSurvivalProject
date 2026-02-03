@@ -8,7 +8,6 @@ public class PlayerShootyManager : MonoBehaviour
 {
     public Transform bulletSpawn;
     private WeaponHolder weaponHolder;
-
     public static PlayerShootyManager instance;
     public CinemachineImpulseSource impulseSource;
     public static ObjectPool<Bullet> bulletPool;

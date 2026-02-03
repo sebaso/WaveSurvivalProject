@@ -59,6 +59,14 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    public void KillAllEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            enemy.GetComponent<Enemy>().ObjectiveDelete();
+        }
+    }
     public void InitializeWave(Wave wave)
     {
         currentWave = wave;
