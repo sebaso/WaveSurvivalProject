@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
     private PlayerController playerController;
     private PlayerShootyManager playerShootyManager;
     private WeaponHolder weaponHolder;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         playerController = PlayerController.instance;
