@@ -75,12 +75,12 @@ public class Bullet : MonoBehaviour
             if (hit.collider.CompareTag("Enemy"))
             {
                 GameObject enemyRoot = hit.collider.transform.root.gameObject;
-                Enemy enemyScript = hit.collider.GetComponentInParent<Enemy>();
+                IDamageable<int> enemyScript = hit.collider.GetComponentInParent<IDamageable<int>>();
 
                 if (enemyScript != null)
                 {
-                    if (hitEnemies.Contains(enemyScript.gameObject)) continue;
-                    hitEnemies.Add(enemyScript.gameObject);
+                    if (hitEnemies.Contains(enemyRoot)) continue;
+                    hitEnemies.Add(enemyRoot);
 
                     enemyScript.TakeDamage(damage);
 

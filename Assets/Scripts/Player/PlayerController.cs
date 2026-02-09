@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDamageableObserver>, IDamageableObserver
 {
@@ -14,18 +14,33 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
     public int maxHp = 5;
     public bool IsDead => hp <= 0;
 
+    public UnityEvent OnInitialize;
+    public UnityEvent OnDeactivate;
+    public UnityEvent OnActivate;
+
+
 
     private void Awake()
     {
         observers = new();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         instance = this;
+        OnInitialize.Invoke();
+    }
+
+    private void OnEnable()
+    {
+        OnActivate.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        OnDeactivate.Invoke();
     }
 
     void FixedUpdate()
@@ -59,8 +74,8 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
         instance.enabled = false;
         PlayerShootyManager.instance.enabled = false;
         WeaponHolder.instance.enabled = false;
-
     }
+
     private List<IDamageableObserver> observers = new();
     public void OnHealthUpdate(int damageAmount)
     {

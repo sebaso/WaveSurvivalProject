@@ -17,6 +17,10 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (enemy.IsDead)
+        {
+            return;
+        }
         if (enemy.nav.pathStatus == NavMeshPathStatus.PathPartial || enemy.nav.pathStatus == NavMeshPathStatus.PathInvalid)
         {
             RaycastHit[] hits = Physics.SphereCastAll(transform.position, sphereCastRadius, Vector3.down, 10f, LayerMask.GetMask("BoardedDoor"));
@@ -60,7 +64,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !enemy.IsDead)
         {
             Attack(other.gameObject);
         }

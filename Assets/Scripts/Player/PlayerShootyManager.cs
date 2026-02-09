@@ -12,6 +12,7 @@ public class PlayerShootyManager : MonoBehaviour
     public CinemachineImpulseSource impulseSource;
     public static ObjectPool<Bullet> bulletPool;
     public GameObject bulletPrefab;
+    public ParticleSystem muzzleFlash;
 
 
     private float nextFire = 0f;
