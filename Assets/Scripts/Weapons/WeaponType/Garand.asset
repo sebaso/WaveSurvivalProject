@@ -24,9 +24,9 @@ MonoBehaviour:
   weaponIcon: {fileID: 0}
   clipSize: 8
   currentAmmoInClip: 8
-  reloadTime: 0
+  reloadTime: 2
   ammoCapacity: 80
-  ammo: 54
+  ammo: 80
   weaponHandling: 5
   screenShakeAmount: 4
   ammoRefillCost: 150

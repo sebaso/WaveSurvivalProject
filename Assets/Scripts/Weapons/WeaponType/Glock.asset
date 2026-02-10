@@ -24,7 +24,7 @@ MonoBehaviour:
   weaponIcon: {fileID: 0}
   clipSize: 15
   currentAmmoInClip: 15
-  reloadTime: 0
+  reloadTime: 1
   ammoCapacity: 150
   ammo: 150
   weaponHandling: 1

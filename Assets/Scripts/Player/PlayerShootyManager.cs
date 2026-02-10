@@ -132,6 +132,7 @@ public class PlayerShootyManager : MonoBehaviour
 
     void Shoot()
     {
+        weaponHolder.CancelReload();
         impulseSource.GenerateImpulseWithVelocity(Vector3.up * weaponHolder.CurrentWeapon.screenShakeAmount);
         canRegenerate = false;
         handlingStaminaRegenTimer = 0;
