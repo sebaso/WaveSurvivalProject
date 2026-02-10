@@ -8,21 +8,25 @@ public class DissolveBehaviour : MonoBehaviour
 {
     public Renderer _renderer;
     private MaterialPropertyBlock _materialPropertyBlock;
-    [SerializeField] public float dissolveTime = 5f;
+    public float dissolveTime = 5f;
     [SerializeField] private float _dissolveMaxHeight = 2f;
     [SerializeField] private float _dissolveMinHeight = -2f;
     private float timer;
     private float _currentDissolveHeight;
     public bool _isDissolving;
-    private Action _dissolveCallback;
+    private readonly Action _dissolveCallback;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
+    public void Awake()
+    {
+        _renderer = GetComponent<MeshRenderer>();
+    }
 
     void Start()
     {
-        _renderer = GetComponent<MeshRenderer>();
         _materialPropertyBlock = new MaterialPropertyBlock();
+        _renderer.GetPropertyBlock(_materialPropertyBlock);
+        _renderer.SetPropertyBlock(_materialPropertyBlock);
         _currentDissolveHeight = _dissolveMaxHeight;
 
     }
@@ -64,6 +68,8 @@ public class DissolveBehaviour : MonoBehaviour
     }
     public void ResetDissolve()
     {
+        _renderer = GetComponent<MeshRenderer>();
+        _materialPropertyBlock = new MaterialPropertyBlock();
         _renderer.GetPropertyBlock(_materialPropertyBlock);
         _currentDissolveHeight = _dissolveMaxHeight;
         _materialPropertyBlock.SetFloat("_CutoffHeight", _dissolveMaxHeight);

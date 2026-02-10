@@ -23,7 +23,7 @@ public class PlayerShootyManager : MonoBehaviour
     public float handlingStaminaRegenTimer = 0f;
     public float handlingStamina = 100f;
     public float handlingStaminaRegenDelay = 1f;
-    private float handlingStaminaDegenRate = 50f;
+    private readonly float handlingStaminaDegenRate = 50f;
     public int maxHandlingStamina = 100;
     public int minHandlingStamina = 70;
     void Start()

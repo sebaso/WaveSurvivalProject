@@ -2,20 +2,23 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponHolder : MonoBehaviour
 {
-    public List<WeaponData> availableWeapons = new List<WeaponData>();
+    public List<WeaponData> availableWeapons = new();
     public TextMeshProUGUI ammoText;
     public TextMeshProUGUI weaponNameText;
     private int currentWeaponIndex = 0;
     public static WeaponHolder instance;
+    public Image reloadImage;
+    private bool isReloading = false;
     void Start()
     {
         instance = this;
         CurrentWeapon.currentAmmoInClip = CurrentWeapon.clipSize;
         CurrentWeapon.ammo = CurrentWeapon.ammoCapacity;
-         UpdateWeaponHUD();
+        UpdateWeaponHUD();
     }
 
     public WeaponData CurrentWeapon
@@ -50,6 +53,17 @@ public class WeaponHolder : MonoBehaviour
 
         if (CurrentWeapon.currentAmmoInClip >= CurrentWeapon.clipSize) return;
         if (CurrentWeapon.ammo <= 0) return;
+
+        isReloading = true;
+        reloadImage.fillAmount = 0;
+        float reloadTime = CurrentWeapon.reloadTime;
+        float reloadTimer = 0;
+        while (reloadTimer < reloadTime)
+        {
+            reloadTimer += Time.deltaTime;
+            reloadImage.fillAmount = reloadTimer / reloadTime;
+        }
+        isReloading = false;
 
         int ammoNeeded = CurrentWeapon.clipSize - CurrentWeapon.currentAmmoInClip;
         int ammoToReload = Mathf.Min(ammoNeeded, CurrentWeapon.ammo);

@@ -36,6 +36,8 @@ public class Enemy : MonoBehaviour, IDamageable<int>
     private void OnEnable()
     {
         onRespawnEvent?.Invoke();
+        if (dissolveBehaviour._renderer == null)
+            dissolveBehaviour.Awake();
         dissolveBehaviour.ResetDissolve();
         hp = initialHp > 0 ? initialHp : maxHp;
 
@@ -64,7 +66,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
     }
     public void Die()
     {
-        onDeathEvent?.Invoke();
+        onDeathEvent.Invoke();
         StartCoroutine(WaitForDissolve());
 
     }

@@ -7,8 +7,8 @@ using TMPro;
 [System.Serializable]
 public class UnlockableRoom : MonoBehaviour
 {
-    public List<BoardedDoor> barriers = new List<BoardedDoor>();
-    public List<Transform> enemySpawnPoints = new List<Transform>();
+    public List<BoardedDoor> barriers = new();
+    public List<Transform> enemySpawnPoints = new();
     public GameObject roomDoor;
     public RoomFlags flags;
     public TextMeshProUGUI buyText;
