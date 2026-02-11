@@ -11,7 +11,6 @@ public class UnlockableRoom : MonoBehaviour
     public List<Transform> enemySpawnPoints = new();
     public GameObject roomDoor;
     public RoomFlags flags;
-    public TextMeshProUGUI buyText;
     public int roomCost;
     public int buyTextDistance;
     public bool isInRange;
@@ -73,26 +72,14 @@ public class UnlockableRoom : MonoBehaviour
     }
     public void DisplayBuyMessage()
     {
-        if (isUnlocked && buyText != null)
-        {
-            buyText.enabled = false;
-            buyText = null;
-            return;
-        }
-        if (!isInRange && buyText != null)
-        {
-            buyText.enabled = false;
-            buyText = null;
-        }
+        if (isUnlocked) return;
 
-        if (isInRange && !isUnlocked)
+        if (isInRange)
         {
-            if (buyText == null)
+            if (InteractionUI.instance != null)
             {
-                buyText = GameObject.FindWithTag("MainText").GetComponent<TextMeshProUGUI>();
+                InteractionUI.instance.Show("Press E to pay " + roomCost + " to unlock the room.");
             }
-            buyText.text = "Press E to pay " + roomCost + " to unlock the room.";
-            buyText.enabled = true;
 
             if (Input.GetKeyDown(KeyCode.E) && ScoreManager.instance.Score >= roomCost)
             {

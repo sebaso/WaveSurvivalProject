@@ -18,7 +18,6 @@ public class BoardedDoor : MonoBehaviour
     private float invulnerabilityTimer;
     public float repairDelay;
     private NavMeshObstacle navMeshObstacle;
-    public TextMeshProUGUI repairText;
 
     public bool isDestroyed;
     public bool isFullHealth;
@@ -66,29 +65,14 @@ public class BoardedDoor : MonoBehaviour
         if (currIndex == maxBoards)
         {
             isFullHealth = true;
-            if (repairText != null)
+        }
+
+        if (IsInRange() && !isFullHealth)
+        {
+            if (InteractionUI.instance != null)
             {
-                repairText.enabled = false;
+                InteractionUI.instance.Show("Hold E to pay to repair the door.");
             }
-        }
-        if (!IsInRange() && repairText != null)
-        {
-
-            repairText.enabled = false;
-            repairText = null;
-            return;
-        }
-
-        if (IsInRange() && repairText == null)
-        {
-            repairText = GameObject.FindGameObjectWithTag("MainText").GetComponent<TextMeshProUGUI>();
-            repairText.enabled = true;
-        }
-
-        if (IsInRange() & !isFullHealth)
-        {
-            repairText.enabled = true;
-            repairText.text = "Hold E to pay to repair the door.";
             if (Input.GetKey(KeyCode.E))
                 Repair();
         }

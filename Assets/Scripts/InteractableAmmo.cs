@@ -4,7 +4,6 @@ using TMPro;
 public class InteractableAmmo : MonoBehaviour
 {
     public float interactionDistance = 5f;
-    public TextMeshProUGUI ammoText;
 
     private float sqrInteractionDistance;
     private Transform playerTransform;
@@ -13,8 +12,6 @@ public class InteractableAmmo : MonoBehaviour
 
     void Start()
     {
-        ammoText = GameObject.FindGameObjectWithTag("MainText").GetComponent<TextMeshProUGUI>();
-        ammoText.enabled = false;
         sqrInteractionDistance = interactionDistance * interactionDistance;
         playerTransform = PlayerController.instance.transform;
     }
@@ -24,11 +21,7 @@ public class InteractableAmmo : MonoBehaviour
         float sqrDistance = (transform.position - playerTransform.position).sqrMagnitude;
         bool nowInRange = sqrDistance < sqrInteractionDistance;
 
-        if (nowInRange != isInRange)
-        {
-            isInRange = nowInRange;
-            ammoText.enabled = isInRange;
-        }
+        isInRange = nowInRange;
 
         if (isInRange)
         {
@@ -37,7 +30,11 @@ public class InteractableAmmo : MonoBehaviour
             if (cachedCost != weapon.ammoRefillCost)
             {
                 cachedCost = weapon.ammoRefillCost;
-                ammoText.text = "Press E to pay " + cachedCost + " to refill ammo.";
+            }
+
+            if (InteractionUI.instance != null)
+            {
+                InteractionUI.instance.Show("Press E to pay " + cachedCost + " to refill ammo.");
             }
 
             if (Input.GetKeyDown(KeyCode.E) && weapon.ammo < weapon.ammoCapacity && ScoreManager.instance.Score >= weapon.ammoRefillCost)

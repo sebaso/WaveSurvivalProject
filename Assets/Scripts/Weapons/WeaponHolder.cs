@@ -50,6 +50,12 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 
+    public void AddWeapon(WeaponData weapon)
+    {
+        availableWeapons.Add(weapon);
+        UpdateWeaponHUD();
+    }
+
     public void Reload()
     {
         if (availableWeapons.Count == 0 || CurrentWeapon == null) return;

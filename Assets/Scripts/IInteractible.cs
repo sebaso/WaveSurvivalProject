@@ -6,6 +6,7 @@ public interface IInteractible
     bool CanInteract();
     string GetInteractText();
     Transform GetTransform();
+    void UpdateHUD();
 
 
 }
