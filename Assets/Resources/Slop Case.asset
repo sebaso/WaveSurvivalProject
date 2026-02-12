@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd574b8a6caabe74cb387380ad1944ca, type: 3}
+  m_Name: Slop Case
+  m_EditorClassIdentifier: Assembly-CSharp::CaseItem
+  Name: 
+  Icon: {fileID: 0}
+  Id: 27
+  ItemType: 1
+  RelatedKey: {fileID: 11400000, guid: 226ea0b5bf0ee3b4286fdce351a0df5a, type: 2}
+  Drops:
+  - {fileID: 11400000, guid: 35a4c513626b99f47b70c3d6a30a867e, type: 2}
+  - {fileID: 11400000, guid: 7bb031ee3c1414c4883fa9dd31c4647d, type: 2}
+  - {fileID: 11400000, guid: 038008db726b7bd4190de9650677aba7, type: 2}
+  - {fileID: 11400000, guid: 692c868d53542cf458487287d442fde7, type: 2}
+  - {fileID: 11400000, guid: b032f11d7a5c4974d8904ff8626c5298, type: 2}
+  - {fileID: 11400000, guid: 6cfcb4a6a0ffdf94db18c6a62b90aa40, type: 2}
