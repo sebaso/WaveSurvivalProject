@@ -13,6 +13,8 @@ public class PlayerShootyManager : MonoBehaviour
     public static ObjectPool<Bullet> bulletPool;
     public GameObject bulletPrefab;
     public ParticleSystem muzzleFlash;
+    public enum ItemType { Weapon, Consumable }
+    public ItemType itemType;
 
 
     private float nextFire = 0f;
@@ -65,19 +67,30 @@ public class PlayerShootyManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        switch (itemType)
         {
-            Reload();
-        }
-        Aim();
+            case ItemType.Weapon:
+                Aim();
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    Reload();
+                }
+                if (weaponHolder == null || weaponHolder.CurrentWeapon == null) return;
 
-        if (weaponHolder == null || weaponHolder.CurrentWeapon == null) return;
-
-        if (Input.GetMouseButton(0) && Time.time > nextFire && weaponHolder.CurrentWeapon.currentAmmoInClip > 0)
-        {
-            nextFire = Time.time + weaponHolder.CurrentWeapon.fireRate;
-            Shoot();
-            weaponHolder.UpdateAmmo();
+                if (Input.GetMouseButton(0) && Time.time > nextFire && weaponHolder.CurrentWeapon.currentAmmoInClip > 0)
+                {
+                    nextFire = Time.time + weaponHolder.CurrentWeapon.fireRate;
+                    Shoot();
+                    weaponHolder.UpdateAmmo();
+                }
+                break;
+            case ItemType.Consumable:
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    UseConsumable();
+                    print("Used consumable");
+                }
+                break;
         }
         HandlingStaminaRegen();
     }
@@ -128,6 +141,11 @@ public class PlayerShootyManager : MonoBehaviour
                 bulletSpawn.rotation = Quaternion.LookRotation(aimDir);
             }
         }
+    }
+    void UseConsumable()
+    {
+        PlayerController.instance.Heal(1);
+        weaponHolder.RemoveWeapon(weaponHolder.CurrentWeapon);
     }
 
     void Shoot()

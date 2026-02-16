@@ -2,7 +2,8 @@ public enum ItemType
 {
     Skin,
     Case,
-    Key
+    Key,
+    Consumable,
 }
 
 public enum Weapons

@@ -4,6 +4,7 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
 
+    public bool consumable;
     public string weaponName;
     public GameObject bulletPrefab;
     public int damage;

@@ -12,6 +12,7 @@ public class WeaponHolder : MonoBehaviour
     private int currentWeaponIndex = 0;
     public static WeaponHolder instance;
     public Image reloadImage;
+    public GameObject dropPrefab;
     public bool isReloading = false;
     void Start()
     {
@@ -48,11 +49,32 @@ public class WeaponHolder : MonoBehaviour
             NextWeapon();
             UpdateWeaponHUD();
         }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            DropWeapon();
+        }
+    }
+    public void DropWeapon()
+    {
+        if (CurrentWeapon == null && availableWeapons.Count == 0) return;
+        GameObject weapon = Instantiate(dropPrefab, transform.position, transform.rotation);
+        weapon.GetComponent<GroundItem>().weapon = availableWeapons[currentWeaponIndex];
+        weapon.GetComponent<GroundItem>().ammo = availableWeapons[currentWeaponIndex].ammo + availableWeapons[currentWeaponIndex].currentAmmoInClip;
+        availableWeapons.Remove(availableWeapons[currentWeaponIndex]);
+        NextWeapon();
+        UpdateWeaponHUD();
     }
 
     public void AddWeapon(WeaponData weapon)
     {
         availableWeapons.Add(weapon);
+        currentWeaponIndex = availableWeapons.Count - 1;
+        UpdateWeaponHUD();
+    }
+    public void RemoveWeapon(WeaponData weapon)
+    {
+        availableWeapons.Remove(weapon);
+        NextWeapon();
         UpdateWeaponHUD();
     }
 
@@ -118,8 +140,14 @@ public class WeaponHolder : MonoBehaviour
     }
     public void UpdateAmmo()
     {
-        if (CurrentWeapon == null) return;
-        ammoText.text = CurrentWeapon.currentAmmoInClip.ToString() + "/" + CurrentWeapon.ammo.ToString();
+        if (CurrentWeapon.consumable)
+        {
+            ammoText.text = "Press E to use";
+        }
+        else
+        {
+            ammoText.text = CurrentWeapon.currentAmmoInClip.ToString() + "/" + CurrentWeapon.ammo.ToString();
+        }
     }
 
     public void EquipWeapon(int index)
@@ -129,6 +157,7 @@ public class WeaponHolder : MonoBehaviour
             CancelReload();
             currentWeaponIndex = index;
             Debug.Log("Equipado:" + availableWeapons[currentWeaponIndex].weaponName);
+            CheckItemType();
         }
     }
 
@@ -138,5 +167,17 @@ public class WeaponHolder : MonoBehaviour
         CancelReload();
         currentWeaponIndex = (currentWeaponIndex + 1) % availableWeapons.Count;
         Debug.Log("Equipado:" + availableWeapons[currentWeaponIndex].weaponName);
+        CheckItemType();
+    }
+    public void CheckItemType()
+    {
+        if (availableWeapons[currentWeaponIndex].consumable == false)
+        {
+            PlayerShootyManager.instance.itemType = PlayerShootyManager.ItemType.Weapon;
+        }
+        else
+        {
+            PlayerShootyManager.instance.itemType = PlayerShootyManager.ItemType.Consumable;
+        }
     }
 }

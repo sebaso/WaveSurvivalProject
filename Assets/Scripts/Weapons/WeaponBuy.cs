@@ -20,6 +20,7 @@ public class WeaponBuy : MonoBehaviour, IInteractible
     {
         if (CanInteract())
         {
+
             if (InteractionUI.instance != null)
             {
                 InteractionUI.instance.Show(GetInteractText());
@@ -78,9 +79,26 @@ public class WeaponBuy : MonoBehaviour, IInteractible
         }
         return false;
     }
+    public void SearchForWeapon()
+    {
+        foreach (var item in WeaponHolder.instance.availableWeapons)
+        {
+            print("Item: " + item.weaponName + " Weapon: " + weapon.weaponName);
+            if (item.weaponName == weapon.weaponName)
+            {
+                owned = true;
+                break;
+            }
+            else
+            {
+                owned = false;
+            }
+        }
+    }
 
     public string GetInteractText()
     {
+        SearchForWeapon();
         if (owned)
         {
             return "Press E to refill " + weapon.weaponName + " ammo for " + weapon.ammoRefillCost.ToString() + " points";

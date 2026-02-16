@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class CaseOpeningUI : MonoBehaviour
 {
+    private static readonly WaitForSeconds _waitForSeconds0_5 = new(0.5f);
     [Header("Roll Settings")]
     [SerializeField] private int _cellCount = 40;
     [SerializeField] private int _winningCellOffset = 4;
@@ -18,8 +19,12 @@ public class CaseOpeningUI : MonoBehaviour
     [SerializeField] private float _rollDuration = 5f;
     [SerializeField] private float _snapDuration = 1f;
 
+    public GameObject bandagePrefab;
+
     public Item keyItem;
     public CaseItem caseItem;
+    public Transform spawnPoint;
+    public Item chosenItem;
 
     private RectTransform _rollerRect;
     private Vector2 _initialRollerPosition;
@@ -44,6 +49,7 @@ public class CaseOpeningUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !_isRolling)
         {
             Item drop = CaseDropSystem.GetRandomDrop(caseItem);
+            chosenItem = drop;
             BeginRoll(caseItem, drop);
         }
 
@@ -74,7 +80,7 @@ public class CaseOpeningUI : MonoBehaviour
 
         float cellWidth = _cellPrefab.GetComponent<RectTransform>().rect.width;
         float spacing = _rollerContent.GetComponent<HorizontalLayoutGroup>().spacing;
-        float halfParentWidth = _rollerContent.parent.GetComponent<RectTransform>().rect.width / 2f;
+        _ = _rollerContent.parent.GetComponent<RectTransform>().rect.width / 2f;
 
         float slotWidth = cellWidth + spacing;
         float targetSlotPosition = slotWidth * (_cellCount - _winningCellOffset);
@@ -134,8 +140,17 @@ public class CaseOpeningUI : MonoBehaviour
 
         _rollerRect.localPosition = new Vector3(_finalTargetX, _rollerRect.localPosition.y, 0f);
 
-        yield return new WaitForSeconds(0.5f);
-
+        yield return _waitForSeconds0_5;
+        print(chosenItem.Name);
+        if (chosenItem != null && chosenItem.Name == "Bandage")
+        {
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+        }
+        if (chosenItem != null && chosenItem.Name == "Soulslop")
+        {
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+        }
         StopAndCloseRoller();
     }
 

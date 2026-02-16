@@ -2801,7 +2801,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7771af15047be08498ce5b87fb9423a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.12
+      value: -24.51
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7771af15047be08498ce5b87fb9423a0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2845,7 +2845,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7771af15047be08498ce5b87fb9423a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1568529070}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7771af15047be08498ce5b87fb9423a0, type: 3}
       insertIndex: -1
@@ -6633,10 +6636,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 44.75
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -7187,8 +7190,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   _rollDuration: 5
   _snapDuration: 1
+  bandagePrefab: {fileID: 1798390559430120025, guid: 3f0a2999bf3b4a243ba96e599db8cad6, type: 3}
   keyItem: {fileID: 11400000, guid: 226ea0b5bf0ee3b4286fdce351a0df5a, type: 2}
   caseItem: {fileID: 11400000, guid: 027d5450c8645524797c21d223be0a57, type: 2}
+  spawnPoint: {fileID: 1568529070}
+  chosenItem: {fileID: 0}
 --- !u!65 &188505443
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7210,6 +7216,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.1584814, z: 1}
   m_Center: {x: 0, y: 0.57067513, z: 0}
+--- !u!4 &188505444 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7771af15047be08498ce5b87fb9423a0, type: 3}
+  m_PrefabInstance: {fileID: 22975833}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &189464177 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 995b51c86fdb9684ebb541a686214882, type: 3}
@@ -100579,8 +100590,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   _rollDuration: 5
   _snapDuration: 1
+  bandagePrefab: {fileID: 0}
   keyItem: {fileID: 0}
   caseItem: {fileID: 0}
+  spawnPoint: {fileID: 0}
+  chosenItem: {fileID: 0}
 --- !u!4 &630344234 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 36740c4dcf799b4438709f001f3dc3de, type: 3}
@@ -106447,6 +106461,7 @@ MonoBehaviour:
   impulseSource: {fileID: 934176240}
   bulletPrefab: {fileID: 4742638846563842940, guid: ba4d223cb896fc24e80cca9e200ce590, type: 3}
   muzzleFlash: {fileID: 0}
+  itemType: 0
   canRegenerate: 1
   handlingStaminaRegenRate: 50
   handlingStaminaRegenTimer: 0
@@ -106473,6 +106488,7 @@ MonoBehaviour:
   ammoText: {fileID: 169012937}
   weaponNameText: {fileID: 417993292}
   reloadImage: {fileID: 1940387860}
+  dropPrefab: {fileID: 1798390559430120025, guid: 26e851f57e98ce14994b74c75c1e592b, type: 3}
   isReloading: 0
 --- !u!114 &934176240
 MonoBehaviour:
@@ -134404,6 +134420,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2394904570181048668, guid: ee4d2207d1ac5bb498eff581fb2e855e, type: 3}
   m_PrefabInstance: {fileID: 387124524}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1568529069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1568529070}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1568529070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568529069}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.691, y: 1.315, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 188505444}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1574202232 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 21efd9e43cbead247aff3b9e9548b77d, type: 3}

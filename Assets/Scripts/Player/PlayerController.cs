@@ -67,6 +67,16 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
         }
         HealthBar.instance.UpdateHealthBar();
     }
+    public void Heal(int amount)
+    {
+        if (IsDead) return;
+        hp += amount;
+        if (hp > maxHp)
+        {
+            hp = maxHp;
+        }
+        HealthBar.instance.UpdateHealthBar();
+    }
 
     public void Die()
     {
