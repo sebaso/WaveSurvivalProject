@@ -60,6 +60,14 @@ public class CaseOpeningUI : MonoBehaviour
     }
     private void Update()
     {
+        if (_isRolling)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
         UpdateRolling();
         if (Input.GetKeyDown(KeyCode.Space) && !_isRolling)
         {
@@ -128,18 +136,17 @@ public class CaseOpeningUI : MonoBehaviour
             return;
         }
 
-        _elapsedRollTime += Time.deltaTime;
+        _elapsedRollTime += Time.unscaledDeltaTime;
         float normalizedTime = Mathf.Clamp01(_elapsedRollTime / _rollDuration);
 
         float curveValue = _speedCurve.Evaluate(normalizedTime);
         float currentSpeed = _maxSpeed * curveValue;
 
-        float newX = _rollerRect.localPosition.x - currentSpeed * Time.deltaTime;
+        float newX = _rollerRect.localPosition.x - currentSpeed * Time.unscaledDeltaTime;
         _rollerRect.localPosition = new Vector3(newX, _rollerRect.localPosition.y, 0f);
 
         if (_elapsedRollTime >= _rollDuration)
         {
-            _isRolling = false;
             StartCoroutine(SmoothSnapToTarget());
         }
     }
@@ -151,7 +158,7 @@ public class CaseOpeningUI : MonoBehaviour
 
         while (elapsed < _snapDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(elapsed / _snapDuration);
 
             float newX = Mathf.Lerp(startX, _finalTargetX, Mathf.SmoothStep(0f, 1f, t));
@@ -161,8 +168,9 @@ public class CaseOpeningUI : MonoBehaviour
         }
 
         _rollerRect.localPosition = new Vector3(_finalTargetX, _rollerRect.localPosition.y, 0f);
-
+        _isRolling = false;
         yield return _waitForSeconds0_5;
+
         print(chosenItem.Name);
         if (chosenItem != null && chosenItem.Name == "Bandage")
         {
