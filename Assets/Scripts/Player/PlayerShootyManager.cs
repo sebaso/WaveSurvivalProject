@@ -75,7 +75,7 @@ public class PlayerShootyManager : MonoBehaviour
                 {
                     Reload();
                 }
-                if (weaponHolder == null || weaponHolder.CurrentWeapon == null) return;
+                if (weaponHolder == null || weaponHolder.CurrentWeapon == null || weaponHolder.availableWeapons.Count == 0) return;
 
                 if (Input.GetMouseButton(0) && Time.time > nextFire && weaponHolder.CurrentWeapon.currentAmmoInClip > 0)
                 {
@@ -146,6 +146,7 @@ public class PlayerShootyManager : MonoBehaviour
     {
         PlayerController.instance.Heal(1);
         weaponHolder.RemoveWeapon(weaponHolder.CurrentWeapon);
+        WeaponHUD.instance.RedrawHUD();
     }
 
     void Shoot()

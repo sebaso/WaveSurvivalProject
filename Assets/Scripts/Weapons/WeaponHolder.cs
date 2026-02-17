@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -12,14 +13,25 @@ public class WeaponHolder : MonoBehaviour
     private int currentWeaponIndex = 0;
     public static WeaponHolder instance;
     public Image reloadImage;
+
+    public System.Action OnWeaponListChanged;
+    public System.Action OnWeaponChanged;
     public GameObject dropPrefab;
     public bool isReloading = false;
-    void Start()
+    void Awake()
     {
         instance = this;
-        CurrentWeapon.currentAmmoInClip = CurrentWeapon.clipSize;
-        CurrentWeapon.ammo = CurrentWeapon.ammoCapacity;
-        UpdateWeaponHUD();
+        if (availableWeapons == null) availableWeapons = new List<WeaponData>();
+    }
+
+    void Start()
+    {
+        if (CurrentWeapon != null)
+        {
+            CurrentWeapon.currentAmmoInClip = CurrentWeapon.clipSize;
+            CurrentWeapon.ammo = CurrentWeapon.ammoCapacity;
+            UpdateWeaponHUD();
+        }
     }
 
     public WeaponData CurrentWeapon
@@ -27,6 +39,7 @@ public class WeaponHolder : MonoBehaviour
         get
         {
             if (availableWeapons.Count == 0) return null;
+            if (currentWeaponIndex >= availableWeapons.Count) return availableWeapons[0];
             return availableWeapons[currentWeaponIndex];
         }
     }
@@ -56,24 +69,50 @@ public class WeaponHolder : MonoBehaviour
     }
     public void DropWeapon()
     {
+        StopAllCoroutines();
         if (CurrentWeapon == null && availableWeapons.Count == 0) return;
         GameObject weapon = Instantiate(dropPrefab, transform.position, transform.rotation);
         weapon.GetComponent<GroundItem>().weapon = availableWeapons[currentWeaponIndex];
         weapon.GetComponent<GroundItem>().ammo = availableWeapons[currentWeaponIndex].ammo + availableWeapons[currentWeaponIndex].currentAmmoInClip;
         availableWeapons.Remove(availableWeapons[currentWeaponIndex]);
         NextWeapon();
+        OnWeaponListChanged?.Invoke();
         UpdateWeaponHUD();
+
+    }
+    public IEnumerator DisplayGoofyMessage()
+    {
+
+        yield return new WaitForSeconds(1f);
+        InteractionUI.instance.Show("Buen intento... pero no.");
+
+        yield return new WaitForSeconds(1f);
+        InteractionUI.instance.Hide();
     }
 
     public void AddWeapon(WeaponData weapon)
     {
+        foreach (var item in availableWeapons)
+        {
+            if (item.weaponName == weapon.weaponName && !item.consumable)
+            {
+                StartCoroutine(DisplayGoofyMessage());
+                item.ammo += weapon.ammo + weapon.currentAmmoInClip;
+
+                return;
+            }
+        }
         availableWeapons.Add(weapon);
         currentWeaponIndex = availableWeapons.Count - 1;
         UpdateWeaponHUD();
+        OnWeaponListChanged?.Invoke();
+        OnWeaponChanged?.Invoke();
+
     }
     public void RemoveWeapon(WeaponData weapon)
     {
         availableWeapons.Remove(weapon);
+        OnWeaponListChanged?.Invoke();
         NextWeapon();
         UpdateWeaponHUD();
     }
@@ -158,6 +197,7 @@ public class WeaponHolder : MonoBehaviour
             currentWeaponIndex = index;
             Debug.Log("Equipado:" + availableWeapons[currentWeaponIndex].weaponName);
             CheckItemType();
+            OnWeaponChanged?.Invoke();
         }
     }
 
@@ -166,8 +206,13 @@ public class WeaponHolder : MonoBehaviour
         if (availableWeapons.Count == 0) return;
         CancelReload();
         currentWeaponIndex = (currentWeaponIndex + 1) % availableWeapons.Count;
+        if (availableWeapons[currentWeaponIndex] == null)
+        {
+            currentWeaponIndex = 0;
+        }
         Debug.Log("Equipado:" + availableWeapons[currentWeaponIndex].weaponName);
         CheckItemType();
+        OnWeaponChanged?.Invoke();
     }
     public void CheckItemType()
     {

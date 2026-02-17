@@ -85,10 +85,8 @@ public class Spawner : MonoBehaviour
                     randomPool.Clear();
                 }
 
-                for (int i = 0; i < group.count; i++)
-                {
-                    spawnQueue.Add(group.enemy);
-                }
+                // Pure spawn means this enemy appears exactly once at this point in the sequence
+                spawnQueue.Add(group.enemy);
             }
             else
             {

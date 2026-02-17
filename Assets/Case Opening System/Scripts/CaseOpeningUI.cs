@@ -34,6 +34,8 @@ public class CaseOpeningUI : MonoBehaviour
     private float _elapsedRollTime;
     private float _finalTargetX;
     private float _randomizedTargetX;
+    private Transform player;
+    public int interactionDistance = 2;
 
     private bool _isRolling;
 
@@ -43,14 +45,34 @@ public class CaseOpeningUI : MonoBehaviour
         _initialRollerPosition = _rollerRect.localPosition;
     }
 
+    public bool CanInteract()
+    {
+        player = GameObject.FindWithTag("Player").transform;
+        if (player != null)
+        {
+            float distance = Vector3.Distance(player.position, transform.position);
+            if (distance <= interactionDistance)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     private void Update()
     {
         UpdateRolling();
         if (Input.GetKeyDown(KeyCode.Space) && !_isRolling)
         {
-            Item drop = CaseDropSystem.GetRandomDrop(caseItem);
-            chosenItem = drop;
-            BeginRoll(caseItem, drop);
+            if (CanInteract())
+            {
+                if (InteractionUI.instance != null)
+                {
+                    InteractionUI.instance.Show("Press Space to open case");
+                }
+                Item drop = CaseDropSystem.GetRandomDrop(caseItem);
+                chosenItem = drop;
+                BeginRoll(caseItem, drop);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) && _isRolling)

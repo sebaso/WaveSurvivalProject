@@ -52,4 +52,10 @@ public class InteractionUI : MonoBehaviour
         interactionText.text = text;
         requestReceived = true;
     }
+    public void Hide()
+    {
+        if (interactionText == null) return;
+        interactionText.text = "";
+        requestReceived = false;
+    }
 }

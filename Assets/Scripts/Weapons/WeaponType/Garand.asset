@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc8eb0755f6add04f9df9c2dc938b0ae, type: 3}
   m_Name: Garand
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  consumable: 0
   weaponName: M1 Garand
   bulletPrefab: {fileID: 4742638846563842940, guid: ba4d223cb896fc24e80cca9e200ce590, type: 3}
   damage: 4
@@ -21,12 +22,13 @@ MonoBehaviour:
   bulletSpeed: 150
   shootSound: {fileID: 0}
   reloadSound: {fileID: 0}
-  weaponIcon: {fileID: 0}
+  weaponIcon: {fileID: 21300000, guid: 60ed1fbc6985878468807adfb30f0615, type: 3}
   clipSize: 8
   currentAmmoInClip: 8
   reloadTime: 2
   ammoCapacity: 80
-  ammo: 80
+  ammo: 37
   weaponHandling: 5
   screenShakeAmount: 4
   ammoRefillCost: 150
+  weaponCost: 0
