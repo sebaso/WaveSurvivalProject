@@ -24,7 +24,9 @@ public class WeaponData : ScriptableObject
     public float screenShakeAmount = 1;
     public int ammoRefillCost;
     public int weaponCost;
-
+    public GameObject weaponMesh;
+    public bool Animation1H;
+    public bool Animation2H;
 
 
 }
