@@ -33,8 +33,6 @@ public class AchievementMenu : MonoBehaviour
         {
             GameObject achievementObj = Instantiate(achievementPrefab, achievementParent);
             achievementObj.GetComponent<AchievementPrefab>().SetAchievement(achievement._name, achievement._description, achievement._imageName);
-
-            //achievementObj.GetComponent<AchievementPrefab>()._unlocked.text = achievement._unlocked ? "Unlocked" : "Locked";
         }
 
     }
