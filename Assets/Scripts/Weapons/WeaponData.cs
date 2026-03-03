@@ -13,7 +13,7 @@ public class WeaponData : ScriptableObject
     public int punchThrough;
     public float bulletSpeed;
     public AudioClip shootSound;
-    public AudioClip reloadSound;
+    public AudioClip reloadSound;     
     public Sprite weaponIcon;
     public int clipSize;
     public int currentAmmoInClip;

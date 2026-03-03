@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDamageableObserver>, IDamageableObserver
 {
     public float speed = 10.0f;
@@ -18,11 +19,12 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
     public UnityEvent OnDeactivate;
     public UnityEvent OnActivate;
 
-
+    private Animator animator;
 
     private void Awake()
     {
         observers = new();
+        animator = GetComponent<Animator>();
     }
 
     void Start()
@@ -52,6 +54,8 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+        animator.SetFloat("Xspeed", horizontal);
+        animator.SetFloat("Yspeed", vertical);
         Vector3 direction = new Vector3(horizontal, 0.0f, vertical).normalized;
         speed = PlayerShootyManager.instance.handlingStamina / maxSpeed;
         rb.linearVelocity = new Vector3(direction.x * speed, rb.linearVelocity.y, direction.z * speed);

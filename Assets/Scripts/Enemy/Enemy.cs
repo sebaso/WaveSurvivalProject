@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
     public UnityEvent onDeathEvent;
     public UnityEvent onRespawnEvent;
 
+
     [HideInInspector] public GameObject originPrefab;
 
     private Coroutine chaseCoroutine;
@@ -67,6 +68,8 @@ public class Enemy : MonoBehaviour, IDamageable<int>
     public void Die()
     {
         onDeathEvent.Invoke();
+        if (AchievementManager.Instance != null)
+            AchievementManager.Instance.IncreaseStat("enemies_killed", 1);
         StartCoroutine(WaitForDissolve());
 
     }
