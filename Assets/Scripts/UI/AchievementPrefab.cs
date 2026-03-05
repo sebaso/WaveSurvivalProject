@@ -12,16 +12,11 @@ public class AchievementPrefab : MonoBehaviour
     public TextMeshProUGUI _description;
     public Image _icon;
     public TextMeshProUGUI _unlocked;
-    void Start()
-    {
-        _name = GetComponent<TextMeshProUGUI>();
-        _icon = GetComponent<Image>();
 
-    }
     public void SetAchievement(string name, string text, string spriteName)
     {
         _name.text = name;
         _description.text = text;
-        _icon.sprite = Resources.Load<Sprite>("Sprites/AchievementIcons/" + spriteName);
+        _icon.sprite = Resources.Load<Sprite>("AchievementIcons/" + spriteName);
     }
 }
