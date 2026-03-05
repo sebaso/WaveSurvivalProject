@@ -22,7 +22,7 @@ public class AchievementMenu : MonoBehaviour
         foreach (Achievement achievement in DataManager.Instance._data._achievement)
         {
             GameObject achievementObj = Instantiate(achievementPrefab, achievementParent);
-            achievementObj.GetComponent<AchievementPrefab>().SetAchievement(achievement._name, achievement._description, achievement._imageName);
+            achievementObj.GetComponent<AchievementPrefab>().SetAchievement(achievement._name, achievement._description, achievement._imageName, achievement._statCode, achievement._targetAmmount, DataManager.Instance.GetStateWithCode(achievement._statCode)._value);
         }
 
     }

@@ -27,8 +27,11 @@ MonoBehaviour:
   currentAmmoInClip: 8
   reloadTime: 2
   ammoCapacity: 80
-  ammo: 37
+  ammo: 80
   weaponHandling: 5
   screenShakeAmount: 4
   ammoRefillCost: 150
-  weaponCost: 0
+  weaponCost: 800
+  weaponMesh: {fileID: 0}
+  Animation1H: 0
+  Animation2H: 0

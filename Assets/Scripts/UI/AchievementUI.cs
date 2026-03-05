@@ -36,7 +36,7 @@ public class AchievementUI : MonoBehaviour
     private void SetandShow(string name, string iconName)
     {
         achievementName.text = name;
-        achievementIcon.sprite = Resources.Load<Sprite>("Sprites/AchievementIcons/" + iconName);
+        achievementIcon.sprite = Resources.Load<Sprite>("AchievementIcons/" + iconName);
         animator.SetTrigger("Play");
         lastAchievementTime = Time.time;
         if (lastAchievementTime > Time.time)
@@ -54,6 +54,6 @@ public class AchievementUI : MonoBehaviour
         yield return new WaitForSeconds(lastAchievementTime - Time.time);
         animator.SetTrigger("Play");
         achievementName.text = name;
-        achievementIcon.sprite = Resources.Load<Sprite>("Sprites/AchievementIcons/" + iconName);
+        achievementIcon.sprite = Resources.Load<Sprite>("AchievementIcons/" + iconName);
     }
 }
