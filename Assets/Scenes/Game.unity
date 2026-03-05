@@ -106254,7 +106254,7 @@ MonoBehaviour:
   transportObjectives: []
   collectObjectives: []
   hasPower: 0
-  objectiveType: 0
+  objectiveType: 3
 --- !u!114 &889159177
 MonoBehaviour:
   m_ObjectHideFlags: 0
