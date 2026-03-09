@@ -83,7 +83,6 @@ public class WeaponBuy : MonoBehaviour, IInteractible
     {
         foreach (var item in WeaponHolder.instance.availableWeapons)
         {
-            print("Item: " + item.weaponName + " Weapon: " + weapon.weaponName);
             if (item.weaponName == weapon.weaponName)
             {
                 owned = true;

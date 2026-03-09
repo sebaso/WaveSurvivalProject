@@ -24,14 +24,16 @@ MonoBehaviour:
   reloadSound: {fileID: 0}
   weaponIcon: {fileID: 21300000, guid: e49fdda52b5525842a781151c8dcb69c, type: 3}
   clipSize: 30
-  currentAmmoInClip: 0
+  currentAmmoInClip: 30
   reloadTime: 2
   ammoCapacity: 300
-  ammo: 250
+  ammo: 300
   weaponHandling: 1
   screenShakeAmount: 0.8
   ammoRefillCost: 500
   weaponCost: 4000
-  weaponMesh: {fileID: 0}
+  weaponMesh: {fileID: 8436373578244722360, guid: caa95720ba10d8649abe2b637b1c5889, type: 3}
+  modelOffsetPosition: {x: -0.079, y: -0.519, z: 0.016}
+  modelOffsetRotation: {x: 181.271, y: 1.737, z: 818.389}
   Animation1H: 0
   Animation2H: 0

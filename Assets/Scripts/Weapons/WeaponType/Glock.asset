@@ -32,3 +32,8 @@ MonoBehaviour:
   screenShakeAmount: 1
   ammoRefillCost: 15
   weaponCost: 0
+  weaponMesh: {fileID: 4340191134455306798, guid: 3ed9d9365f61b0f4791abbda68434bf6, type: 3}
+  modelOffsetPosition: {x: 0.021, y: 0.044, z: 0.105}
+  modelOffsetRotation: {x: 15.57, y: 1.745, z: 73.613}
+  Animation1H: 0
+  Animation2H: 0

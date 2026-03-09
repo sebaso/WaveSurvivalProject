@@ -7,6 +7,9 @@ using UnityEngine.Pool;
 public class PlayerShootyManager : MonoBehaviour
 {
     public Transform bulletSpawn;
+    public Transform weaponMountPoint; // Parent transform for weapon models
+    private GameObject currentWeaponModel;
+
     private WeaponHolder weaponHolder;
     public static PlayerShootyManager instance;
     public CinemachineImpulseSource impulseSource;
@@ -15,7 +18,7 @@ public class PlayerShootyManager : MonoBehaviour
     public ParticleSystem muzzleFlash;
     public enum ItemType { Weapon, Consumable }
     public ItemType itemType;
-
+    private Animator animator;
 
     private float nextFire = 0f;
     private Camera playerCamera;
@@ -38,7 +41,46 @@ public class PlayerShootyManager : MonoBehaviour
         weaponHolder = GetComponent<WeaponHolder>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
         bulletPool = new ObjectPool<Bullet>(CreateBullet, OnGetBullet, OnReleaseBullet, OnDestroyBullet, true, 10, 10);
+        animator = GetComponentInChildren<Animator>();
+
+        weaponHolder.OnWeaponChanged += UpdateWeaponModel;
+        UpdateWeaponModel();
     }
+
+    void OnDestroy()
+    {
+        if (weaponHolder != null)
+        {
+            weaponHolder.OnWeaponChanged -= UpdateWeaponModel;
+        }
+    }
+
+    void UpdateWeaponModel()
+    {
+        // Destroy old mesh
+        if (currentWeaponModel != null)
+        {
+            Destroy(currentWeaponModel);
+        }
+
+        if (weaponHolder == null || weaponHolder.CurrentWeapon == null) return;
+
+        // Instantiate new mesh
+        if (weaponHolder.CurrentWeapon.weaponMesh != null && weaponMountPoint != null)
+        {
+            currentWeaponModel = Instantiate(weaponHolder.CurrentWeapon.weaponMesh, weaponMountPoint);
+            currentWeaponModel.transform.localPosition = weaponHolder.CurrentWeapon.modelOffsetPosition;
+            currentWeaponModel.transform.localEulerAngles = weaponHolder.CurrentWeapon.modelOffsetRotation;
+
+            // Auto-assign bulletSpawn if the weapon prefab has a "BulletSpawn" transform child
+            Transform newSpawn = currentWeaponModel.transform.Find("BulletSpawn");
+            if (newSpawn != null)
+            {
+                bulletSpawn = newSpawn;
+            }
+        }
+    }
+
     Bullet CreateBullet()
     {
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation).GetComponent<Bullet>();
@@ -115,6 +157,7 @@ public class PlayerShootyManager : MonoBehaviour
     public void Reload()
     {
         weaponHolder.Reload();
+        animator.SetTrigger("Reload");
     }
 
 
@@ -161,6 +204,7 @@ public class PlayerShootyManager : MonoBehaviour
         Bullet bulletScript = bulletPool.Get();
         if (bulletScript == null)
         {
+            animator.SetTrigger("Shoot");
             bulletScript = CreateBullet();
         }
 

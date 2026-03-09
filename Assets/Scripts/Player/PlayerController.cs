@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDamageableObserver>, IDamageableObserver
 {
     public float speed = 10.0f;
@@ -24,7 +23,7 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
     private void Awake()
     {
         observers = new();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Start()
@@ -54,11 +53,19 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        animator.SetFloat("Xspeed", horizontal);
-        animator.SetFloat("Yspeed", vertical);
+
         Vector3 direction = new Vector3(horizontal, 0.0f, vertical).normalized;
         speed = PlayerShootyManager.instance.handlingStamina / maxSpeed;
         rb.linearVelocity = new Vector3(direction.x * speed, rb.linearVelocity.y, direction.z * speed);
+
+        // Convert the world movement direction into local space depending on where we are looking
+        Vector3 localDir = transform.InverseTransformDirection(direction);
+
+        // Pass the local velocities to the animator 
+        // localDir.x gives us our left/right strafe relative to aim
+        // localDir.z gives us our forward/backward relative to aim
+        animator.SetFloat("Xspeed", localDir.x);
+        animator.SetFloat("Yspeed", localDir.z); // Using Z here because in 3D, Z is forward
     }
 
     public void TakeDamage(int damage)

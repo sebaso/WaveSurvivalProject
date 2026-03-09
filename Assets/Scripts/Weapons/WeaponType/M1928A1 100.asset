@@ -10,30 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc8eb0755f6add04f9df9c2dc938b0ae, type: 3}
-  m_Name: Garand
+  m_Name: M1928A1 100
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   consumable: 0
-  weaponName: M1 Garand
+  weaponName: M1928A1 100
   bulletPrefab: {fileID: 4742638846563842940, guid: ba4d223cb896fc24e80cca9e200ce590, type: 3}
-  damage: 4
-  fireRate: 0.35
-  baseAccuracy: 99
-  punchThrough: 2
-  bulletSpeed: 150
+  damage: 1
+  fireRate: 0.06
+  baseAccuracy: 98
+  punchThrough: 0
+  bulletSpeed: 80
   shootSound: {fileID: 0}
   reloadSound: {fileID: 0}
-  weaponIcon: {fileID: 21300000, guid: 60ed1fbc6985878468807adfb30f0615, type: 3}
-  clipSize: 8
-  currentAmmoInClip: 4
+  weaponIcon: {fileID: 21300000, guid: e49fdda52b5525842a781151c8dcb69c, type: 3}
+  clipSize: 100
+  currentAmmoInClip: 0
   reloadTime: 2
-  ammoCapacity: 80
-  ammo: 58
-  weaponHandling: 5
-  screenShakeAmount: 4
-  ammoRefillCost: 150
-  weaponCost: 800
-  weaponMesh: {fileID: 1846966888228866365, guid: d0844856f3e486f4ca2fba32e21ab28e, type: 3}
-  modelOffsetPosition: {x: -0.017, y: 0.279, z: 0.05}
-  modelOffsetRotation: {x: -4.322, y: -83.121, z: 90.327}
+  ammoCapacity: 600
+  ammo: 600
+  weaponHandling: 1
+  screenShakeAmount: 0.8
+  ammoRefillCost: 2000
+  weaponCost: 6000
+  weaponMesh: {fileID: 0}
   Animation1H: 0
   Animation2H: 0

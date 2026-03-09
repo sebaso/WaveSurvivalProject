@@ -60,6 +60,7 @@ public class ObjectiveManager : MonoBehaviour
         }
         if (enemiesToDefend <= 0)
         {
+            objectiveType = ObjectiveType.None;
             DeactivateObjective();
             hasPower = true;
         }
@@ -112,6 +113,7 @@ public class ObjectiveManager : MonoBehaviour
     {
         WaveManager.instance.spawner.SpawnObjectiveWave();
         currentObjective = defencePositions[Random.Range(0, defencePositions.Count)];
+        objectiveType = ObjectiveType.DefendLocation;
         ActivateObjectiveCompass();
     }
     public void GenerateTransportItemObjective()
