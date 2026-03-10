@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8387034839045306115}
-  - component: {fileID: 6980007103327757021}
   - component: {fileID: 4784241521519516656}
   - component: {fileID: 6210747107735149191}
   - component: {fileID: 4650866116092487213}
@@ -36,17 +35,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2408519763468504540}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6980007103327757021
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6690680711054330374}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &4784241521519516656
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -155,6 +147,7 @@ MonoBehaviour:
   nav: {fileID: 4650866116092487213}
   timeBetweenFetches: 0.1
   scoreMultiplier: 1
+  secondsToFreeze: 1
   maxHp: 3
   hp: 2
   dissolveBehaviour: {fileID: 4833766655455826200}
@@ -224,7 +217,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  useRagdoll: 1
+  ragdollPrefab: {fileID: 2946615323625972867, guid: ce7ef6d4e95970241b1f85b6471528c2, type: 3}
   originPrefab: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!114 &5697813829472204018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,3 +273,95 @@ MonoBehaviour:
   _dissolveMaxHeight: 2
   _dissolveMinHeight: -2
   _isDissolving: 0
+--- !u!1001 &2803066956615330359
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8387034839045306115}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.446
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_Name
+      value: Zombiegirl W Kurniawan
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8702545641665051874}
+  m_SourcePrefab: {fileID: 100100000, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+--- !u!4 &2408519763468504540 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+  m_PrefabInstance: {fileID: 2803066956615330359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3037422150387242854 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+  m_PrefabInstance: {fileID: 2803066956615330359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8702545641665051874
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3037422150387242854}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f04c773dfae9b1a4c9e915c0eeb4d3ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

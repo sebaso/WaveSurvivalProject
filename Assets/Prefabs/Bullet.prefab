@@ -109,6 +109,9 @@ MonoBehaviour:
   damage: 0
   speed: 50
   radius: 0.5
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 2035
 --- !u!54 &17661363075115452
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     public int damage;
     public float speed = 50f;
     public float radius = 0.5f;
+    public LayerMask hitMask = Physics.DefaultRaycastLayers;
 
     private IObjectPool<Bullet> pool;
     private float deactivateTimer;
@@ -65,7 +66,7 @@ public class Bullet : MonoBehaviour
         }
 
         float moveDistance = speed * Time.deltaTime;
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position, radius, direction, moveDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, radius, direction, moveDistance, hitMask, QueryTriggerInteraction.Ignore);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
         foreach (var hit in hits)

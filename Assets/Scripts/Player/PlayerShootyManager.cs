@@ -57,7 +57,6 @@ public class PlayerShootyManager : MonoBehaviour
 
     void UpdateWeaponModel()
     {
-        // Destroy old mesh
         if (currentWeaponModel != null)
         {
             Destroy(currentWeaponModel);
@@ -65,14 +64,12 @@ public class PlayerShootyManager : MonoBehaviour
 
         if (weaponHolder == null || weaponHolder.CurrentWeapon == null) return;
 
-        // Instantiate new mesh
         if (weaponHolder.CurrentWeapon.weaponMesh != null && weaponMountPoint != null)
         {
             currentWeaponModel = Instantiate(weaponHolder.CurrentWeapon.weaponMesh, weaponMountPoint);
             currentWeaponModel.transform.localPosition = weaponHolder.CurrentWeapon.modelOffsetPosition;
             currentWeaponModel.transform.localEulerAngles = weaponHolder.CurrentWeapon.modelOffsetRotation;
 
-            // Auto-assign bulletSpawn if the weapon prefab has a "BulletSpawn" transform child
             Transform newSpawn = currentWeaponModel.transform.Find("BulletSpawn");
             if (newSpawn != null)
             {
