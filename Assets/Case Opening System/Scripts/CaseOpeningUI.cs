@@ -68,19 +68,20 @@ public class CaseOpeningUI : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
-        UpdateRolling();
-        if (Input.GetKeyDown(KeyCode.Space) && !_isRolling)
+        if (CanInteract())
         {
-            if (CanInteract())
+            if (InteractionUI.instance != null)
             {
-                if (InteractionUI.instance != null)
-                {
-                    InteractionUI.instance.Show("Press Space to open case");
-                }
-                Item drop = CaseDropSystem.GetRandomDrop(caseItem);
-                chosenItem = drop;
-                BeginRoll(caseItem, drop);
+                InteractionUI.instance.Show("Press Space to a mystery case for 1000 points.");
             }
+        }
+        UpdateRolling();
+        if (Input.GetKeyDown(KeyCode.Space) && !_isRolling && ScoreManager.instance.Score >= 1000)
+        {
+            Item drop = CaseDropSystem.GetRandomDrop(caseItem);
+            chosenItem = drop;
+            ScoreManager.instance.Score -= 1000;
+            BeginRoll(caseItem, drop);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) && _isRolling)

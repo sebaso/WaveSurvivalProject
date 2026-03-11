@@ -125,8 +125,11 @@ public class WeaponBuy : MonoBehaviour, IInteractible
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, interactRange);
-        Gizmos.DrawRay(transform.position, PlayerController.instance.transform.position - transform.position);
+        if (PlayerController.instance != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, interactRange);
+            Gizmos.DrawRay(transform.position, PlayerController.instance.transform.position - transform.position);
+        }
     }
 }

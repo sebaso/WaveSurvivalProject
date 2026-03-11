@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -45,11 +46,18 @@ public class EnemyAttack : MonoBehaviour
     }
     public IEnumerator AttackInPlace()
     {
-        enemy.nav.isStopped = true;
-        yield return new WaitForSeconds(enemy.secondsToFreeze);
-        enemy.anim.SetTrigger("Attack");
-        yield return _waitForSeconds1;
-        enemy.nav.isStopped = false;
+        if (enemy.anim != null)
+        {
+            enemy.nav.isStopped = true;
+            yield return new WaitForSeconds(enemy.secondsToFreeze);
+            if (enemy.anim == null)
+            {
+                yield break;
+            }
+            enemy.anim.SetTrigger("Attack");
+            yield return _waitForSeconds1;
+            enemy.nav.isStopped = false;
+        }
     }
     public void Attack(GameObject target)
     {

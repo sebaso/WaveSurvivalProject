@@ -37,6 +37,7 @@ public class PlayerShootyManager : MonoBehaviour
         {
             instance = this;
         }
+        muzzleFlash = GetComponentInChildren<ParticleSystem>();
         playerCamera = Camera.main;
         weaponHolder = GetComponent<WeaponHolder>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
@@ -74,6 +75,7 @@ public class PlayerShootyManager : MonoBehaviour
             if (newSpawn != null)
             {
                 bulletSpawn = newSpawn;
+                muzzleFlash.transform.position = newSpawn.transform.position;
             }
         }
     }
@@ -191,6 +193,10 @@ public class PlayerShootyManager : MonoBehaviour
 
     void Shoot()
     {
+        if (muzzleFlash != null)
+        {
+            muzzleFlash.Play();
+        }
         weaponHolder.CancelReload();
         impulseSource.GenerateImpulseWithVelocity(Vector3.up * weaponHolder.CurrentWeapon.screenShakeAmount);
         canRegenerate = false;

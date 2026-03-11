@@ -36,6 +36,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6697245779234146297}
+  - {fileID: 8736232331846448436}
   - {fileID: 2408519763468504540}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -220,6 +222,12 @@ MonoBehaviour:
   useRagdoll: 1
   ragdollPrefab: {fileID: 2946615323625972867, guid: ce7ef6d4e95970241b1f85b6471528c2, type: 3}
   originPrefab: {fileID: 0}
+  variantIndex: 0
+  doVariantLogic: 1
+  variantPrefab:
+  - {fileID: 6321564184166014275}
+  - {fileID: 8247926726127857550}
+  - {fileID: 3037422150387242854}
   anim: {fileID: 0}
 --- !u!114 &5697813829472204018
 MonoBehaviour:
@@ -325,6 +333,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombiegirl W Kurniawan
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -365,3 +377,195 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &6592105402970742802
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8387034839045306115}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.529
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_Name
+      value: Prisoner B Styperek@Zombie Running
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3516495522374769067}
+  m_SourcePrefab: {fileID: 100100000, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+--- !u!1 &6321564184166014275 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+  m_PrefabInstance: {fileID: 6592105402970742802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3516495522374769067
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6321564184166014275}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f04c773dfae9b1a4c9e915c0eeb4d3ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &6697245779234146297 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: da9ba17ddf4780d419419b51fc86762e, type: 3}
+  m_PrefabInstance: {fileID: 6592105402970742802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &9131026776372286175
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8387034839045306115}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5270003
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_Name
+      value: Warzombie F Pedroso@Zombie Running
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9045649682936971375}
+  m_SourcePrefab: {fileID: 100100000, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+--- !u!1 &8247926726127857550 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+  m_PrefabInstance: {fileID: 9131026776372286175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &9045649682936971375
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8247926726127857550}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f04c773dfae9b1a4c9e915c0eeb4d3ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &8736232331846448436 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ffb79f34d3a7aec4e81e9bb12f4d43f6, type: 3}
+  m_PrefabInstance: {fileID: 9131026776372286175}
+  m_PrefabAsset: {fileID: 0}

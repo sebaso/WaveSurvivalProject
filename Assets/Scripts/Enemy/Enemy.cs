@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,6 +22,9 @@ public class Enemy : MonoBehaviour, IDamageable<int>
     public bool useRagdoll;
     public GameObject ragdollPrefab;
     [HideInInspector] public GameObject originPrefab;
+    public int variantIndex;
+    public bool doVariantLogic;
+    public List<GameObject> variantPrefab = new();
 
     private Coroutine chaseCoroutine;
     private int initialHp;
@@ -36,10 +40,31 @@ public class Enemy : MonoBehaviour, IDamageable<int>
         if (PlayerController.instance != null && PlayerController.instance.transform != null)
             player = PlayerController.instance.transform;
         anim = GetComponentInChildren<Animator>();
+        if (doVariantLogic)
+        {
+            foreach (var variant in variantPrefab)
+            {
+                variant.SetActive(false);
+            }
+            variantIndex = Random.Range(0, variantPrefab.Count);
+            variantPrefab[variantIndex].SetActive(true);
+            anim = variantPrefab[variantIndex].GetComponent<Animator>();
+        }
     }
 
     private void OnEnable()
     {
+        if (doVariantLogic)
+        {
+            foreach (var variant in variantPrefab)
+            {
+                variant.SetActive(false);
+            }
+            variantIndex = Random.Range(0, variantPrefab.Count);
+            variantPrefab[variantIndex].SetActive(true);
+            anim = variantPrefab[variantIndex].GetComponent<Animator>();
+        }
+
         onRespawnEvent?.Invoke();
         if (dissolveBehaviour._renderer == null)
             dissolveBehaviour.Awake();
