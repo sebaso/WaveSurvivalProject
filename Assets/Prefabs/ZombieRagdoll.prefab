@@ -218,7 +218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
       propertyPath: m_Name
-      value: Zombiegirl Ragdoll
+      value: ZombieRagdoll
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}
       propertyPath: m_Layer
@@ -952,6 +952,8 @@ MonoBehaviour:
   _dissolveMinHeight: -2
   _isDissolving: 0
   timeToWaitBeforeDissolve: 5
+  forceDirection: {x: 0, y: 0, z: -1}
+  forceMagnitude: 2
 --- !u!1 &3107503857191815128 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}

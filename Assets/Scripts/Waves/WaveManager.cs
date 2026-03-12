@@ -144,6 +144,14 @@ public class WaveManager : MonoBehaviour
     IEnumerator StartNextWave()
     {
         currentWaveIndex++;
+
+        // Trigger UI and Feedback hook
+        if (WaveUI.instance != null)
+            WaveUI.instance.UpdateWaveText(currentWaveIndex);
+        
+        if (RoundFeedback.instance != null)
+            RoundFeedback.instance.PlayRoundStartFeedback();
+
         wavesArePaused = true;
         timer = timeBetweenWaves;
         while (timer > 0)

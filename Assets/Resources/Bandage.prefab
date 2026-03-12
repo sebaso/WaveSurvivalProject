@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1012514318156270826}
   - component: {fileID: 2123151467061196057}
   - component: {fileID: 4720093244525786058}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bandage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,6 +130,8 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   interactRange: 1
   sqrInteractionDistance: 0
+  isConsumable: 0
+  ammo: 0
 --- !u!54 &4720093244525786058
 Rigidbody:
   m_ObjectHideFlags: 0

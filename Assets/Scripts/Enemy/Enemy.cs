@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
     public UnityEvent onDeathEvent;
     public UnityEvent onRespawnEvent;
     public bool useRagdoll;
-    public GameObject ragdollPrefab;
+    public List<GameObject> ragdollPrefab = new();
     [HideInInspector] public GameObject originPrefab;
     public int variantIndex;
     public bool doVariantLogic;
@@ -129,7 +129,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
                 AchievementManager.Instance.IncreaseStat("enemies_killed", 1);
 
             //creamos el ragdoll
-            GameObject ragdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
+            GameObject ragdoll = Instantiate(ragdollPrefab[variantIndex], transform.position, transform.rotation);
             MatchTransforms(transform, ragdoll.transform, nav.velocity);
             //el ragdoll se agrega a si mismo al ragdoll manager
             //retornamos el enemigo al pool

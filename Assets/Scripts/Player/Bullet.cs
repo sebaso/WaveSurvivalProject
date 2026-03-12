@@ -8,7 +8,8 @@ public class Bullet : MonoBehaviour
     public int punchThrough;
     public int damage;
     public float speed = 50f;
-    public float radius = 0.5f;
+
+    public float radius = 0.2f;
     public LayerMask hitMask = Physics.DefaultRaycastLayers;
 
     private IObjectPool<Bullet> pool;
@@ -27,6 +28,16 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
+        if (TryGetComponent<CapsuleCollider>(out var capsuleCollider))
+        {
+            radius = capsuleCollider.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.z);
+        }
+        else if (TryGetComponent<Collider>(out var col))
+        {
+            // Fallback
+            radius = Mathf.Min(col.bounds.extents.x, Mathf.Min(col.bounds.extents.y, col.bounds.extents.z));
+        }
     }
 
     public void Initialize(Vector3 shootDirection, float bulletSpeed, int bulletDamage, int bulletPunchThrough)

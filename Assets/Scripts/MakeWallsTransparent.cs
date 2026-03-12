@@ -39,7 +39,7 @@ public class MakeWallTransparent : MonoBehaviour
     {
         Vector3 playerPosition = player.transform.position + offest;
         float characterDistance = Vector3.Distance(transform.position, playerPosition);
-        int layerNumber = LayerMask.NameToLayer("floor");
+        int layerNumber = LayerMask.NameToLayer("Floor");
         int layerMask = 1 << layerNumber;
         RaycastHit[] hits = Physics.RaycastAll(transform.position, playerPosition - transform.position, characterDistance, layerMask);
         if (hits.Length > 0)
