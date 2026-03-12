@@ -19,6 +19,7 @@ public class PlayerShootyManager : MonoBehaviour
     public enum ItemType { Weapon, Consumable }
     public ItemType itemType;
     private Animator animator;
+    public float reloadTimeModifier;
 
     private float nextFire = 0f;
     private Camera playerCamera;
@@ -211,32 +212,39 @@ public class PlayerShootyManager : MonoBehaviour
             bulletScript = CreateBullet();
         }
 
-        // Setup initial position (visual only, real movement starts in Bullet.Update)
         bulletScript.transform.position = bulletSpawn.position;
 
         currentWeapon.currentAmmoInClip -= 1;
 
-        // Update handling stamina
+
         handlingStamina = Mathf.Lerp(handlingStamina, handlingStamina - currentWeapon.weaponHandling, handlingStaminaDegenRate * Time.deltaTime);
         handlingStamina = Mathf.Clamp(handlingStamina, minHandlingStamina, maxHandlingStamina);
 
-        // Calculate accuracy spread
+
         float staminaFactor = (handlingStamina - minHandlingStamina) / (maxHandlingStamina - minHandlingStamina);
         float staminaMultiplier = Mathf.Lerp(30f, 1f, staminaFactor);
         float maxSpreadAngle = (100f - currentWeapon.baseAccuracy) * staminaMultiplier;
 
-        // Apply random yaw spread (flat distribution)
         float currentSpread = Random.Range(-maxSpreadAngle * 0.5f, maxSpreadAngle * 0.5f);
 
-        // Get flat forward direction
         Vector3 flatForward = bulletSpawn.forward;
         flatForward.y = 0;
         flatForward.Normalize();
 
         Vector3 spreadDirection = Quaternion.Euler(0, currentSpread, 0) * flatForward;
 
-        // Initialize the new SphereCast-based bullet
         bulletScript.Initialize(spreadDirection, currentWeapon.bulletSpeed, currentWeapon.damage, currentWeapon.punchThrough);
+        if (currentWeapon.isShotgun)
+        {
+            for (int i = 0; i < currentWeapon.shotgunPellets - 1; i++)
+            {
+                float pelletSpread = Random.Range(-maxSpreadAngle * 0.5f, maxSpreadAngle * 0.5f);
+                Bullet bulletScript1 = bulletPool.Get();
+                bulletScript1.transform.position = bulletSpawn.position;
+                Vector3 newSpreadDirection = Quaternion.Euler(0, pelletSpread, 0) * flatForward;
+                bulletScript1.Initialize(newSpreadDirection, currentWeapon.bulletSpeed, currentWeapon.damage, currentWeapon.punchThrough);
+            }
+        }
     }
 
 

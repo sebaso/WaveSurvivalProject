@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
     public int variantIndex;
     public bool doVariantLogic;
     public List<GameObject> variantPrefab = new();
+    public float speed;
 
     private Coroutine chaseCoroutine;
     private int initialHp;
@@ -54,6 +55,8 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
     private void OnEnable()
     {
+        speed = Random.Range(nav.speed * 0.8f, nav.speed * 1.2f);
+        nav.speed = speed;
         if (doVariantLogic)
         {
             foreach (var variant in variantPrefab)

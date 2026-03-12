@@ -1,0 +1,230 @@
+fileFormatVersion: 2
+guid: 564cd559eba3dcb47b86c1ec90c3dc5c
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_attach_h1_basic_rail_short
+    second: {fileID: 2100000, guid: df7f7710dc64cbe45ac76234b4b99ca1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_h2_spas12_front
+    second: {fileID: 2100000, guid: cab9b0d35c98b8849b8a1d6ffcb47a82, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_h2_spas12_ironsight
+    second: {fileID: 2100000, guid: 4671d5d85b0fbcc49831a172cfe898df, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_h2_spas12_reciever
+    second: {fileID: 2100000, guid: 4f97cbd5ca19707419ec4168abda854f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h1_pst_m9_sight_ems_nodecal
+    second: {fileID: 2100000, guid: 687f162fe8f31e949a3a960a317189ff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h1_sgn_m1014_foregrip
+    second: {fileID: 2100000, guid: 6a82a8e3cf89e06409108cfd5d37a286, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h1_sgn_w1200_forend_base
+    second: {fileID: 2100000, guid: 28ce9026ef826144f8a7cb11f659fd07, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h1_sgn_w1200_receiver_base
+    second: {fileID: 2100000, guid: 885118a168e3ae745b1ad54dbc328fbf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h1_sgn_w1200_sights_base
+    second: {fileID: 2100000, guid: 7f40f0e69bf492244ac797dccf0ed924, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h1_sgn_w1200_stock_base
+    second: {fileID: 2100000, guid: b0616faa10939bb4fbb683ed418d6ee8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h1_sticker_placeholder
+    second: {fileID: 2100000, guid: 63e39b5ad74364a4f961b760dbe83994, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_sgn_ranger_base
+    second: {fileID: 2100000, guid: a1bb4f7e0eb78cd41a7e88d4e57feaee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_m1014_flashlight_base
+    second: {fileID: 2100000, guid: c178bd67329288a479d6245e7bfafe59, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_m1014_handguard_base
+    second: {fileID: 2100000, guid: eb5a3a4a4d11a484e804954bc2b3c993, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_m1014_ironsight_base
+    second: {fileID: 2100000, guid: 1c9ee9831912f754fa5346761b22e082, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_m1014_receiver_base
+    second: {fileID: 2100000, guid: 7526b7fb3dac9cf43b7d95370a23cf51, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_m1014_stock_base
+    second: {fileID: 2100000, guid: 598f0a1f7f9c2884bbb1455e20ff9407, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_model1887_barrel_base
+    second: {fileID: 2100000, guid: 3273f66ba209c8b4eb0a2b42f536dd17, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_model1887_receiver_base
+    second: {fileID: 2100000, guid: b9d881c5c4f2db948905c6feb06ef6f9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_model1887_wood_base
+    second: {fileID: 2100000, guid: 1f3ede154f85ff9418e60dc36ffec1a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_striker_barrel_base
+    second: {fileID: 2100000, guid: bd0be0eaa1aba08469f4cbe4bd89971b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_striker_handle_base
+    second: {fileID: 2100000, guid: 41cb3884fbdaaa04bb26897030f0c96a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_striker_magazine_base
+    second: {fileID: 2100000, guid: c02a8cc07956e0d45a90c65f73000070, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mtl_wpn_h2_shotgun_striker_sight_base
+    second: {fileID: 2100000, guid: 9181f780a9ea786419098f00cbeaa677, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -40,10 +40,6 @@ public class ScoreManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            AddScore(1000);
-        }
         if (_displayedScore != _targetScore)
         {
             if (_displayedScore < _targetScore)

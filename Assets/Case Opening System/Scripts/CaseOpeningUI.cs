@@ -182,6 +182,25 @@ public class CaseOpeningUI : MonoBehaviour
             Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
             Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
         }
+        if (chosenItem != null && chosenItem.Name == "Resource Managementslop")
+        {
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+        }
+        if (chosenItem != null && chosenItem.Name == "FTLslop")
+        {
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+        }
         StopAndCloseRoller();
     }
 

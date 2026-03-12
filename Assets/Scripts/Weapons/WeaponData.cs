@@ -13,7 +13,7 @@ public class WeaponData : ScriptableObject
     public int punchThrough;
     public float bulletSpeed;
     public AudioClip shootSound;
-    public AudioClip reloadSound;     
+    public AudioClip reloadSound;
     public Sprite weaponIcon;
     public int clipSize;
     public int currentAmmoInClip;
@@ -27,8 +27,11 @@ public class WeaponData : ScriptableObject
     public GameObject weaponMesh;
     public Vector3 modelOffsetPosition;
     public Vector3 modelOffsetRotation;
-    public bool Animation1H;
-    public bool Animation2H;
+    [Header("Shotgun stuff")]
+    public bool isShotgun;
+    public int shotgunPellets;
+    public float spread;
+
 
 
 }

@@ -148,7 +148,7 @@ public class WeaponHolder : MonoBehaviour
         isReloading = true;
         reloadImage.enabled = true;
         reloadImage.fillAmount = 0;
-        float reloadTime = CurrentWeapon.reloadTime;
+        float reloadTime = CurrentWeapon.reloadTime * PlayerShootyManager.instance.reloadTimeModifier;
         float reloadTimer = 0;
 
         while (reloadTimer < reloadTime)

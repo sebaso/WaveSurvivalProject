@@ -46,6 +46,8 @@ public class WeaponBuy : MonoBehaviour, IInteractible
             owned = true;
             ScoreManager.instance.Score -= price;
             WeaponHolder.instance.AddWeapon(weapon);
+            WeaponHolder.instance.CurrentWeapon.currentAmmoInClip = WeaponHolder.instance.CurrentWeapon.clipSize;
+            WeaponHolder.instance.CurrentWeapon.ammo = WeaponHolder.instance.CurrentWeapon.ammoCapacity;
             WeaponHolder.instance.UpdateWeaponHUD();
         }
     }
