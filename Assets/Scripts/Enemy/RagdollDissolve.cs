@@ -16,7 +16,7 @@ public class RagdollDissolve : MonoBehaviour
     public bool _isDissolving;
     public float timeToWaitBeforeDissolve = 5f;
     public Vector3 forceDirection = Vector3.back;
-    public float forceMagnitude = 1f;
+    public float forceMagnitude = 2f;
     private readonly Action _dissolveCallback;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

@@ -220,7 +220,10 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   useRagdoll: 1
-  ragdollPrefab: {fileID: 2946615323625972867, guid: ce7ef6d4e95970241b1f85b6471528c2, type: 3}
+  ragdollPrefab:
+  - {fileID: 6958038902544266372, guid: 5e7ad204c63fc7e8e959562ee83a08c2, type: 3}
+  - {fileID: 2460071610145975712, guid: 54f5b1775b2b5b590a620e4a78e5f561, type: 3}
+  - {fileID: 5454484117880888659, guid: 280336b832f47a34aa4736a9abaf687b, type: 3}
   originPrefab: {fileID: 0}
   variantIndex: 0
   doVariantLogic: 1
@@ -228,6 +231,7 @@ MonoBehaviour:
   - {fileID: 6321564184166014275}
   - {fileID: 8247926726127857550}
   - {fileID: 3037422150387242854}
+  speed: 0
   anim: {fileID: 0}
 --- !u!114 &5697813829472204018
 MonoBehaviour:

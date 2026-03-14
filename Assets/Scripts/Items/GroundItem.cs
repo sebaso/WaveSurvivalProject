@@ -30,6 +30,12 @@ public class GroundItem : MonoBehaviour
             {
                 InteractionUI.instance.Show("Press E to to pick up " + weapon.weaponName);
             }
+            if(Input.GetKeyDown(KeyCode.E) && weapon.weaponName == "Grenade")
+            {
+                PlayerShootyManager.instance.AddGrenades(1);
+                Destroy(gameObject);
+                return;
+            }
 
             if (Input.GetKeyDown(KeyCode.E))
             {

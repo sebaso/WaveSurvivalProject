@@ -32,12 +32,24 @@ public class PlayerShootyManager : MonoBehaviour
     private readonly float handlingStaminaDegenRate = 50f;
     public int maxHandlingStamina = 100;
     public int minHandlingStamina = 70;
-    void Start()
+    public int maxGrenadeCount = 3;
+    public int grenadeCount = 0;
+    public float grenadeThrowForce = 10f;
+
+    public delegate void GrenadeCountChanged(int current, int max);
+    public event GrenadeCountChanged OnGrenadeCountChanged;
+    public GameObject grenadePrefab;
+
+    void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
+    }
+
+    void Start()
+    {
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
         playerCamera = Camera.main;
         weaponHolder = GetComponent<WeaponHolder>();
@@ -78,6 +90,17 @@ public class PlayerShootyManager : MonoBehaviour
                 bulletSpawn = newSpawn;
                 muzzleFlash.transform.position = newSpawn.transform.position;
             }
+        }
+    }
+    void ThrowGrenade()
+    {
+        if (grenadeCount > 0)
+        {
+            grenadeCount--;
+            OnGrenadeCountChanged?.Invoke(grenadeCount, maxGrenadeCount);
+            GameObject grenade = Instantiate(grenadePrefab, bulletSpawn.position, bulletSpawn.rotation);
+            grenade.GetComponent<Rigidbody>().AddForce(bulletSpawn.forward * grenadeThrowForce);
+            grenade.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * grenadeThrowForce);
         }
     }
 
@@ -136,6 +159,25 @@ public class PlayerShootyManager : MonoBehaviour
         }
         HandlingStaminaRegen();
     }
+
+    public void AddGrenades(int amount)
+    {
+        print("Adding grenades");
+        grenadeCount = Mathf.Min(grenadeCount + amount, maxGrenadeCount);
+        OnGrenadeCountChanged?.Invoke(grenadeCount, maxGrenadeCount);
+    }
+
+    public bool UseGrenade()
+    {
+        if (grenadeCount > 0)
+        {
+            grenadeCount--;
+            OnGrenadeCountChanged?.Invoke(grenadeCount, maxGrenadeCount);
+            return true;
+        }
+        return false;
+    }
+
     void HandlingStaminaRegen()
     {
         if (!canRegenerate)

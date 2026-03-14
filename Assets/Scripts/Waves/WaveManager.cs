@@ -145,13 +145,8 @@ public class WaveManager : MonoBehaviour
     {
         currentWaveIndex++;
 
-        // Trigger UI and Feedback hook
         if (WaveUI.instance != null)
             WaveUI.instance.UpdateWaveText(currentWaveIndex);
-        
-        if (RoundFeedback.instance != null)
-            RoundFeedback.instance.PlayRoundStartFeedback();
-
         wavesArePaused = true;
         timer = timeBetweenWaves;
         while (timer > 0)
@@ -161,6 +156,8 @@ public class WaveManager : MonoBehaviour
         }
         wavesArePaused = false;
         spawner.NextWave();
+        if (RoundFeedback.instance != null)
+            RoundFeedback.instance.PlayRoundStartFeedback();
     }
 
 }

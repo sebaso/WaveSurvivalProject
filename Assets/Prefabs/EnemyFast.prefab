@@ -218,12 +218,14 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   useRagdoll: 1
-  ragdollPrefab: {fileID: 2946615323625972867, guid: ce7ef6d4e95970241b1f85b6471528c2, type: 3}
+  ragdollPrefab:
+  - {fileID: 7896931698998802461, guid: 9faad5feedef7b33c91201ded925b61e, type: 3}
   originPrefab: {fileID: 0}
   variantIndex: 0
   doVariantLogic: 1
   variantPrefab:
   - {fileID: 6019035839421323881}
+  speed: 0
   anim: {fileID: 0}
 --- !u!114 &5192795116518318345
 MonoBehaviour:
