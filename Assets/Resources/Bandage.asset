@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Bandage
   m_EditorClassIdentifier: Assembly-CSharp::SkinItem
   Name: Bandage
-  Icon: {fileID: 0}
-  Id: 25
+  Icon: {fileID: 21300000, guid: bb07946fcbb1d71fdb193484211667c3, type: 3}
+  Id: 30
   ItemType: 0
   Weapon: 0
-  SkinRarity: 0
+  SkinRarity: 2
   SkinType: 0
   SkinWear: 0
   Float: 0

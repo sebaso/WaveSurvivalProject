@@ -41,7 +41,19 @@ public class EnemyAttack : MonoBehaviour
         }
         if (enemy.nav.remainingDistance <= enemy.nav.stoppingDistance)
         {
-            //Attack(enemy.player.gameObject);
+            // Attack based on distance in case the stopping distance prevents the trigger collider from reaching the player
+            if (enemy.player != null && Vector3.Distance(transform.position, enemy.player.position) <= enemy.nav.stoppingDistance + 0.2f)
+            {
+                Attack(enemy.player.gameObject);
+                
+                // Keep looking at the player while attacking/stopped
+                Vector3 lookDir = enemy.player.position - transform.position;
+                lookDir.y = 0;
+                if (lookDir.sqrMagnitude > 0.01f)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
+                }
+            }
         }
     }
     public IEnumerator AttackInPlace()

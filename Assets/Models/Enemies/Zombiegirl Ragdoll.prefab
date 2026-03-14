@@ -1280,7 +1280,7 @@ MonoBehaviour:
   _isDissolving: 0
   timeToWaitBeforeDissolve: 2
   forceDirection: {x: 0, y: 0, z: -1}
-  forceMagnitude: 1
+  forceMagnitude: 3
 --- !u!1 &7851557873851165231 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3135921509060577837, guid: 687ab1d8a1510f841ba7f8678bf8932f, type: 3}

@@ -141,10 +141,14 @@ public class ObjectiveManager : MonoBehaviour
         Debug.Log("Objective Deactivated");
         isObjectiveActive = false;
         objectiveMarker.SetActive(false);
-        waveManager.wavesArePaused = false;
-        waveManager.timer = 10;
+        
+        // Clean up the remaining objective enemies
         waveManager.spawner.KillAllEnemies();
+        waveManager.spawner.spawnQueue.Clear();
+        
+        // Force enemiesLeft to 0 so WaveManager seamlessly enters the intermission for the next normal wave
+        waveManager.enemiesLeft = 0; 
+
         currentObjective = null;
-        waveManager.spawner.NextWave();
     }
 }

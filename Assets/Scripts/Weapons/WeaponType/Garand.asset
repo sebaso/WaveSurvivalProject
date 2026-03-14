@@ -20,20 +20,21 @@ MonoBehaviour:
   baseAccuracy: 99
   punchThrough: 2
   bulletSpeed: 150
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: feebe24eea12121ae90546accaafec80, type: 3}
   reloadSound: {fileID: 0}
   weaponIcon: {fileID: 21300000, guid: 60ed1fbc6985878468807adfb30f0615, type: 3}
   clipSize: 8
-  currentAmmoInClip: 4
+  currentAmmoInClip: 5
   reloadTime: 2
   ammoCapacity: 80
-  ammo: 58
+  ammo: 60
   weaponHandling: 5
   screenShakeAmount: 4
   ammoRefillCost: 150
-  weaponCost: 800
+  weaponCost: 1000
   weaponMesh: {fileID: 1846966888228866365, guid: d0844856f3e486f4ca2fba32e21ab28e, type: 3}
   modelOffsetPosition: {x: -0.017, y: 0.279, z: 0.05}
   modelOffsetRotation: {x: -4.322, y: -83.121, z: 90.327}
-  Animation1H: 0
-  Animation2H: 0
+  isShotgun: 0
+  shotgunPellets: 0
+  spread: 0

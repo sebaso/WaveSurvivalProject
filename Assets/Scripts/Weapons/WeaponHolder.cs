@@ -70,7 +70,9 @@ public class WeaponHolder : MonoBehaviour
     public void DropWeapon()
     {
         StopAllCoroutines();
-        if (CurrentWeapon == null && availableWeapons.Count == 0) return;
+        // Prevent dropping if there's only 1 weapon or no weapons
+        if (availableWeapons.Count <= 1) return;
+        
         GameObject weapon = Instantiate(dropPrefab, transform.position, transform.rotation);
         weapon.GetComponent<GroundItem>().weapon = availableWeapons[currentWeaponIndex];
         weapon.GetComponent<GroundItem>().ammo = availableWeapons[currentWeaponIndex].ammo + availableWeapons[currentWeaponIndex].currentAmmoInClip;

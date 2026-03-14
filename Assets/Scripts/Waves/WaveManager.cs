@@ -133,9 +133,21 @@ public class WaveManager : MonoBehaviour
     {
         if (enemiesLeft <= 0 && spawner != null)
         {
+            if (ObjectiveManager.instance != null && ObjectiveManager.instance.isObjectiveActive)
+            {
+                if (!wavesArePaused && objectiveWaves.Count > 0)
+                {
+                    spawner.SpawnObjectiveWave();
+                }
+                return;
+            }
 
             if (currentWaveIndex < waves.Count && !wavesArePaused)
             {
+                if (RoundNumeralUI.instance != null)
+                {
+                    RoundNumeralUI.instance.FlashWaveEnd();
+                }
                 StartCoroutine(StartNextWave());
             }
         }
@@ -147,6 +159,10 @@ public class WaveManager : MonoBehaviour
 
         if (WaveUI.instance != null)
             WaveUI.instance.UpdateWaveText(currentWaveIndex);
+
+        if (RoundNumeralUI.instance != null)
+            RoundNumeralUI.instance.UpdateRound(currentWaveIndex);
+
         wavesArePaused = true;
         timer = timeBetweenWaves;
         while (timer > 0)

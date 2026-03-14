@@ -29,12 +29,15 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
     private Coroutine chaseCoroutine;
     private int initialHp;
+    public List<AudioClip> hitSounds;
+    private AudioSource audioSource;
 
     public bool IsDead => hp <= 0;
 
     public Animator anim;
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         dissolveBehaviour = GetComponent<DissolveBehaviour>();
         nav = GetComponent<NavMeshAgent>();
         initialHp = hp;
@@ -184,6 +187,29 @@ public class Enemy : MonoBehaviour, IDamageable<int>
     {
         hp -= damage;
         ScoreManager.instance.AddScore((int)(10f * scoreMultiplier));
+        if (hitSounds.Count > 0)
+        {
+            AudioClip clip = hitSounds[Random.Range(0, hitSounds.Count)];
+            GameObject tempAudio = new("TempHitAudio");
+            tempAudio.transform.position = transform.position;
+            AudioSource tempSource = tempAudio.AddComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                tempSource.spatialBlend = audioSource.spatialBlend;
+                tempSource.volume = audioSource.volume;
+                tempSource.minDistance = audioSource.minDistance;
+                tempSource.maxDistance = audioSource.maxDistance;
+                tempSource.rolloffMode = audioSource.rolloffMode;
+            }
+            else
+            {
+                tempSource.spatialBlend = 1f; // Default to 3D sound if no reference
+            }
+            tempSource.pitch = Random.Range(0.8f, 1.2f);
+            tempSource.clip = clip;
+            tempSource.Play();
+            Destroy(tempAudio, clip.length / tempSource.pitch + 0.1f);
+        }
 
         if (hp <= 0)
         {
@@ -193,11 +219,17 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
     private IEnumerator ChasePlayer()
     {
+        if (nav.stoppingDistance < 1.4f) nav.stoppingDistance = 1.4f;
+
         while (gameObject.activeSelf)
         {
             if (player != null && nav.isOnNavMesh)
             {
                 nav.SetDestination(player.position);
+
+                float dist = Vector3.Distance(transform.position, player.position);
+                int calculatedPriority = Mathf.FloorToInt(dist * 10f);
+                nav.avoidancePriority = Mathf.Clamp(calculatedPriority, 10, 99);
             }
             yield return new WaitForSeconds(timeBetweenFetches);
         }

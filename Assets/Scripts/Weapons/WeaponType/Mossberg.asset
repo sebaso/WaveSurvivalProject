@@ -20,14 +20,14 @@ MonoBehaviour:
   baseAccuracy: 80
   punchThrough: 0
   bulletSpeed: 80
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 8c4f9c4a30c458b8bb52b69277cb77bb, type: 3}
   reloadSound: {fileID: 0}
   weaponIcon: {fileID: 21300000, guid: e49fdda52b5525842a781151c8dcb69c, type: 3}
   clipSize: 6
-  currentAmmoInClip: 0
+  currentAmmoInClip: 3
   reloadTime: 2
   ammoCapacity: 60
-  ammo: 8
+  ammo: 14
   weaponHandling: 10
   screenShakeAmount: 5
   ammoRefillCost: 500

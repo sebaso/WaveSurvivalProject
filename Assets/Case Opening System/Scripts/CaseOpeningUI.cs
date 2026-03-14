@@ -20,6 +20,7 @@ public class CaseOpeningUI : MonoBehaviour
     [SerializeField] private float _snapDuration = 1f;
 
     public GameObject bandagePrefab;
+    public GameObject grenadePrefab;
 
     public Item keyItem;
     public CaseItem caseItem;
@@ -172,7 +173,10 @@ public class CaseOpeningUI : MonoBehaviour
         _isRolling = false;
         yield return _waitForSeconds0_5;
 
-        print(chosenItem.Name);
+        if (chosenItem != null && chosenItem.Name == "Grenade")
+        {
+            Instantiate(grenadePrefab, spawnPoint.position, spawnPoint.rotation);
+        }
         if (chosenItem != null && chosenItem.Name == "Bandage")
         {
             Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);

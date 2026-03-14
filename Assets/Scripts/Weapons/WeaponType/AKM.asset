@@ -20,7 +20,7 @@ MonoBehaviour:
   baseAccuracy: 90
   punchThrough: 1
   bulletSpeed: 80
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: feebe24eea12121ae90546accaafec80, type: 3}
   reloadSound: {fileID: 0}
   weaponIcon: {fileID: 21300000, guid: f78f72837441753488a459f3a9909e92, type: 3}
   clipSize: 30

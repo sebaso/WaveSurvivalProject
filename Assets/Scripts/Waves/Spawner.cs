@@ -144,6 +144,7 @@ public class Spawner : MonoBehaviour
         if (enemyInstance != null)
         {
             enemyInstance.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+            enemyInstance.transform.SetParent(this.transform);
             enemyInstance.SetActive(true);
         }
     }

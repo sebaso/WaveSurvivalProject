@@ -39,6 +39,7 @@ public class PlayerShootyManager : MonoBehaviour
     public delegate void GrenadeCountChanged(int current, int max);
     public event GrenadeCountChanged OnGrenadeCountChanged;
     public GameObject grenadePrefab;
+    private AudioSource audioSource;
 
     void Awake()
     {
@@ -50,6 +51,7 @@ public class PlayerShootyManager : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
         playerCamera = Camera.main;
         weaponHolder = GetComponent<WeaponHolder>();
@@ -142,7 +144,7 @@ public class PlayerShootyManager : MonoBehaviour
                 }
                 if (weaponHolder == null || weaponHolder.CurrentWeapon == null || weaponHolder.availableWeapons.Count == 0) return;
 
-                if (Input.GetMouseButton(0) && Time.time > nextFire && weaponHolder.CurrentWeapon.currentAmmoInClip > 0)
+                if (Input.GetMouseButton(0) && Time.time > nextFire && weaponHolder.CurrentWeapon.currentAmmoInClip > 0 && !weaponHolder.isReloading)
                 {
                     nextFire = Time.time + weaponHolder.CurrentWeapon.fireRate;
                     Shoot();
@@ -157,12 +159,15 @@ public class PlayerShootyManager : MonoBehaviour
                 }
                 break;
         }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            ThrowGrenade();
+        }
         HandlingStaminaRegen();
     }
 
     public void AddGrenades(int amount)
     {
-        print("Adding grenades");
         grenadeCount = Mathf.Min(grenadeCount + amount, maxGrenadeCount);
         OnGrenadeCountChanged?.Invoke(grenadeCount, maxGrenadeCount);
     }
@@ -233,14 +238,21 @@ public class PlayerShootyManager : MonoBehaviour
         weaponHolder.RemoveWeapon(weaponHolder.CurrentWeapon);
         WeaponHUD.instance.RedrawHUD();
     }
+    public void PlayGunSFX()
+    {
+        if (weaponHolder.CurrentWeapon.shootSound == null) return;
+        audioSource.pitch = Random.Range(0.8f, 1.2f);
+        audioSource.PlayOneShot(weaponHolder.CurrentWeapon.shootSound);
+    }
 
     void Shoot()
     {
+        PlayGunSFX();
         if (muzzleFlash != null)
         {
             muzzleFlash.Play();
         }
-        weaponHolder.CancelReload();
+        //weaponHolder.CancelReload(); se siente terrible disparar con 1 bala y cancelar la recarga.
         impulseSource.GenerateImpulseWithVelocity(Vector3.up * weaponHolder.CurrentWeapon.screenShakeAmount);
         canRegenerate = false;
         handlingStaminaRegenTimer = 0;
