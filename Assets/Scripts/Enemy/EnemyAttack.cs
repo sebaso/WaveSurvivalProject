@@ -11,6 +11,7 @@ public class EnemyAttack : MonoBehaviour
     public float attackRate = 1f;
     private float nextAttack = 0f;
     public float sphereCastRadius = 3f;
+    public AudioClip attackSound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,7 +46,7 @@ public class EnemyAttack : MonoBehaviour
             if (enemy.player != null && Vector3.Distance(transform.position, enemy.player.position) <= enemy.nav.stoppingDistance + 0.2f)
             {
                 Attack(enemy.player.gameObject);
-                
+
                 // Keep looking at the player while attacking/stopped
                 Vector3 lookDir = enemy.player.position - transform.position;
                 lookDir.y = 0;
@@ -67,6 +68,7 @@ public class EnemyAttack : MonoBehaviour
                 yield break;
             }
             enemy.anim.SetTrigger("Attack");
+            enemy.audioSource.PlayOneShot(attackSound);
             yield return _waitForSeconds1;
             enemy.nav.isStopped = false;
         }

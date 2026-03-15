@@ -227,6 +227,7 @@ MonoBehaviour:
   variantPrefab:
   - {fileID: 6019035839421323881}
   speed: 0
+  walkingAnimationsCount: 2
   hitSounds:
   - {fileID: 8300000, guid: 6b8371c38d61c8654a393f189f92a988, type: 3}
   - {fileID: 8300000, guid: 4d26dcd036f81cb3c8750b622876c3f7, type: 3}
@@ -234,6 +235,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1f0e6240526fb9844ba6891dac22d473, type: 3}
   - {fileID: 8300000, guid: abd6f540ac992e39888893187d1bc3fd, type: 3}
   - {fileID: 8300000, guid: 73521f02a24ca57a1836c6ae2d5c4e0d, type: 3}
+  audioSource: {fileID: 0}
+  attackAudioSource: {fileID: 0}
   anim: {fileID: 0}
 --- !u!114 &5192795116518318345
 MonoBehaviour:
@@ -287,6 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   attackRate: 2
   sphereCastRadius: 3
+  attackSound: {fileID: 0}
 --- !u!82 &-6709794741175798902
 AudioSource:
   m_ObjectHideFlags: 0

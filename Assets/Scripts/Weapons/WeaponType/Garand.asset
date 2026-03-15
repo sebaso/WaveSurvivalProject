@@ -18,7 +18,7 @@ MonoBehaviour:
   damage: 4
   fireRate: 0.35
   baseAccuracy: 99
-  punchThrough: 2
+  punchThrough: 1
   bulletSpeed: 150
   shootSound: {fileID: 8300000, guid: feebe24eea12121ae90546accaafec80, type: 3}
   reloadSound: {fileID: 0}

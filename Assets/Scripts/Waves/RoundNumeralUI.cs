@@ -33,7 +33,11 @@ public class RoundNumeralUI : MonoBehaviour
         if (roundText != null)
         {
             roundText.text = ToRoman(waveIndex);
-            roundText.color = normalColor; // Ensure it's back to normal color if it was flashing
+            
+            // Only reset color and stop coroutine if we are NOT in the middle of a wave-end flash
+            // Or let's just make it simpler: UpdateRound is for the "New Round" state.
+            // If we call it after the flash, it's fine.
+            roundText.color = normalColor; 
             if (flashCoroutine != null)
             {
                 StopCoroutine(flashCoroutine);

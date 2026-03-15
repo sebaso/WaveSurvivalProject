@@ -36,6 +36,10 @@ public class WaveManager : MonoBehaviour
 
     void Start()
     {
+        currentWaveIndex = 1;
+        if (RoundNumeralUI.instance != null)
+            RoundNumeralUI.instance.UpdateRound(currentWaveIndex);
+
         if (enemyTypes == null) return;
         foreach (GameObject prefab in enemyTypes)
         {
@@ -144,10 +148,14 @@ public class WaveManager : MonoBehaviour
 
             if (currentWaveIndex < waves.Count && !wavesArePaused)
             {
+                wavesArePaused = true;
+                
+                // Flash the CURRENT round number on end
                 if (RoundNumeralUI.instance != null)
                 {
                     RoundNumeralUI.instance.FlashWaveEnd();
                 }
+
                 StartCoroutine(StartNextWave());
             }
         }
@@ -155,21 +163,26 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator StartNextWave()
     {
-        currentWaveIndex++;
-
-        if (WaveUI.instance != null)
-            WaveUI.instance.UpdateWaveText(currentWaveIndex);
-
-        if (RoundNumeralUI.instance != null)
-            RoundNumeralUI.instance.UpdateRound(currentWaveIndex);
-
-        wavesArePaused = true;
         timer = timeBetweenWaves;
         while (timer > 0)
         {
             timer -= Time.deltaTime;
             yield return null;
         }
+
+        currentWaveIndex++;
+
+        // Update to NEW round number
+        if (WaveUI.instance != null)
+            WaveUI.instance.UpdateWaveText(currentWaveIndex);
+
+        if (RoundNumeralUI.instance != null)
+        {
+            RoundNumeralUI.instance.UpdateRound(currentWaveIndex);
+            // Flash the NEW round number on start
+            RoundNumeralUI.instance.FlashWaveEnd();
+        }
+
         wavesArePaused = false;
         spawner.NextWave();
         if (RoundFeedback.instance != null)

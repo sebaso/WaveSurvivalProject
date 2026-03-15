@@ -26,11 +26,13 @@ public class Enemy : MonoBehaviour, IDamageable<int>
     public bool doVariantLogic;
     public List<GameObject> variantPrefab = new();
     public float speed;
+    public int walkingAnimationsCount;
 
     private Coroutine chaseCoroutine;
     private int initialHp;
     public List<AudioClip> hitSounds;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
+    public AudioSource attackAudioSource;
 
     public bool IsDead => hp <= 0;
 
@@ -69,6 +71,11 @@ public class Enemy : MonoBehaviour, IDamageable<int>
             variantIndex = Random.Range(0, variantPrefab.Count);
             variantPrefab[variantIndex].SetActive(true);
             anim = variantPrefab[variantIndex].GetComponent<Animator>();
+        }
+
+        if (anim != null && walkingAnimationsCount > 0)
+        {
+            anim.SetFloat("Walking", Random.Range(0, walkingAnimationsCount));
         }
 
         onRespawnEvent?.Invoke();

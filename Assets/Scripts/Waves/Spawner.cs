@@ -35,7 +35,6 @@ public class Spawner : MonoBehaviour
     }
     public void NextWave()
     {
-        WaveManager.instance.currentWaveIndex++;
         InitializeWave(WaveManager.instance.waves[WaveManager.instance.currentWaveIndex - 1]);
     }
 
