@@ -42,12 +42,9 @@ public class EnemyAttack : MonoBehaviour
         }
         if (enemy.nav.remainingDistance <= enemy.nav.stoppingDistance)
         {
-            // Attack based on distance in case the stopping distance prevents the trigger collider from reaching the player
             if (enemy.player != null && Vector3.Distance(transform.position, enemy.player.position) <= enemy.nav.stoppingDistance + 0.2f)
             {
                 Attack(enemy.player.gameObject);
-
-                // Keep looking at the player while attacking/stopped
                 Vector3 lookDir = enemy.player.position - transform.position;
                 lookDir.y = 0;
                 if (lookDir.sqrMagnitude > 0.01f)
@@ -68,7 +65,7 @@ public class EnemyAttack : MonoBehaviour
                 yield break;
             }
             enemy.anim.SetTrigger("Attack");
-            enemy.audioSource.PlayOneShot(attackSound);
+            enemy.audioSource3D.PlayOneShot(enemy.deathSounds[0]);
             yield return _waitForSeconds1;
             enemy.nav.isStopped = false;
         }

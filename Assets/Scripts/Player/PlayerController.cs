@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
         float vertical = Input.GetAxisRaw("Vertical");
 
         Vector3 direction = new Vector3(horizontal, 0.0f, vertical).normalized;
-        speed = PlayerShootyManager.instance.handlingStamina / maxSpeed;
+        speed = maxSpeed * (PlayerShootyManager.instance.handlingStamina / PlayerShootyManager.instance.maxHandlingStamina);
         rb.linearVelocity = new Vector3(direction.x * speed, rb.linearVelocity.y, direction.z * speed);
 
         // Convert the world movement direction into local space depending on where we are looking

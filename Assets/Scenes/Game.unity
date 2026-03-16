@@ -6645,7 +6645,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -6777,7 +6777,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -12263,6 +12263,55 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6169486971522710405, guid: ad8cdb41af1fe32b9ae88fffe591f7ca, type: 3}
   m_PrefabInstance: {fileID: 1843184311}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &255092731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 255092732}
+  - component: {fileID: 255092733}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &255092732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255092731}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2140911505}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &255092733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255092731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: afe1307d4909567d89c628f59729186a, type: 2}
 --- !u!1 &260759409 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bda0408fe41268743b239765bb6b6359, type: 3}
@@ -13579,7 +13628,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -100651,7 +100700,6 @@ RectTransform:
   - {fileID: 1434139081}
   - {fileID: 740460778}
   - {fileID: 1558252195}
-  - {fileID: 1025253625}
   - {fileID: 1195362379}
   - {fileID: 1744511859}
   - {fileID: 1095526181}
@@ -104929,7 +104977,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -108058,7 +108106,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -131.67822, y: 79.79999}
+  m_AnchoredPosition: {x: -131.67822, y: 79.79968}
   m_SizeDelta: {x: 263.3565, y: 157}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &740460779
@@ -109549,7 +109597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -699, y: -395}
+  m_AnchoredPosition: {x: -736, y: -401}
   m_SizeDelta: {x: 209.7767, y: 114.33919}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &800812849
@@ -110282,7 +110330,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -117708,16 +117756,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025253624}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 572955290}
+  m_Father: {fileID: 1558252195}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -817.9, y: -536.6}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -784.4, y: -486.2376}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1025253626
@@ -130031,7 +130079,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -146037,7 +146085,7 @@ MonoBehaviour:
     m_SecondaryNoise: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
     AmplitudeGain: 0.2
     FrequencyGain: 1
-    Duration: 4
+    Duration: 0.2
     m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &1344370538
 MonoBehaviour:
@@ -147520,7 +147568,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -149973,7 +150021,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -150549,7 +150597,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -151371,14 +151419,15 @@ RectTransform:
   - {fileID: 800812848}
   - {fileID: 866301659}
   - {fileID: 417993291}
+  - {fileID: 1025253625}
   - {fileID: 169012936}
   - {fileID: 1663110626}
   m_Father: {fileID: 572955290}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: -1820, y: -1044}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1558252196
 MonoBehaviour:
@@ -175957,7 +176006,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -181159,6 +181208,7 @@ Transform:
   - {fileID: 280343095}
   - {fileID: 1919155317}
   - {fileID: 1344370536}
+  - {fileID: 255092732}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2141445493
@@ -181240,7 +181290,7 @@ Light:
   m_InnerSpotAngle: 73.87481
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1

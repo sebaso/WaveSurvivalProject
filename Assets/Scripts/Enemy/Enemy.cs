@@ -4,7 +4,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
-
+using UnityEngine.VFX;
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(DissolveBehaviour))]
 public class Enemy : MonoBehaviour, IDamageable<int>
@@ -30,9 +30,14 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
     private Coroutine chaseCoroutine;
     private int initialHp;
+    private float baseNavSpeed;
     public List<AudioClip> hitSounds;
+    public List<AudioClip> deathSounds;
     public AudioSource audioSource;
-    public AudioSource attackAudioSource;
+    public AudioSource audioSource3D;
+    public VisualEffectAsset hitVFX;
+    public VisualEffectAsset deathVFX;
+
 
     public bool IsDead => hp <= 0;
 
@@ -42,6 +47,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
         audioSource = GetComponent<AudioSource>();
         dissolveBehaviour = GetComponent<DissolveBehaviour>();
         nav = GetComponent<NavMeshAgent>();
+        baseNavSpeed = nav.speed;
         initialHp = hp;
         if (PlayerController.instance != null && PlayerController.instance.transform != null)
             player = PlayerController.instance.transform;
@@ -60,7 +66,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
     private void OnEnable()
     {
-        speed = Random.Range(nav.speed * 0.8f, nav.speed * 1.2f);
+        speed = Random.Range(baseNavSpeed * 0.8f, baseNavSpeed * 1.2f);
         nav.speed = speed;
         if (doVariantLogic)
         {
@@ -75,6 +81,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
         if (anim != null && walkingAnimationsCount > 0)
         {
+            //en un mundo ideal, hay mas de 2 animaciones zombis en mixamo :,)
             anim.SetFloat("Walking", Random.Range(0, walkingAnimationsCount));
         }
 
@@ -115,6 +122,29 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
     public void Die()
     {
+        if (deathSounds.Count > 0)
+        {
+            AudioClip clip = deathSounds[Random.Range(0, deathSounds.Count)];
+            GameObject tempAudio = new("TempHitAudio");
+            tempAudio.transform.position = transform.position;
+            AudioSource tempSource = tempAudio.AddComponent<AudioSource>();
+            if (audioSource3D != null)
+            {
+                tempSource.spatialBlend = audioSource3D.spatialBlend;
+                tempSource.volume = audioSource3D.volume;
+                tempSource.minDistance = audioSource3D.minDistance;
+                tempSource.maxDistance = audioSource3D.maxDistance;
+                tempSource.rolloffMode = audioSource.rolloffMode;
+            }
+            else
+            {
+                tempSource.spatialBlend = 1f;
+            }
+            tempSource.pitch = Random.Range(0.8f, 1.2f);
+            tempSource.clip = clip;
+            tempSource.Play();
+            Destroy(tempAudio, clip.length / tempSource.pitch + 0.1f);
+        }
         if (!useRagdoll)
         {
             onDeathEvent.Invoke();
@@ -148,6 +178,10 @@ public class Enemy : MonoBehaviour, IDamageable<int>
             {
                 ObjectiveManager.instance.DefenseObjectiveLogic();
             }
+            if (deathVFX != null)
+            {
+                SpawnVFX(deathVFX, Vector3.zero, 30f);
+            }
         }
 
 
@@ -162,7 +196,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
         Transform[] sourceTransforms = source.GetComponentsInChildren<Transform>();
         Transform[] destTransforms = destination.GetComponentsInChildren<Transform>();
 
-        System.Collections.Generic.Dictionary<string, Transform> destDict = new System.Collections.Generic.Dictionary<string, Transform>();
+        System.Collections.Generic.Dictionary<string, Transform> destDict = new();
         foreach (Transform t in destTransforms)
         {
             if (!destDict.ContainsKey(t.name))
@@ -210,12 +244,16 @@ public class Enemy : MonoBehaviour, IDamageable<int>
             }
             else
             {
-                tempSource.spatialBlend = 1f; // Default to 3D sound if no reference
+                tempSource.spatialBlend = 1f;
             }
             tempSource.pitch = Random.Range(0.8f, 1.2f);
             tempSource.clip = clip;
             tempSource.Play();
             Destroy(tempAudio, clip.length / tempSource.pitch + 0.1f);
+        }
+        if (hitVFX != null)
+        {
+            SpawnVFX(hitVFX, new Vector3(0.044f, 0.711f, 0.11f), 2f);
         }
 
         if (hp <= 0)
@@ -235,10 +273,28 @@ public class Enemy : MonoBehaviour, IDamageable<int>
                 nav.SetDestination(player.position);
 
                 float dist = Vector3.Distance(transform.position, player.position);
-                int calculatedPriority = Mathf.FloorToInt(dist * 10f);
-                nav.avoidancePriority = Mathf.Clamp(calculatedPriority, 10, 99);
+                int calculatedPriority = Mathf.Clamp(Mathf.FloorToInt(dist * 10f), 10, 99);
+                if (Mathf.Abs(nav.avoidancePriority - calculatedPriority) > 5)
+                {
+                    nav.avoidancePriority = calculatedPriority;
+                }
             }
             yield return new WaitForSeconds(timeBetweenFetches);
         }
+    }
+
+    private void SpawnVFX(VisualEffectAsset asset, Vector3 localOffset, float destroyDelay)
+    {
+        GameObject vfxObj = new GameObject(asset.name + "_Temp");
+        vfxObj.transform.position = transform.TransformPoint(localOffset);
+        vfxObj.transform.rotation = transform.rotation;
+
+        VisualEffect vfx = vfxObj.AddComponent<VisualEffect>();
+        vfx.visualEffectAsset = asset;
+
+        TimedDestruction destroyScript = vfxObj.AddComponent<TimedDestruction>();
+        destroyScript.timeToDestroy = destroyDelay;
+
+        vfx.Play();
     }
 }
