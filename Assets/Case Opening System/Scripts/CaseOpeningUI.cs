@@ -160,10 +160,11 @@ public class CaseOpeningUI : MonoBehaviour
 
             yield return null;
         }
-
+        Time.timeScale = 1f;
         _rollerRect.localPosition = new Vector3(_finalTargetX, _rollerRect.localPosition.y, 0f);
         _isRolling = false;
         yield return _waitForSeconds0_5;
+
 
         if (chosenItem != null && chosenItem.Name == "Grenade")
         {

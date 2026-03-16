@@ -14,10 +14,31 @@ public class CheatMenu : MonoBehaviour
         {
             ScoreManager.instance.AddScore(1000);
         }
+        if (Input.GetKeyDown(KeyCode.F3) && cheatMenu.activeSelf)
+        {
+            InfiniteAmmo();
+        }
+        if (Input.GetKeyDown(KeyCode.F4) && cheatMenu.activeSelf)
+        {
+            InfiniteHealth();
+        }
+        if (Input.GetKeyDown(KeyCode.F5) && cheatMenu.activeSelf)
+        {
+            UpgradeHealth();
+        }
+        if (Input.GetKeyDown(KeyCode.F2) && cheatMenu.activeSelf)
+        {
+            UpgradeSpeed();
+        }
+        if (Input.GetKeyDown(KeyCode.F6) && cheatMenu.activeSelf)
+        {
+            UpgradeReloadSpeed();
+        }
     }
     public void InfiniteAmmo()
     {
         WeaponHolder.instance.CurrentWeapon.currentAmmoInClip = 9999;
+        PlayerShootyManager.instance.AddGrenades(3);
     }
     public void InfiniteHealth()
     {
