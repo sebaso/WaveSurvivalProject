@@ -34,7 +34,6 @@ public class UnlockableRoom : MonoBehaviour
         instance = this;
         foreach (Transform spawner in enemySpawnPoints)
         {
-            print(spawner.name);
             spawner.gameObject.SetActive(false);
         }
         RoomManager.instance.unlockableRooms.Add(this);

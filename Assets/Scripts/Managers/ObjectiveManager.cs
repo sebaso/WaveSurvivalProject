@@ -36,20 +36,13 @@ public class ObjectiveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            RollObjective();
-        }
         if (isObjectiveActive)
         {
             float angle = GetCompassAngle(currentObjective.position);
             compassTransform.eulerAngles = new Vector3(0, angle, 0);
             compassTransform.position = new Vector3(player.transform.position.x, player.transform.position.y + compassOffsetY, player.transform.position.z);
         }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            DeactivateObjective();
-        }
+
     }
     public void DefenseObjectiveLogic()
     {
@@ -63,6 +56,7 @@ public class ObjectiveManager : MonoBehaviour
             objectiveType = ObjectiveType.None;
             DeactivateObjective();
             hasPower = true;
+            PowerManager.instance.TurnPowerOn();
         }
     }
     public void RollObjective()
@@ -108,7 +102,7 @@ public class ObjectiveManager : MonoBehaviour
     }
 
 
-
+    //Eran otros tiempos mas felices.
     public void GenerateDefendLocationObjective()
     {
         WaveManager.instance.spawner.SpawnObjectiveWave();
@@ -141,13 +135,13 @@ public class ObjectiveManager : MonoBehaviour
         Debug.Log("Objective Deactivated");
         isObjectiveActive = false;
         objectiveMarker.SetActive(false);
-        
+
         // Clean up the remaining objective enemies
         waveManager.spawner.KillAllEnemies();
         waveManager.spawner.spawnQueue.Clear();
-        
+
         // Force enemiesLeft to 0 so WaveManager seamlessly enters the intermission for the next normal wave
-        waveManager.enemiesLeft = 0; 
+        waveManager.enemiesLeft = 0;
 
         currentObjective = null;
     }

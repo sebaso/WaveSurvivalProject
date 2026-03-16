@@ -65,10 +65,7 @@ public class CaseOpeningUI : MonoBehaviour
         {
             Time.timeScale = 0f;
         }
-        else
-        {
-            Time.timeScale = 1f;
-        }
+
         if (CanInteract())
         {
             if (InteractionUI.instance != null)
@@ -83,11 +80,6 @@ public class CaseOpeningUI : MonoBehaviour
             chosenItem = drop;
             ScoreManager.instance.Score -= 1000;
             BeginRoll(caseItem, drop);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape) && _isRolling)
-        {
-            StopAndCloseRoller();
         }
     }
 
@@ -229,6 +221,7 @@ public class CaseOpeningUI : MonoBehaviour
 
     public void StopAndCloseRoller()
     {
+        Time.timeScale = 1f;
         _rollerPanel.SetActive(false);
 
         foreach (Transform child in _rollerContent)
