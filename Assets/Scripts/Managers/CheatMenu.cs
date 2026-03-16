@@ -42,7 +42,7 @@ public class CheatMenu : MonoBehaviour
     }
     public void InfiniteHealth()
     {
-        PlayerController.instance.hp = PlayerController.instance.maxHp;
+        PlayerController.instance.isInvincible = !PlayerController.instance.isInvincible;
     }
     public void UpgradeHealth()
     {

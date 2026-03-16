@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDamageableObserver>, IDamageableObserver
 {
     public float speed = 10.0f;
     public float acceleration = 1.0f;
     public float maxSpeed = 10.0f;
     public float deceleration = 1.0f;
-    private Rigidbody rb;
+    [HideInInspector]
+    public Rigidbody rb;
     public static PlayerController instance;
     public int hp = 5;
     public int maxHp = 5;
     public bool IsDead => hp <= 0;
+    public bool isInvincible = false;
 
     public UnityEvent OnInitialize;
     public UnityEvent OnDeactivate;
@@ -41,7 +42,10 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
 
     private void OnDisable()
     {
-        OnDeactivate.Invoke();
+        if (IsDead)
+        {
+            OnDeactivate.Invoke();
+        }
     }
 
     void FixedUpdate()
@@ -70,6 +74,7 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
 
     public void TakeDamage(int damage)
     {
+        if (isInvincible) return;
         if (IsDead) return;
         hp -= damage;
         if (hp <= 0)

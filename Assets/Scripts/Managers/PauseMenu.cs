@@ -26,7 +26,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         PlayerController.instance.enabled = true;
-        PlayerController.instance.GetComponent<Rigidbody>().isKinematic = false; // se vuelve kinematic por razones que dios no sabe. solo unity.
+        PlayerController.instance.rb.isKinematic = false; // se vuelve kinematic por razones que dios no sabe. solo unity.
         PlayerShootyManager.instance.enabled = true;
     }
     public void Quit()

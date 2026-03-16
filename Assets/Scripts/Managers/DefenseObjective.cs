@@ -7,6 +7,8 @@ public class DefenseObjective : MonoBehaviour
     public bool isInRange;
     public static DefenseObjective instance;
     public bool hasBeenTriggered = false;
+    public GameObject generatorWarning;
+
     void Start()
     {
         playerTransform = PlayerController.instance.transform;
@@ -28,16 +30,32 @@ public class DefenseObjective : MonoBehaviour
 
             if (InteractionUI.instance != null)
             {
-                InteractionUI.instance.Show("Press E to to pick up power up the generator");
+                InteractionUI.instance.Show("Press E to power up the generator");
             }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                ObjectiveManager.instance.GenerateDefendLocationObjective();
-                hasBeenTriggered = true;
+                ActivateGeneratorWarning();
             }
         }
 
+    }
+    public void ActivateGeneratorWarning()
+    {
+        Time.timeScale = 0f;
+        generatorWarning.SetActive(true);
+    }
+    public void DeactivateGeneratorWarning()
+    {
+        Time.timeScale = 1f;
+        generatorWarning.SetActive(false);
+    }
+    public void ActivateGenerator()
+    {
+        Time.timeScale = 1f;
+        ObjectiveManager.instance.GenerateDefendLocationObjective();
+        hasBeenTriggered = true;
+        generatorWarning.SetActive(false);
     }
 
     public bool CanInteract()
