@@ -149,8 +149,6 @@ public class WaveManager : MonoBehaviour
             if (currentWaveIndex < waves.Count && !wavesArePaused)
             {
                 wavesArePaused = true;
-                
-                // Flash the CURRENT round number on end
                 if (RoundNumeralUI.instance != null)
                 {
                     RoundNumeralUI.instance.FlashWaveEnd();
@@ -171,15 +169,14 @@ public class WaveManager : MonoBehaviour
         }
 
         currentWaveIndex++;
-
-        // Update to NEW round number
+        if (AchievementManager.Instance != null)
+            AchievementManager.Instance.IncreaseStat("waves_completed", 1);
         if (WaveUI.instance != null)
             WaveUI.instance.UpdateWaveText(currentWaveIndex);
 
         if (RoundNumeralUI.instance != null)
         {
             RoundNumeralUI.instance.UpdateRound(currentWaveIndex);
-            // Flash the NEW round number on start
             RoundNumeralUI.instance.FlashWaveEnd();
         }
 

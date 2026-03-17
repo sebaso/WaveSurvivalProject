@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
     private PlayerController playerController;
     private PlayerShootyManager playerShootyManager;
     private WeaponHolder weaponHolder;
-    
+    //no se para que era esto la verdad
     void Start()
     {
         playerController = PlayerController.instance;

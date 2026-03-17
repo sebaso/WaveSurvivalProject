@@ -56,6 +56,8 @@ public class DefenseObjective : MonoBehaviour
         ObjectiveManager.instance.GenerateDefendLocationObjective();
         hasBeenTriggered = true;
         generatorWarning.SetActive(false);
+        if (AchievementManager.Instance != null)
+            AchievementManager.Instance.IncreaseStat("generator_powered_up", 1);
     }
 
     public bool CanInteract()

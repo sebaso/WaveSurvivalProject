@@ -943,6 +943,10 @@ MonoBehaviour:
     _statistics:
     - _code: enemies_killed
       _value: 0
+    - _code: generator_powered_up
+      _value: 0
+    - _code: waves_completed
+      _value: 0
     _achievement:
     - _name: Mata Enemigos
       _statCode: enemies_killed
@@ -961,6 +965,18 @@ MonoBehaviour:
       _imageName: killoro
       _description: Elemina 50 enemigos
       _targetAmmount: 50
+      _unlocked: 0
+    - _name: Generador
+      _statCode: generator_powered_up
+      _imageName: killoro
+      _description: Prende el generador
+      _targetAmmount: 1
+      _unlocked: 0
+    - _name: Generador
+      _statCode: generator_powered_up
+      _imageName: killoro
+      _description: Prende el generador
+      _targetAmmount: 1
       _unlocked: 0
 --- !u!4 &1121810403
 Transform:

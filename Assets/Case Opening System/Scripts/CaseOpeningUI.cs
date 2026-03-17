@@ -44,18 +44,20 @@ public class CaseOpeningUI : MonoBehaviour
     {
         _rollerRect = _rollerContent.GetComponent<RectTransform>();
         _initialRollerPosition = _rollerRect.localPosition;
+
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
     }
 
     public bool CanInteract()
     {
-        player = GameObject.FindWithTag("Player").transform;
         if (player != null)
         {
             float distance = Vector3.Distance(player.position, transform.position);
-            if (distance <= interactionDistance)
-            {
-                return true;
-            }
+            return distance <= interactionDistance;
         }
         return false;
     }
@@ -64,6 +66,8 @@ public class CaseOpeningUI : MonoBehaviour
         if (_isRolling)
         {
             Time.timeScale = 0f;
+            UpdateRolling();
+            return; // Don't allow interaction while rolling
         }
 
         if (CanInteract())
@@ -72,14 +76,14 @@ public class CaseOpeningUI : MonoBehaviour
             {
                 InteractionUI.instance.Show("Press Space to a mystery case for 1000 points.");
             }
-        }
-        UpdateRolling();
-        if (Input.GetKeyDown(KeyCode.Space) && !_isRolling && ScoreManager.instance.Score >= 1000)
-        {
-            Item drop = CaseDropSystem.GetRandomDrop(caseItem);
-            chosenItem = drop;
-            ScoreManager.instance.Score -= 1000;
-            BeginRoll(caseItem, drop);
+
+            if (Input.GetKeyDown(KeyCode.Space) && ScoreManager.instance.Score >= 1000)
+            {
+                Item drop = CaseDropSystem.GetRandomDrop(caseItem);
+                chosenItem = drop;
+                ScoreManager.instance.Score -= 1000;
+                BeginRoll(caseItem, drop);
+            }
         }
     }
 
