@@ -110025,7 +110025,7 @@ GameObject:
   - component: {fileID: 835638872}
   - component: {fileID: 835638871}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: MoveSpeedButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121932,7 +121932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1095526181
 RectTransform:
   m_ObjectHideFlags: 0
@@ -152300,7 +152300,7 @@ MonoBehaviour:
   lightningLight: {fileID: 1186185887}
   lightningDuration: 1
   baseIntensity: 0
-  maxIntensity: 5
+  maxIntensity: 1
   fadeOutDuration: 2
 --- !u!114 &1618368231
 MonoBehaviour:
@@ -171305,7 +171305,7 @@ GameObject:
   - component: {fileID: 1772508324}
   - component: {fileID: 1772508323}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ReloadSpeedButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172071,7 +172071,7 @@ GameObject:
   - component: {fileID: 1804654166}
   - component: {fileID: 1804654165}
   m_Layer: 5
-  m_Name: Button
+  m_Name: HealthButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175926,6 +175926,10 @@ MonoBehaviour:
   playerSpeedUpgradeCost: 2000
   playerHealthUpgradeCost: 1000
   playerReloadSpeedUpgradeCost: 1500
+  speedButton: {fileID: 835638871}
+  healthButton: {fileID: 1804654165}
+  reloadSpeedButton: {fileID: 1772508323}
+  unpoweredBuyLimit: 1
   powered: 0
 --- !u!1 &2015194104
 GameObject:

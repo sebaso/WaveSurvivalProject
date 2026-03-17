@@ -942,7 +942,7 @@ MonoBehaviour:
   _data:
     _statistics:
     - _code: enemies_killed
-      _value: 35
+      _value: 0
     _achievement:
     - _name: Mata Enemigos
       _statCode: enemies_killed

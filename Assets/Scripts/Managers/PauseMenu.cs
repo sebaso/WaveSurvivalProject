@@ -35,6 +35,6 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         PlayerController.instance.enabled = true; // por si acaso?????
         PlayerShootyManager.instance.enabled = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("MainMenu");
     }
 }
