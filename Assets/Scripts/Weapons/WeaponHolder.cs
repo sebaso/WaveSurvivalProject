@@ -11,6 +11,7 @@ public class WeaponHolder : MonoBehaviour
     public TextMeshProUGUI ammoText;
     public TextMeshProUGUI weaponNameText;
     private int currentWeaponIndex = 0;
+    public int CurrentWeaponIndex => currentWeaponIndex;
     public static WeaponHolder instance;
     public Image reloadImage;
 
@@ -106,6 +107,7 @@ public class WeaponHolder : MonoBehaviour
         }
         availableWeapons.Add(weapon);
         currentWeaponIndex = availableWeapons.Count - 1;
+        CheckItemType();
         UpdateWeaponHUD();
         OnWeaponListChanged?.Invoke();
         OnWeaponChanged?.Invoke();

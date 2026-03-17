@@ -947,7 +947,7 @@ MonoBehaviour:
   - {fileID: 5248472874590412677}
   - {fileID: 920895896513345672}
   - {fileID: 1613474070874018419}
-  dissolveTime: 5
+  dissolveTime: 15
   _dissolveMaxHeight: 2
   _dissolveMinHeight: -2
   _isDissolving: 0

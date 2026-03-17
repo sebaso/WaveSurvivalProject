@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -12,6 +13,9 @@ public class SettingsMenu : MonoBehaviour
     public Slider musicSlider;
     public Slider sfxSlider;
     public Slider ambienceSlider;
+    public AudioSource menuMusicSource;
+    public float musicFadeDuration = 2.0f;
+    public GameObject settingsMenu;
 
     [Header("Graphics")]
     public TMP_Dropdown resolutionDropdown;
@@ -21,8 +25,51 @@ public class SettingsMenu : MonoBehaviour
 
     private void Start()
     {
+        ValidateAssignments();
         InitializeResolutions();
+        HookUpListeners();
         LoadSettings();
+        StartCoroutine(FadeInMusic());
+    }
+
+    private void ValidateAssignments()
+    {
+        if (audioMixer == null) Debug.LogError("SettingsMenu: AudioMixer is not assigned!");
+        if (masterSlider == null) Debug.LogWarning("SettingsMenu: MasterSlider is not assigned.");
+        if (musicSlider == null) Debug.LogWarning("SettingsMenu: MusicSlider is not assigned.");
+        if (sfxSlider == null) Debug.LogWarning("SettingsMenu: SFXSlider is not assigned.");
+        if (ambienceSlider == null) Debug.LogWarning("SettingsMenu: AmbienceSlider is not assigned.");
+        if (resolutionDropdown == null) Debug.LogError("SettingsMenu: ResolutionDropdown is not assigned!");
+        if (fullscreenToggle == null) Debug.LogError("SettingsMenu: FullscreenToggle is not assigned!");
+    }
+
+    private void HookUpListeners()
+    {
+        if (masterSlider) masterSlider.onValueChanged.AddListener(SetMasterVolume);
+        if (musicSlider) musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        if (sfxSlider) sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        if (ambienceSlider) ambienceSlider.onValueChanged.AddListener(SetAmbienceVolume);
+
+        if (fullscreenToggle) fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
+        if (resolutionDropdown) resolutionDropdown.onValueChanged.AddListener(SetResolution);
+    }
+
+    private IEnumerator FadeInMusic()
+    {
+        if (menuMusicSource == null) yield break;
+
+        float targetVolume = menuMusicSource.volume;
+        menuMusicSource.volume = 0f;
+        menuMusicSource.Play();
+
+        float currentTime = 0;
+        while (currentTime < musicFadeDuration)
+        {
+            currentTime += Time.deltaTime;
+            menuMusicSource.volume = Mathf.Lerp(0f, targetVolume, currentTime / musicFadeDuration);
+            yield return null;
+        }
+        menuMusicSource.volume = targetVolume;
     }
 
     private void InitializeResolutions()
@@ -30,7 +77,7 @@ public class SettingsMenu : MonoBehaviour
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
 
-        List<string> options = new List<string>();
+        List<string> options = new();
         int currentResolutionIndex = 0;
 
         for (int i = 0; i < resolutions.Length; i++)
@@ -70,9 +117,6 @@ public class SettingsMenu : MonoBehaviour
         SetMusicVolume(music);
         SetSFXVolume(sfx);
         SetAmbienceVolume(ambience);
-
-        // Graphics are handled in InitializeResolutions for the dropdown, 
-        // but we'll ensure they are applied here too if needed.
     }
 
     public void SaveSettings()
@@ -82,8 +126,6 @@ public class SettingsMenu : MonoBehaviour
 
     private void SetMixerVolume(string parameter, float sliderValue)
     {
-        // Convert 0-1 slider value to decibels (-80 to 20)
-        // Logarithmic scale is better for volume
         float dB = sliderValue > 0.0001f ? Mathf.Log10(sliderValue) * 20 : -80f;
         audioMixer.SetFloat(parameter, dB);
     }
@@ -124,6 +166,16 @@ public class SettingsMenu : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
     }
+    public void BackButton()
+    {
+        settingsMenu.SetActive(false);
+
+    }
+    public void ToggleMenu()
+    {
+        settingsMenu.SetActive(!settingsMenu.activeSelf);
+    }
+
 
     private void OnDisable()
     {

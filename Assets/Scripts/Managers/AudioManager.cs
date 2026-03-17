@@ -5,22 +5,35 @@ public class AudioManager : MonoBehaviour
 {
 
     public static AudioManager instance;
-    private AudioMixer _audioMixer;
+    public AudioMixer audioMixer;
 
     void Awake()
     {
-        instance = this;
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
     }
     public void SetMasterVolume(float volume)
     {
-        _audioMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);
+        if (audioMixer)
+        {
+            float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
+            audioMixer.SetFloat("MasterVolume", dB);
+        }
     }
-    public void SetEffectsVolume(float volume)
+    public void SetSFXVolume(float volume)
     {
-        _audioMixer.SetFloat("EffectsVolume", Mathf.Log10(volume) * 20);
+        if (audioMixer)
+        {
+            float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
+            audioMixer.SetFloat("SFXVolume", dB);
+        }
     }
     public void SetMusicVolume(float volume)
     {
-        _audioMixer.SetFloat("MusicVolume", Mathf.Log10(volume) * 20);
+        if (audioMixer)
+        {
+            float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
+            audioMixer.SetFloat("MusicVolume", dB);
+        }
     }
 }

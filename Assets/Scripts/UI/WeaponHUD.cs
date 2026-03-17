@@ -115,7 +115,7 @@ public class WeaponHUD : MonoBehaviour
             WeaponHUDItem itemScript = itemObj.GetComponent<WeaponHUDItem>();
             if (itemScript != null)
             {
-                bool isSelected = (weapons[i] == WeaponHolder.instance.CurrentWeapon);
+                bool isSelected = (i == WeaponHolder.instance.CurrentWeaponIndex);
                 itemScript.Setup(weapons[i], i, isSelected);
             }
         }
@@ -149,7 +149,7 @@ public class WeaponHUD : MonoBehaviour
             WeaponHUDItem itemScript = child.GetComponent<WeaponHUDItem>();
             if (itemScript != null)
             {
-                bool isSelected = (weapons[i] == WeaponHolder.instance.CurrentWeapon);
+                bool isSelected = (i == WeaponHolder.instance.CurrentWeaponIndex);
                 itemScript.Setup(weapons[i], i, isSelected);
             }
         }

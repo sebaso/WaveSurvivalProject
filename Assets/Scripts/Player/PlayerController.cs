@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
 
     private void Awake()
     {
+        instance = this;
         observers = new();
         animator = GetComponentInChildren<Animator>();
     }
@@ -31,7 +32,6 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        instance = this;
         OnInitialize.Invoke();
     }
 
@@ -100,6 +100,11 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
         instance.enabled = false;
         PlayerShootyManager.instance.enabled = false;
         WeaponHolder.instance.enabled = false;
+
+        if (GameOverUI.instance != null)
+        {
+            GameOverUI.instance.Show();
+        }
     }
 
     private List<IDamageableObserver> observers = new();

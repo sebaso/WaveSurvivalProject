@@ -65,7 +65,7 @@ public class CaseOpeningUI : MonoBehaviour
     {
         if (_isRolling)
         {
-            Time.timeScale = 0f;
+            // Pause is requested once in BeginRoll
             UpdateRolling();
             return; // Don't allow interaction while rolling
         }
@@ -90,6 +90,7 @@ public class CaseOpeningUI : MonoBehaviour
     public void BeginRoll(CaseItem caseItem, Item guaranteedDrop)
     {
         _rollerPanel.SetActive(true);
+        TimeManager.instance.RequestPause(this);
 
         for (int i = 0; i < _cellCount; i++)
         {
@@ -159,12 +160,9 @@ public class CaseOpeningUI : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(elapsed / _snapDuration);
 
-            float newX = Mathf.Lerp(startX, _finalTargetX, Mathf.SmoothStep(0f, 1f, t));
-            _rollerRect.localPosition = new Vector3(newX, _rollerRect.localPosition.y, 0f);
-
             yield return null;
         }
-        Time.timeScale = 1f;
+        TimeManager.instance.RequestResume(this);
         _rollerRect.localPosition = new Vector3(_finalTargetX, _rollerRect.localPosition.y, 0f);
         _isRolling = false;
         yield return _waitForSeconds0_5;
@@ -226,7 +224,7 @@ public class CaseOpeningUI : MonoBehaviour
 
     public void StopAndCloseRoller()
     {
-        Time.timeScale = 1f;
+        TimeManager.instance.RequestResume(this);
         _rollerPanel.SetActive(false);
 
         foreach (Transform child in _rollerContent)

@@ -17,7 +17,7 @@ public class VendingMachine : MonoBehaviour
     public int playerSpeedUpgradeMax = 3;
     public int playerSpeedUpgradeCost = 2000;
     public Button speedButton;
-    public Image[] speedUpgradeImages;  // One Image per upgrade tier (size = playerSpeedUpgradeMax)
+    public Image[] speedUpgradeImages;
 
     [Header("Health Upgrade")]
     public int playerHealthUpgrade;
@@ -78,7 +78,7 @@ public class VendingMachine : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 vendingMachineUI.SetActive(true);
-                Time.timeScale = 0f;
+                TimeManager.instance.RequestPause(this);
                 PlayerController.instance.enabled = false;
                 PlayerShootyManager.instance.enabled = false;
                 //Cursor.lockState = CursorLockMode.None;
@@ -94,34 +94,27 @@ public class VendingMachine : MonoBehaviour
 
     public void CloseVendingMachine()
     {
-        vendingMachineUI.SetActive(false);
-        Time.timeScale = 1f;
-        PlayerController.instance.enabled = true;
-        PlayerShootyManager.instance.enabled = true;
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        if (vendingMachineUI.activeSelf)
+        {
+            vendingMachineUI.SetActive(false);
+            TimeManager.instance.RequestResume(this);
+            PlayerController.instance.enabled = true;
+            PlayerShootyManager.instance.enabled = true;
+            //Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
+        }
     }
-
-    /// <summary>
-    /// Returns the effective max for an upgrade based on powered state.
-    /// When unpowered, the cap is unpoweredBuyLimit.
-    /// When powered, the cap is the full upgradeMax.
-    /// </summary>
     int GetEffectiveMax(int upgradeMax)
     {
         return powered ? upgradeMax : Mathf.Min(unpoweredBuyLimit, upgradeMax);
     }
-
-    /// <summary>
-    /// Updates all button texts and tier images.
-    /// </summary>
     void UpdateUI()
     {
         int speedMax = GetEffectiveMax(playerSpeedUpgradeMax);
         int healthMax = GetEffectiveMax(playerHealthUpgradeMax);
         int reloadMax = GetEffectiveMax(playerReloadSpeedUpgradeMax);
 
-        // Update button texts
+
         speedButton.GetComponentInChildren<TextMeshProUGUI>().text =
             "Speed Upgrade " + playerSpeedUpgrade + "/" + speedMax + " Cost: " + playerSpeedUpgradeCost;
         healthButton.GetComponentInChildren<TextMeshProUGUI>().text =
@@ -129,23 +122,14 @@ public class VendingMachine : MonoBehaviour
         reloadSpeedButton.GetComponentInChildren<TextMeshProUGUI>().text =
             "Reload Speed Upgrade " + playerReloadSpeedUpgrade + "/" + reloadMax + " Cost: " + playerReloadSpeedUpgradeCost;
 
-        // Update button interactability
         speedButton.interactable = playerSpeedUpgrade < speedMax;
         healthButton.interactable = playerHealthUpgrade < healthMax;
         reloadSpeedButton.interactable = playerReloadSpeedUpgrade < reloadMax;
-
-        // Update tier images
         UpdateTierImages(speedUpgradeImages, playerSpeedUpgrade, playerSpeedUpgradeMax);
         UpdateTierImages(healthUpgradeImages, playerHealthUpgrade, playerHealthUpgradeMax);
         UpdateTierImages(reloadSpeedUpgradeImages, playerReloadSpeedUpgrade, playerReloadSpeedUpgradeMax);
     }
 
-    /// <summary>
-    /// Sets the color of each tier image:
-    ///   - Green  if the tier has been bought (index < currentLevel)
-    ///   - Orange if the tier is available to buy (index < effectiveMax and index >= currentLevel)
-    ///   - Red    if the tier is locked because the machine is unpowered (index >= effectiveMax)
-    /// </summary>
     void UpdateTierImages(Image[] tierImages, int currentLevel, int upgradeMax)
     {
         if (tierImages == null) return;
@@ -158,17 +142,14 @@ public class VendingMachine : MonoBehaviour
 
             if (i < currentLevel)
             {
-                // Already purchased
                 tierImages[i].color = boughtColor;
             }
             else if (i < effectiveMax)
             {
-                // Available for purchase
                 tierImages[i].color = availableColor;
             }
             else
             {
-                // Locked (unpowered cap reached)
                 tierImages[i].color = lockedColor;
             }
         }

@@ -20,6 +20,13 @@ public class ScoreManager : MonoBehaviour
         set => _targetScore = value;
     }
 
+    public int SessionKills { get; private set; }
+
+    public void IncrementKills()
+    {
+        SessionKills++;
+    }
+
     void Awake()
     {
         if (instance == null)

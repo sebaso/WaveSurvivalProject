@@ -26,7 +26,7 @@ public class AchievementManager : MonoBehaviour
         Achievement[] unlockedAchievements = DataManager.Instance.CheckAchievements(statCode);
         foreach (Achievement achievement in unlockedAchievements)
         {
-            if (achievement._targetAmmount <= stat._value)
+            if (!achievement._unlocked && achievement._targetAmmount <= stat._value)
             {
                 achievement._unlocked = true;
                 OnAchievementUnlocked?.Invoke(achievement._name, achievement._imageName);

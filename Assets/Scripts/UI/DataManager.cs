@@ -67,17 +67,6 @@ public class DataManager : MonoBehaviour
     }
     public Achievement[] CheckAchievements(string statCode)
     {
-        Stat stat = GetStateWithCode(statCode);
-        List<Achievement> unlockedAchievements = new();
-        for (int i = 0; i < _data._achievement.Length; i++)
-        {
-            if (_data._achievement[i]._statCode == statCode && _data._achievement[i]._targetAmmount <= stat._value)
-            {
-                _data._achievement[i]._unlocked = true;
-                AchievementManager.OnAchievementUnlocked?.Invoke(_data._achievement[i]._name, _data._achievement[i]._imageName);
-                unlockedAchievements.Add(_data._achievement[i]);
-            }
-        }
-        return _data._achievement.Where(a => a._statCode == stat._code).ToArray();
+        return _data._achievement.Where(a => a._statCode == statCode).ToArray();
     }
 }

@@ -1,59 +1,115 @@
 using System.Collections;
-using TMPro;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AchievementUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject achievementCard;
+    public GameObject achievementPrefab;
+    public Transform achievementParent;
+    public float displayDuration = 3f;
+    public float fadeDuration = 0.4f;
 
-    private TextMeshProUGUI achievementName;
-    private Image achievementIcon;
-    private Animator animator;
-    private float animationDuration = 3f;
-    private float lastAchievementTime;
+    private readonly Queue<(string name, string iconName)> pending = new();
+    private bool isExecuting = false;
+
     void Start()
     {
-        animator = GetComponent<Animator>();
-        achievementIcon = GetComponentInChildren<Image>();
-        achievementName = GetComponentInChildren<TextMeshProUGUI>();
-        animationDuration = animator.GetCurrentAnimatorStateInfo(0).length;
+        if (achievementCard != null)
+            achievementCard.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void OnEnable() { AchievementManager.OnAchievementUnlocked += Enqueue; }
 
-    }
-    void OnEnable()
-    {
-        AchievementManager.OnAchievementUnlocked += SetandShow;
-    }
     void OnDisable()
     {
-        AchievementManager.OnAchievementUnlocked -= SetandShow;
+        AchievementManager.OnAchievementUnlocked -= Enqueue;
+        StopAllCoroutines();
+        isExecuting = false;
+        if (achievementCard != null) achievementCard.SetActive(false);
     }
-    private void SetandShow(string name, string iconName)
+
+    private void Enqueue(string name, string iconName)
     {
-        achievementName.text = name;
-        achievementIcon.sprite = Resources.Load<Sprite>("AchievementIcons/" + iconName);
-        animator.SetTrigger("Play");
-        lastAchievementTime = Time.time;
-        if (lastAchievementTime > Time.time)
-        {
-            lastAchievementTime += animationDuration;
-        }
-        else
-        {
-            lastAchievementTime = Time.time + animationDuration;
-        }
-        StartCoroutine(WaitForNextAchievement(name, iconName));
+        pending.Enqueue((name, iconName));
+        if (!isExecuting) StartCoroutine(DisplayRoutine());
     }
-    private IEnumerator WaitForNextAchievement(string name, string iconName)
+
+    private IEnumerator DisplayRoutine()
     {
-        yield return new WaitForSeconds(lastAchievementTime - Time.time);
-        animator.SetTrigger("Play");
-        achievementName.text = name;
-        achievementIcon.sprite = Resources.Load<Sprite>("AchievementIcons/" + iconName);
+        isExecuting = true;
+
+        if (achievementCard != null)
+            achievementCard.SetActive(true);
+
+        while (pending.Count > 0)
+        {
+            var data = pending.Dequeue();
+
+            // Clear old content
+            if (achievementParent != null)
+            {
+                for (int i = achievementParent.childCount - 1; i >= 0; i--)
+                {
+                    Transform child = achievementParent.GetChild(i);
+                    if (child != null) Destroy(child.gameObject);
+                }
+            }
+
+            // Spawn and populate new prefab
+            GameObject spawnedPrefab = null;
+            if (achievementPrefab != null && achievementParent != null &&
+                DataManager.Instance != null && DataManager.Instance._data != null)
+            {
+                spawnedPrefab = Instantiate(achievementPrefab, achievementParent);
+                Achievement achievement = DataManager.Instance._data._achievement
+                    .FirstOrDefault(a => a != null && a._name == data.name);
+
+                if (achievement != null && spawnedPrefab != null)
+                {
+                    Stat stat = DataManager.Instance.GetStateWithCode(achievement._statCode);
+                    spawnedPrefab.GetComponent<AchievementPrefab>()?.SetAchievement(
+                        achievement._name, achievement._description, achievement._imageName,
+                        achievement._statCode, achievement._targetAmmount,
+                        stat != null ? stat._value : 0);
+                }
+            }
+
+            // Animate In — scale the spawned prefab, not the card
+            if (spawnedPrefab != null)
+            {
+                spawnedPrefab.transform.localScale = Vector3.zero;
+                float t = 0;
+                while (t < fadeDuration)
+                {
+                    t += Time.deltaTime;
+                    spawnedPrefab.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, t / fadeDuration);
+                    yield return null;
+                }
+                spawnedPrefab.transform.localScale = Vector3.one;
+            }
+
+            yield return new WaitForSeconds(displayDuration);
+
+            // Animate Out — scale the spawned prefab back
+            if (spawnedPrefab != null)
+            {
+                float t = 0;
+                while (t < fadeDuration)
+                {
+                    t += Time.deltaTime;
+                    spawnedPrefab.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t / fadeDuration);
+                    yield return null;
+                }
+
+                Destroy(spawnedPrefab);
+            }
+        }
+
+        if (achievementCard != null)
+            achievementCard.SetActive(false);
+
+        isExecuting = false;
     }
 }

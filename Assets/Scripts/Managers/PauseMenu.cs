@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public GameObject achievementsMenu;
+    public GameObject settingsMenu;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,16 +17,62 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pauseMenu.SetActive(!pauseMenu.activeSelf);
-            Time.timeScale = pauseMenu.activeSelf ? 0 : 1;
-            PlayerController.instance.enabled = !pauseMenu.activeSelf;
-            PlayerShootyManager.instance.enabled = !pauseMenu.activeSelf;
+            if (settingsMenu && settingsMenu.activeSelf)
+            {
+                CloseSettings();
+            }
+            else if (achievementsMenu && achievementsMenu.activeSelf)
+            {
+                CloseAchievements();
+            }
+            else if (VendingMachine.instance != null && VendingMachine.instance.vendingMachineUI.activeSelf)
+            {
+                return;
+            }
+            else if (DefenseObjective.instance != null && DefenseObjective.instance.generatorWarning.activeSelf)
+            {
+                DefenseObjective.instance.DeactivateGeneratorWarning();
+            }
+            else
+            {
+                TogglePause();
+            }
         }
+    }
+
+    public void TogglePause()
+    {
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
+        if (pauseMenu.activeSelf) TimeManager.instance.RequestPause(this);
+        else TimeManager.instance.RequestResume(this);
+
+        if (PlayerController.instance) PlayerController.instance.enabled = !pauseMenu.activeSelf;
+        if (PlayerShootyManager.instance) PlayerShootyManager.instance.enabled = !pauseMenu.activeSelf;
+    }
+    public void OpenAchievements()
+    {
+        pauseMenu.SetActive(false);
+        achievementsMenu.SetActive(true);
+    }
+    public void OpenSettings()
+    {
+        pauseMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
+    public void CloseSettings()
+    {
+        settingsMenu.SetActive(false);
+        pauseMenu.SetActive(true);
+    }
+    public void CloseAchievements()
+    {
+        achievementsMenu.SetActive(false);
+        pauseMenu.SetActive(true);
     }
     public void Resume()
     {
         pauseMenu.SetActive(false);
-        Time.timeScale = 1f;
+        TimeManager.instance.RequestResume(this);
         PlayerController.instance.enabled = true;
         PlayerController.instance.rb.isKinematic = false; // se vuelve kinematic por razones que dios no sabe. solo unity.
         PlayerShootyManager.instance.enabled = true;
@@ -32,7 +80,7 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         pauseMenu.SetActive(false);
-        Time.timeScale = 1f;
+        TimeManager.instance.RequestResume(this);
         PlayerController.instance.enabled = true; // por si acaso?????
         PlayerShootyManager.instance.enabled = true;
         SceneManager.LoadScene("MainMenu");

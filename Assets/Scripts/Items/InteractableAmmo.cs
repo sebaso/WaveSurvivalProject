@@ -13,7 +13,11 @@ public class InteractableAmmo : MonoBehaviour
     void Start()
     {
         sqrInteractionDistance = interactionDistance * interactionDistance;
-        playerTransform = PlayerController.instance.transform;
+        
+        if (PlayerController.instance != null)
+            playerTransform = PlayerController.instance.transform;
+        else
+            playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     void Update()

@@ -150,6 +150,8 @@ public class Enemy : MonoBehaviour, IDamageable<int>
             onDeathEvent.Invoke();
             if (AchievementManager.Instance != null)
                 AchievementManager.Instance.IncreaseStat("enemies_killed", 1);
+            if (ScoreManager.instance != null)
+                ScoreManager.instance.IncrementKills();
             StartCoroutine(WaitForDissolve());
             if (ObjectiveManager.instance.objectiveType == ObjectiveManager.ObjectiveType.DefendLocation)
             {
@@ -167,6 +169,8 @@ public class Enemy : MonoBehaviour, IDamageable<int>
             //aumentamos la estadistica de enemigos eliminados
             if (AchievementManager.Instance != null)
                 AchievementManager.Instance.IncreaseStat("enemies_killed", 1);
+            if (ScoreManager.instance != null)
+                ScoreManager.instance.IncrementKills();
 
             //creamos el ragdoll
             GameObject ragdoll = Instantiate(ragdollPrefab[variantIndex], transform.position, transform.rotation);

@@ -42,17 +42,17 @@ public class DefenseObjective : MonoBehaviour
     }
     public void ActivateGeneratorWarning()
     {
-        Time.timeScale = 0f;
+        TimeManager.instance.RequestPause(this);
         generatorWarning.SetActive(true);
     }
     public void DeactivateGeneratorWarning()
     {
-        Time.timeScale = 1f;
+        TimeManager.instance.RequestResume(this);
         generatorWarning.SetActive(false);
     }
     public void ActivateGenerator()
     {
-        Time.timeScale = 1f;
+        TimeManager.instance.RequestResume(this);
         ObjectiveManager.instance.GenerateDefendLocationObjective();
         hasBeenTriggered = true;
         generatorWarning.SetActive(false);
