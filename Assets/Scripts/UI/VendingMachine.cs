@@ -182,7 +182,7 @@ public class VendingMachine : MonoBehaviour
             ScoreManager.instance.Score -= playerSpeedUpgradeCost;
             playerSpeedUpgrade++;
             playerSpeedUpgradeCost += 2000;
-            PlayerController.instance.speed += 0.5f;
+            PlayerController.instance.maxSpeed += 1f;
         }
         UpdateUI();
     }
