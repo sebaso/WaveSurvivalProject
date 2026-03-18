@@ -98,6 +98,7 @@ public class PlayerShootyManager : MonoBehaviour
     {
         if (grenadeCount > 0)
         {
+            if (Tutoriel.instance != null) Tutoriel.CompleteStep("grenade");
             grenadeCount--;
             OnGrenadeCountChanged?.Invoke(grenadeCount, maxGrenadeCount);
             GameObject grenade = Instantiate(grenadePrefab, bulletSpawn.position, bulletSpawn.rotation);
@@ -203,6 +204,7 @@ public class PlayerShootyManager : MonoBehaviour
     }
     public void Reload()
     {
+        if (Tutoriel.instance != null) Tutoriel.CompleteStep("reload");
         weaponHolder.Reload();
         animator.SetTrigger("Reload");
     }
@@ -214,6 +216,7 @@ public class PlayerShootyManager : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerMask.GetMask("Floor")))
         {
             lookTarget = hit.point;
+            if (Tutoriel.instance != null) Tutoriel.CompleteStep("aim");
         }
 
         Vector3 playerLookDir = lookTarget - transform.position;
@@ -234,6 +237,7 @@ public class PlayerShootyManager : MonoBehaviour
     }
     void UseConsumable()
     {
+        if (Tutoriel.instance != null) Tutoriel.CompleteStep("consumable");
         PlayerController.instance.Heal(1);
         weaponHolder.RemoveWeapon(weaponHolder.CurrentWeapon);
         WeaponHUD.instance.RedrawHUD();
@@ -247,6 +251,7 @@ public class PlayerShootyManager : MonoBehaviour
 
     void Shoot()
     {
+        if (Tutoriel.instance != null) Tutoriel.CompleteStep("shoot");
         PlayGunSFX();
         if (muzzleFlash != null)
         {

@@ -49,14 +49,18 @@ public class ScoreManager : MonoBehaviour
     {
         if (_displayedScore != _targetScore)
         {
+            // Calculate a dynamic step to catch up in roughly 1 second at 60fps
+            int diff = Mathf.Abs(_targetScore - _displayedScore);
+            int dynamicStep = Mathf.Max(_scoreStep, diff / 60);
+
             if (_displayedScore < _targetScore)
             {
-                _displayedScore += _scoreStep;
+                _displayedScore += dynamicStep;
                 if (_displayedScore > _targetScore) _displayedScore = _targetScore;
             }
             else if (_displayedScore > _targetScore)
             {
-                _displayedScore -= _scoreStep;
+                _displayedScore -= dynamicStep;
                 if (_displayedScore < _targetScore) _displayedScore = _targetScore;
             }
 

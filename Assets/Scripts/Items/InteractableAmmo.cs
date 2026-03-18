@@ -13,7 +13,7 @@ public class InteractableAmmo : MonoBehaviour
     void Start()
     {
         sqrInteractionDistance = interactionDistance * interactionDistance;
-        
+
         if (PlayerController.instance != null)
             playerTransform = PlayerController.instance.transform;
         else
@@ -47,6 +47,7 @@ public class InteractableAmmo : MonoBehaviour
                 weapon.ammo = weapon.ammoCapacity;
                 WeaponHolder.instance.UpdateAmmo();
                 cachedCost = -1;
+                if (Tutoriel.instance != null && Tutoriel.instance.CurrentStep != null && Tutoriel.instance.CurrentStep.id == "refill") Tutoriel.CompleteStep("refill");
             }
         }
     }

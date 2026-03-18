@@ -34,6 +34,10 @@ public class CheatMenu : MonoBehaviour
         {
             UpgradeReloadSpeed();
         }
+        if (Input.GetKeyDown(KeyCode.F7) && cheatMenu.activeSelf)
+        {
+            WaveManager.instance.ForceNextWave();
+        }
     }
     public void InfiniteAmmo()
     {
@@ -55,5 +59,9 @@ public class CheatMenu : MonoBehaviour
     public void UpgradeReloadSpeed()
     {
         VendingMachine.instance.UpgradeReloadSpeed();
+    }
+    public void NextRound()
+    {
+        WaveManager.instance.StartNextWave();
     }
 }

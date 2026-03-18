@@ -10,6 +10,10 @@ public class GroundItem : MonoBehaviour
     private bool isInRange;
     public bool isConsumable;
     public int ammo;
+    public bool canBePickedUp = true;
+    public bool refillOnPickUp = false;
+
+    public bool tutorialGun = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,6 +24,7 @@ public class GroundItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!canBePickedUp) return;
         isInRange = CanInteract();
 
 
@@ -30,7 +35,7 @@ public class GroundItem : MonoBehaviour
             {
                 InteractionUI.instance.Show("Press E to to pick up " + weapon.weaponName);
             }
-            if(Input.GetKeyDown(KeyCode.E) && weapon.weaponName == "Grenade")
+            if (Input.GetKeyDown(KeyCode.E) && weapon.weaponName == "Grenade")
             {
                 PlayerShootyManager.instance.AddGrenades(1);
                 Destroy(gameObject);
@@ -43,6 +48,12 @@ public class GroundItem : MonoBehaviour
                 Destroy(gameObject);
                 if (weapon.weaponName == WeaponHolder.instance.CurrentWeapon.weaponName)
                 {
+                    WeaponHolder.instance.UpdateWeaponHUD();
+                }
+                if (Tutoriel.instance != null && tutorialGun) Tutoriel.CompleteStep("pick");
+                if (refillOnPickUp)
+                {
+                    WeaponHolder.instance.CurrentWeapon.ammo = WeaponHolder.instance.CurrentWeapon.ammoCapacity;
                     WeaponHolder.instance.UpdateWeaponHUD();
                 }
             }

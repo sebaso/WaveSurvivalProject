@@ -9,50 +9,58 @@ public class DataManager : MonoBehaviour
     private static DataManager _instance;
     public static DataManager Instance { get { return _instance; } }
 
+    private const string PlayerDataKey = "PlayerData";
     public Data _data;
     private string _fileName = "data.dat";
     private string _dataPath;
-    void Awake()
+
+    private void Awake()
     {
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
+            return;
         }
-        else
-        {
-            _instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
+
+        _instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
         _dataPath = Application.persistentDataPath + "/" + _fileName;
+
+        // Cleanup legacy file-based data if it exists
+        if (File.Exists(_dataPath))
+        {
+            Debug.Log("[DataManager] Legacy data file found. Deleting after migration/switch.");
+            File.Delete(_dataPath);
+        }
+
         Load();
     }
 
-    private void Save()
+    public void Save()
     {
-        BinaryFormatter bf = new();
-        FileStream file = File.Create(_dataPath);
-        bf.Serialize(file, _data);
-        file.Close();
-
+        string json = JsonUtility.ToJson(_data);
+        PlayerPrefs.SetString(PlayerDataKey, json);
+        PlayerPrefs.Save();
     }
+
     private void Load()
     {
-        if (!File.Exists(_dataPath)) return;
+        if (PlayerPrefs.HasKey(PlayerDataKey))
         {
-            BinaryFormatter bf = new();
-            FileStream file = File.Open(_dataPath, FileMode.Open);
-            _data = (Data)bf.Deserialize(file);
-            file.Close();
+            string json = PlayerPrefs.GetString(PlayerDataKey);
+            JsonUtility.FromJsonOverwrite(json, _data);
         }
-
+        else
+        {
+            Debug.Log("[DataManager] No PlayerPrefs data found. Starting fresh.");
+        }
     }
-    [ContextMenu("Delete Data")]
-    private void DeleteData()
+
+    public void DeleteData()
     {
-        if (File.Exists(_dataPath))
-        {
-            File.Delete(_dataPath);
-        }
+        PlayerPrefs.DeleteKey(PlayerDataKey);
+        Debug.Log("[DataManager] Data deleted from PlayerPrefs.");
     }
     public Stat GetStateWithCode(string code)
     {

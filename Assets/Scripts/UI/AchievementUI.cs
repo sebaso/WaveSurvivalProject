@@ -27,7 +27,7 @@ public class AchievementUI : MonoBehaviour
         AchievementManager.OnAchievementUnlocked -= Enqueue;
         StopAllCoroutines();
         isExecuting = false;
-        if (achievementCard != null) achievementCard.SetActive(false);
+        achievementCard?.SetActive(false);
     }
 
     private void Enqueue(string name, string iconName)
@@ -40,14 +40,12 @@ public class AchievementUI : MonoBehaviour
     {
         isExecuting = true;
 
-        if (achievementCard != null)
-            achievementCard.SetActive(true);
+        achievementCard?.SetActive(true);
 
         while (pending.Count > 0)
         {
             var data = pending.Dequeue();
 
-            // Clear old content
             if (achievementParent != null)
             {
                 for (int i = achievementParent.childCount - 1; i >= 0; i--)
@@ -56,8 +54,6 @@ public class AchievementUI : MonoBehaviour
                     if (child != null) Destroy(child.gameObject);
                 }
             }
-
-            // Spawn and populate new prefab
             GameObject spawnedPrefab = null;
             if (achievementPrefab != null && achievementParent != null &&
                 DataManager.Instance != null && DataManager.Instance._data != null)
@@ -76,7 +72,6 @@ public class AchievementUI : MonoBehaviour
                 }
             }
 
-            // Animate In — scale the spawned prefab, not the card
             if (spawnedPrefab != null)
             {
                 spawnedPrefab.transform.localScale = Vector3.zero;
@@ -92,7 +87,6 @@ public class AchievementUI : MonoBehaviour
 
             yield return new WaitForSeconds(displayDuration);
 
-            // Animate Out — scale the spawned prefab back
             if (spawnedPrefab != null)
             {
                 float t = 0;
@@ -107,8 +101,7 @@ public class AchievementUI : MonoBehaviour
             }
         }
 
-        if (achievementCard != null)
-            achievementCard.SetActive(false);
+        achievementCard?.SetActive(false);
 
         isExecuting = false;
     }

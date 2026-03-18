@@ -49,6 +49,7 @@ public class WeaponBuy : MonoBehaviour, IInteractible
             WeaponHolder.instance.CurrentWeapon.currentAmmoInClip = WeaponHolder.instance.CurrentWeapon.clipSize;
             WeaponHolder.instance.CurrentWeapon.ammo = WeaponHolder.instance.CurrentWeapon.ammoCapacity;
             WeaponHolder.instance.UpdateWeaponHUD();
+            if (Tutoriel.instance != null && Tutoriel.instance.CurrentStep != null && Tutoriel.instance.CurrentStep.id == "weapon") Tutoriel.CompleteStep("weapon");
         }
     }
 

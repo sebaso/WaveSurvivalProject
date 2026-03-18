@@ -27,10 +27,10 @@ MonoBehaviour:
   currentAmmoInClip: 15
   reloadTime: 1
   ammoCapacity: 150
-  ammo: 129
+  ammo: 150
   weaponHandling: 1
   screenShakeAmount: 1
-  ammoRefillCost: 15
+  ammoRefillCost: 0
   weaponCost: 0
   weaponMesh: {fileID: 4340191134455306798, guid: 3ed9d9365f61b0f4791abbda68434bf6, type: 3}
   modelOffsetPosition: {x: 0.021, y: 0.044, z: 0.105}

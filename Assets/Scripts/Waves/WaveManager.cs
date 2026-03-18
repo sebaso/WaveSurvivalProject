@@ -158,8 +158,13 @@ public class WaveManager : MonoBehaviour
             }
         }
     }
+    public void ForceNextWave()
+    {
+        wavesArePaused = false;
+        StartCoroutine(StartNextWave());
+    }
 
-    IEnumerator StartNextWave()
+    public IEnumerator StartNextWave()
     {
         timer = timeBetweenWaves;
         while (timer > 0)

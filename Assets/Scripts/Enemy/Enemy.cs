@@ -167,10 +167,8 @@ public class Enemy : MonoBehaviour, IDamageable<int>
             //invocamos el evento de muerte
             onDeathEvent.Invoke();
             //aumentamos la estadistica de enemigos eliminados
-            if (AchievementManager.Instance != null)
-                AchievementManager.Instance.IncreaseStat("enemies_killed", 1);
-            if (ScoreManager.instance != null)
-                ScoreManager.instance.IncrementKills();
+            AchievementManager.Instance?.IncreaseStat("enemies_killed", 1);
+            ScoreManager.instance?.IncrementKills();
 
             //creamos el ragdoll
             GameObject ragdoll = Instantiate(ragdollPrefab[variantIndex], transform.position, transform.rotation);
@@ -185,6 +183,11 @@ public class Enemy : MonoBehaviour, IDamageable<int>
             if (deathVFX != null)
             {
                 SpawnVFX(deathVFX, Vector3.zero, 30f);
+            }
+            if (Tutoriel.instance != null && Tutoriel.instance.CurrentStep != null && Tutoriel.instance.CurrentStep.id == "shoot")
+            {
+                //Y COMO OLVIDARSE DEL TUTORIAL. EL BENDITO TUTORIAL.
+                Tutoriel.CompleteStep("shoot");
             }
         }
 

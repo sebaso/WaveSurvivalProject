@@ -24,3 +24,9 @@ MonoBehaviour:
   - enemy: {fileID: 5614218197008894055, guid: 7a8c95bfaf193ec4d9c9f64388695cca, type: 3}
     count: 20
     pureSpawn: 1
+  - enemy: {fileID: 8303538356390828187, guid: 41f3e806f6db74f449fa3ab4beaa87e2, type: 3}
+    count: 4
+    pureSpawn: 1
+  - enemy: {fileID: 3216795837052715023, guid: 47438bb3bad7fb749bec7e2606fd78c2, type: 3}
+    count: 1
+    pureSpawn: 1

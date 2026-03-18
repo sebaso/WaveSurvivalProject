@@ -123,6 +123,10 @@ public class SettingsMenu : MonoBehaviour
     {
         PlayerPrefs.Save();
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
     private void SetMixerVolume(string parameter, float sliderValue)
     {
@@ -166,6 +170,7 @@ public class SettingsMenu : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
     }
+
     public void BackButton()
     {
         settingsMenu.SetActive(false);

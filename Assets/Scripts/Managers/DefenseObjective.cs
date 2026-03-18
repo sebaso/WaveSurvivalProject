@@ -28,10 +28,7 @@ public class DefenseObjective : MonoBehaviour
         {
             if (hasBeenTriggered) return;
 
-            if (InteractionUI.instance != null)
-            {
-                InteractionUI.instance.Show("Press E to power up the generator");
-            }
+            InteractionUI.instance?.Show("Press E to power up the generator");
 
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -56,8 +53,7 @@ public class DefenseObjective : MonoBehaviour
         ObjectiveManager.instance.GenerateDefendLocationObjective();
         hasBeenTriggered = true;
         generatorWarning.SetActive(false);
-        if (AchievementManager.Instance != null)
-            AchievementManager.Instance.IncreaseStat("generator_powered_up", 1);
+
     }
 
     public bool CanInteract()

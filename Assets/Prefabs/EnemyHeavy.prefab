@@ -121,7 +121,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.3
-  m_Speed: 1.5
+  m_Speed: 2.5
   m_Acceleration: 8
   avoidancePriority: 59
   m_AngularSpeed: 120
@@ -150,8 +150,8 @@ MonoBehaviour:
   timeBetweenFetches: 0.1
   scoreMultiplier: 1.5
   secondsToFreeze: 1
-  maxHp: 60
-  hp: 60
+  maxHp: 20
+  hp: 20
   dissolveBehaviour: {fileID: 581091553285424601}
   onDeathEvent:
     m_PersistentCalls:
@@ -221,9 +221,9 @@ MonoBehaviour:
         m_CallState: 2
   useRagdoll: 1
   ragdollPrefab:
-  - {fileID: 2460071610145975712, guid: 54f5b1775b2b5b590a620e4a78e5f561, type: 3}
+  - {fileID: 3185813297105343114, guid: 7c9297f4e9c46f01aa10f52b3a9ee3f7, type: 3}
   originPrefab: {fileID: 3216795837052715023}
-  variantIndex: 2
+  variantIndex: 1
   doVariantLogic: 1
   variantPrefab:
   - {fileID: 5051171729955313066}

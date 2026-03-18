@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0361fded32a80c345bafe7e8fac88142, type: 3}
+  m_Name: Wave 17
+  m_EditorClassIdentifier: 
+  waveName: Wave 11
+  spawnRate: 0.1
+  enemies:
+  - enemy: {fileID: 6690680711054330374, guid: 04a0d47a1615805449367cf9cce39965, type: 3}
+    count: 350
+    pureSpawn: 0
+  - enemy: {fileID: 5614218197008894055, guid: 7a8c95bfaf193ec4d9c9f64388695cca, type: 3}
+    count: 159
+    pureSpawn: 0
+  - enemy: {fileID: 5614218197008894055, guid: 7a8c95bfaf193ec4d9c9f64388695cca, type: 3}
+    count: 0
+    pureSpawn: 0
+  - enemy: {fileID: 8303538356390828187, guid: 41f3e806f6db74f449fa3ab4beaa87e2, type: 3}
+    count: 0
+    pureSpawn: 0
+  - enemy: {fileID: 3216795837052715023, guid: 47438bb3bad7fb749bec7e2606fd78c2, type: 3}
+    count: 40
+    pureSpawn: 0

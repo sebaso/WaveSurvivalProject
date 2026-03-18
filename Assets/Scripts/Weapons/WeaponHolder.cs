@@ -106,12 +106,17 @@ public class WeaponHolder : MonoBehaviour
             }
         }
         availableWeapons.Add(weapon);
-        currentWeaponIndex = availableWeapons.Count - 1;
-        CheckItemType();
-        UpdateWeaponHUD();
-        OnWeaponListChanged?.Invoke();
-        OnWeaponChanged?.Invoke();
 
+        // Don't auto-equip if picking up bandages (or we're already equipped with something)
+        if (weapon.weaponName != "Bandages")
+        {
+            currentWeaponIndex = availableWeapons.Count - 1;
+            CheckItemType();
+            UpdateWeaponHUD();
+            OnWeaponChanged?.Invoke();
+        }
+
+        OnWeaponListChanged?.Invoke();
     }
     public void RemoveWeapon(WeaponData weapon)
     {

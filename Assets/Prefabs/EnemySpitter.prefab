@@ -221,7 +221,7 @@ MonoBehaviour:
         m_CallState: 2
   useRagdoll: 1
   ragdollPrefab:
-  - {fileID: 2460071610145975712, guid: 54f5b1775b2b5b590a620e4a78e5f561, type: 3}
+  - {fileID: 1892458342841995037, guid: a72fbca1117544841b150b8ff546cdc2, type: 3}
   originPrefab: {fileID: 8303538356390828187}
   variantIndex: 2
   doVariantLogic: 1

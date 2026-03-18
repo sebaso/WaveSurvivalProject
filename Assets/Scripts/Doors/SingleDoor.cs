@@ -32,6 +32,7 @@ public class SingleDoor : MonoBehaviour, IInteractible
     {
         if (ScoreManager.instance.Score >= price)
         {
+            if (Tutoriel.instance != null && Tutoriel.instance.CurrentStep != null && Tutoriel.instance.CurrentStep.id == "door") Tutoriel.CompleteStep("door");
             ScoreManager.instance.Score -= price;
             Destroy(gameObject);
         }

@@ -32,5 +32,6 @@ public class AchievementManager : MonoBehaviour
                 OnAchievementUnlocked?.Invoke(achievement._name, achievement._imageName);
             }
         }
+        DataManager.Instance.Save();
     }
 }

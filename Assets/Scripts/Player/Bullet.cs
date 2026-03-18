@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
     private readonly float maxLifeTime = 1.5f;
     private Vector3 direction;
     private int currentPunchThrough;
-    private readonly HashSet<GameObject> hitEnemies = new();
+    private readonly HashSet<IDamageable<int>> hitEnemies = new();
     private Rigidbody rb;
 
     public void SetPool(IObjectPool<Bullet> bulletPool)
@@ -98,13 +98,12 @@ public class Bullet : MonoBehaviour
 
             if (hit.collider.CompareTag("Enemy"))
             {
-                GameObject enemyRoot = hit.collider.transform.root.gameObject;
                 IDamageable<int> enemyScript = hit.collider.GetComponentInParent<IDamageable<int>>();
 
                 if (enemyScript != null)
                 {
-                    if (hitEnemies.Contains(enemyRoot)) continue;
-                    hitEnemies.Add(enemyRoot);
+                    if (hitEnemies.Contains(enemyScript)) continue;
+                    hitEnemies.Add(enemyScript);
 
                     enemyScript.TakeDamage(damage);
 

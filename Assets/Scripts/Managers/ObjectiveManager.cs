@@ -28,6 +28,7 @@ public class ObjectiveManager : MonoBehaviour
     }
     public ObjectiveType objectiveType;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    //Aqui hay muchisimas lagrimas sobre las cosas que no fueron ser.
     void Start()
     {
         instance = this;
@@ -135,12 +136,9 @@ public class ObjectiveManager : MonoBehaviour
         Debug.Log("Objective Deactivated");
         isObjectiveActive = false;
         objectiveMarker.SetActive(false);
-
-        // Clean up the remaining objective enemies
         waveManager.spawner.KillAllEnemies();
         waveManager.spawner.spawnQueue.Clear();
-
-        // Force enemiesLeft to 0 so WaveManager seamlessly enters the intermission for the next normal wave
+        AchievementManager.Instance?.IncreaseStat("generator_powered_up", 1);
         waveManager.enemiesLeft = 0;
 
         currentObjective = null;
