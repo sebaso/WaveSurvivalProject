@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class ExplosivesDetonator : MonoBehaviour
 {
@@ -9,6 +11,10 @@ public class ExplosivesDetonator : MonoBehaviour
 
     [Header("Events")]
     public UnityEvent OnExplosivesPlaced;
+    public GameObject explosionPrefab;
+    public AudioClip explosionSound;
+    public List<GameObject> toDisable;
+    public GameObject toEnable;
 
     private Transform playerTransform;
 
@@ -18,8 +24,11 @@ public class ExplosivesDetonator : MonoBehaviour
 
         if (PlayerController.instance != null)
             playerTransform = PlayerController.instance.transform;
-        else
-            playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        if (playerTransform == null)
+        {
+            Debug.LogError("Player not found");
+        }
     }
 
     void Update()
@@ -35,7 +44,7 @@ public class ExplosivesDetonator : MonoBehaviour
             {
                 if (ExplosiveInventory.instance.hasExplosives && PowerManager.instance.isPowerOn)
                 {
-                    InteractionUI.instance.Show("Press E to place explosives");
+                    InteractionUI.instance.Show("Press E to place explosives.");
 
                     if (Input.GetKeyDown(KeyCode.E))
                     {
@@ -54,12 +63,30 @@ public class ExplosivesDetonator : MonoBehaviour
         }
     }
 
+    private IEnumerator Explosion()
+    {
+        yield return new WaitForSeconds(3);
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
+        foreach (GameObject obj in toDisable)
+        {
+            obj.SetActive(false);
+        }
+        if (toEnable != null)
+        {
+            toEnable.SetActive(true);
+        }
+        this.enabled = false;
+    }
+
     private void PlaceExplosives()
     {
         ExplosiveInventory.instance.UseExplosives();
         OnExplosivesPlaced?.Invoke();
+        StartCoroutine(Explosion());
+        ExplosiveInventory.instance.hasExplosives = false;
 
         // Disable this script to prevent further interaction
-        this.enabled = false;
+
     }
 }

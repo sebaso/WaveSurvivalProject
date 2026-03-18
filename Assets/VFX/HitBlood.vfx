@@ -3525,8 +3525,8 @@ MonoBehaviour:
   m_ActivationSlot: {fileID: 8926484042661615010}
   behavior: 1
   mode: 0
-  radiusMode: 0
-  collisionAttributes: 0
+  radiusMode: 1
+  collisionAttributes: 1
   roughSurface: 0
   writeRoughNormal: 1
   overrideBounceThreshold: 0

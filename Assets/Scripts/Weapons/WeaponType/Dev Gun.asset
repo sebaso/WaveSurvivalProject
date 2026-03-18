@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8eb0755f6add04f9df9c2dc938b0ae, type: 3}
+  m_Name: Dev Gun
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  consumable: 0
+  weaponName: Dev Gun
+  bulletPrefab: {fileID: 4742638846563842940, guid: ba4d223cb896fc24e80cca9e200ce590, type: 3}
+  damage: 1
+  fireRate: 0.01
+  baseAccuracy: 100
+  punchThrough: 0
+  bulletSpeed: 80
+  shootSound: {fileID: 8300000, guid: 0fa8eb9762689f80497277de9ec88c87, type: 3}
+  reloadSound: {fileID: 0}
+  weaponIcon: {fileID: 21300000, guid: acf7cfe70eb56ad4d957f309c8663425, type: 3}
+  clipSize: 9999
+  currentAmmoInClip: 99999
+  reloadTime: 1
+  ammoCapacity: 9999
+  ammo: 99999
+  weaponHandling: 0
+  screenShakeAmount: 0
+  ammoRefillCost: 15
+  weaponCost: 0
+  weaponMesh: {fileID: 4340191134455306798, guid: 3ed9d9365f61b0f4791abbda68434bf6, type: 3}
+  modelOffsetPosition: {x: 0.021, y: 0.044, z: 0.105}
+  modelOffsetRotation: {x: 15.57, y: 1.745, z: 73.613}
+  isShotgun: 0
+  shotgunPellets: 0
+  spread: 0

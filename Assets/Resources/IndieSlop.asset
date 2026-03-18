@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c727532b0bbd2940a3897f00f23c81e, type: 3}
   m_Name: IndieSlop
   m_EditorClassIdentifier: Assembly-CSharp::SkinItem
-  Name: Bandage
+  Name: IndieSlop
   Icon: {fileID: 0}
-  Id: 25
+  Id: 31
   ItemType: 0
   Weapon: 0
   SkinRarity: 2

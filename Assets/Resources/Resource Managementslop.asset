@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Resource Managementslop
   m_EditorClassIdentifier: Assembly-CSharp::SkinItem
   Name: Resource Managementslop
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: c428574b7c2a89a4aa5a77e8a9b7a6a6, type: 3}
   Id: 25
   ItemType: 0
   Weapon: 0

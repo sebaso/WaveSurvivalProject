@@ -18,16 +18,16 @@ MonoBehaviour:
   damage: 4
   fireRate: 0.35
   baseAccuracy: 99
-  punchThrough: 1
+  punchThrough: 2
   bulletSpeed: 150
   shootSound: {fileID: 8300000, guid: feebe24eea12121ae90546accaafec80, type: 3}
   reloadSound: {fileID: 0}
   weaponIcon: {fileID: 21300000, guid: 60ed1fbc6985878468807adfb30f0615, type: 3}
   clipSize: 8
-  currentAmmoInClip: 5
+  currentAmmoInClip: 6
   reloadTime: 2
   ammoCapacity: 80
-  ammo: 60
+  ammo: 54
   weaponHandling: 5
   screenShakeAmount: 4
   ammoRefillCost: 150

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Soulslop
   m_EditorClassIdentifier: Assembly-CSharp::SkinItem
   Name: Soulslop
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8e3c67d25e7f8ba488e3f9c47eebf7a2, type: 3}
   Id: 25
   ItemType: 0
   Weapon: 0

@@ -19,8 +19,10 @@ public class CaseOpeningUI : MonoBehaviour
     [SerializeField] private float _rollDuration = 5f;
     [SerializeField] private float _snapDuration = 1f;
 
+    [Header("Prefabs")]
     public GameObject bandagePrefab;
     public GameObject grenadePrefab;
+    public GameObject devGunPrefab;
 
     public Item keyItem;
     public CaseItem caseItem;
@@ -160,12 +162,17 @@ public class CaseOpeningUI : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(elapsed / _snapDuration);
 
+            float newX = Mathf.Lerp(startX, _finalTargetX, Mathf.SmoothStep(0f, 1f, t));
+            _rollerRect.localPosition = new Vector3(newX, _rollerRect.localPosition.y, 0f);
+
             yield return null;
         }
-        TimeManager.instance.RequestResume(this);
+
         _rollerRect.localPosition = new Vector3(_finalTargetX, _rollerRect.localPosition.y, 0f);
         _isRolling = false;
+        TimeManager.instance.RequestResume(this);
         yield return _waitForSeconds0_5;
+
 
 
         if (chosenItem != null && chosenItem.Name == "Grenade")
@@ -199,6 +206,10 @@ public class CaseOpeningUI : MonoBehaviour
             Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
             Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
             Instantiate(bandagePrefab, spawnPoint.position, spawnPoint.rotation);
+        }
+        if (chosenItem != null && chosenItem.Name == "Dev Gun")
+        {
+            Instantiate(devGunPrefab, spawnPoint.position, spawnPoint.rotation);
         }
         StopAndCloseRoller();
     }
