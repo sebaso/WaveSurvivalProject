@@ -5255,6 +5255,7 @@ MonoBehaviour:
   attackRate: 3
   sphereCastRadius: 3
   attackSound: {fileID: 0}
+  contactDamageThreshold: 0.1
 --- !u!65 &397475113851646945
 BoxCollider:
   m_ObjectHideFlags: 0

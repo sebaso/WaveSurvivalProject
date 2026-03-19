@@ -68,9 +68,22 @@ public class WeaponBuy : MonoBehaviour, IInteractible
     {
         if (ScoreManager.instance.Score >= weapon.ammoRefillCost)
         {
-            ScoreManager.instance.Score -= weapon.ammoRefillCost;
-            WeaponHolder.instance.CurrentWeapon.ammo = WeaponHolder.instance.CurrentWeapon.ammoCapacity;
-            WeaponHolder.instance.UpdateWeaponHUD();
+            WeaponData weaponToRefill = null;
+            foreach (var w in WeaponHolder.instance.availableWeapons)
+            {
+                if (w.weaponName == weapon.weaponName)
+                {
+                    weaponToRefill = w;
+                    break;
+                }
+            }
+
+            if (weaponToRefill != null)
+            {
+                ScoreManager.instance.Score -= weapon.ammoRefillCost;
+                weaponToRefill.ammo = weaponToRefill.ammoCapacity;
+                WeaponHolder.instance.UpdateWeaponHUD();
+            }
         }
     }
     public bool CanInteract()
@@ -84,16 +97,13 @@ public class WeaponBuy : MonoBehaviour, IInteractible
     }
     public void SearchForWeapon()
     {
+        owned = false;
         foreach (var item in WeaponHolder.instance.availableWeapons)
         {
             if (item.weaponName == weapon.weaponName)
             {
                 owned = true;
                 break;
-            }
-            else
-            {
-                owned = false;
             }
         }
     }

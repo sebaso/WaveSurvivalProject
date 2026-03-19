@@ -73,7 +73,7 @@ public class WeaponHolder : MonoBehaviour
         StopAllCoroutines();
         // Prevent dropping if there's only 1 weapon or no weapons
         if (availableWeapons.Count <= 1) return;
-        
+
         GameObject weapon = Instantiate(dropPrefab, transform.position, transform.rotation);
         weapon.GetComponent<GroundItem>().weapon = availableWeapons[currentWeaponIndex];
         weapon.GetComponent<GroundItem>().ammo = availableWeapons[currentWeaponIndex].ammo + availableWeapons[currentWeaponIndex].currentAmmoInClip;
@@ -82,6 +82,19 @@ public class WeaponHolder : MonoBehaviour
         OnWeaponListChanged?.Invoke();
         UpdateWeaponHUD();
 
+    }
+    public void RemoveAmmo(int amount)
+    {
+        CurrentWeapon.ammo -= amount;
+        UpdateAmmo();
+    }
+    public void DestroyCurrentWeapon(bool nextWeapon)
+    {
+        StopAllCoroutines();
+        availableWeapons.Remove(availableWeapons[currentWeaponIndex]);
+        if (nextWeapon) NextWeapon();
+        OnWeaponListChanged?.Invoke();
+        UpdateWeaponHUD();
     }
     public IEnumerator DisplayGoofyMessage()
     {

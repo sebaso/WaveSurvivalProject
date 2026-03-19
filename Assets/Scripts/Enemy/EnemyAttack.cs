@@ -12,11 +12,15 @@ public class EnemyAttack : MonoBehaviour
     private float nextAttack = 0f;
     public float sphereCastRadius = 3f;
     public AudioClip attackSound;
+    public float contactDamageThreshold = 0.2f;
+    private float currentContactTimer = 0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         enemy = GetComponent<Enemy>();
     }
+
+    private bool isTouchingTrigger = false;
 
     // Update is called once per frame
     void Update()
@@ -37,23 +41,41 @@ public class EnemyAttack : MonoBehaviour
                     break;
                 }
             }
-
-
         }
+
+        bool isNearPlayer = false;
         if (enemy.nav.remainingDistance <= enemy.nav.stoppingDistance)
         {
             if (enemy.player != null && Vector3.Distance(transform.position, enemy.player.position) <= enemy.nav.stoppingDistance + 0.2f)
             {
-                Attack(enemy.player.gameObject);
-                Vector3 lookDir = enemy.player.position - transform.position;
-                lookDir.y = 0;
-                if (lookDir.sqrMagnitude > 0.01f)
-                {
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
-                }
+                isNearPlayer = true;
             }
         }
+
+        if ((isNearPlayer || isTouchingTrigger) && enemy.player != null)
+        {
+            currentContactTimer += Time.deltaTime;
+            if (currentContactTimer >= contactDamageThreshold)
+            {
+                Attack(enemy.player.gameObject);
+                currentContactTimer = 0f;
+            }
+
+            Vector3 lookDir = enemy.player.position - transform.position;
+            lookDir.y = 0;
+            if (lookDir.sqrMagnitude > 0.01f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
+            }
+        }
+        else
+        {
+            currentContactTimer = 0f;
+        }
+
+        isTouchingTrigger = false;
     }
+
     public IEnumerator AttackInPlace()
     {
         if (enemy.anim != null)
@@ -93,11 +115,19 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && !enemy.IsDead)
         {
-            Attack(other.gameObject);
+            isTouchingTrigger = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isTouchingTrigger = false;
         }
     }
 }

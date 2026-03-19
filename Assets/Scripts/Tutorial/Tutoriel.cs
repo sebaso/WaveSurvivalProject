@@ -28,6 +28,7 @@ public class Tutoriel : MonoBehaviour
 
     [Header("Enemy Spawning")]
     public GameObject enemyPrefab;
+    public GameObject enemyPrefab2;
     public Transform enemySpawnLocation;
 
     private int currentStepIndex = -1;
@@ -83,8 +84,7 @@ public class Tutoriel : MonoBehaviour
     {
         if (tutorialGun != null)
         {
-            var groundItem = tutorialGun.GetComponent<GroundItem>();
-            if (groundItem != null) groundItem.canBePickedUp = true;
+            if (tutorialGun.TryGetComponent<GroundItem>(out var groundItem)) groundItem.canBePickedUp = true;
         }
     }
 
@@ -110,6 +110,16 @@ public class Tutoriel : MonoBehaviour
 
         step.isComplete = true;
         PlaySound(stepCompleteSound);
+        if (step.id == "reload" && ScoreManager.instance != null)
+        {
+            ScoreManager.instance.AddScore(1050);
+        }
+        if (step.id == "weapon" && ScoreManager.instance != null)
+        {
+            ScoreManager.instance.AddScore(500);
+            ScoreManager.instance.AddScore(500);
+        }
+
         OnStepCompleted?.Invoke(step);
 
         if (IsComplete)
@@ -123,7 +133,6 @@ public class Tutoriel : MonoBehaviour
 
         if (autoAdvance)
         {
-            // Always find the first incomplete step, no matter the order
             int nextIdx = steps.FindIndex(s => s.isEnabled && !s.isComplete);
             if (nextIdx >= 0)
             {
@@ -144,11 +153,12 @@ public class Tutoriel : MonoBehaviour
         if (idx < 0) return;
 
         TutorialStep step = steps[idx];
-        if (step.isComplete) return; // Ignore triggers for steps already done!
+        if (step.isComplete) return;
 
         currentStepIndex = idx;
         if (step.id == "pick" || step.id == "shoot") GivePlayerTutorialGun();
         if (step.id == "shoot") SpawnTutorialEnemy();
+
         OnStepStarted?.Invoke(step);
         hud?.RefreshHUD(steps, currentStepIndex);
         Debug.Log($"[TutorialManager] Tutorial jumped to step '{stepId}'.");
@@ -163,7 +173,14 @@ public class Tutoriel : MonoBehaviour
     {
         for (int i = 0; i < 100; i++)
         {
-            SpawnTutorialEnemy();
+            Instantiate(enemyPrefab2, enemySpawnLocation.position, enemySpawnLocation.rotation);
+            ScoreManager.instance.Score = 0;
+        }
+        for (int i = 0; i < WeaponHolder.instance.availableWeapons.Count; i++)
+        {
+            WeaponHolder.instance.availableWeapons[i].currentAmmoInClip = 0;
+            WeaponHolder.instance.availableWeapons[i].ammo = 0;
+            WeaponHolder.instance.UpdateWeaponHUD();
         }
     }
 
@@ -177,11 +194,8 @@ public class Tutoriel : MonoBehaviour
                 TutorialStep step = steps[i];
                 if (step.id == "pick" || step.id == "shoot") GivePlayerTutorialGun();
                 if (step.id == "shoot") SpawnTutorialEnemy();
-                if (step.id == "weapon")
-                {
-                    ScoreManager.instance.AddScore(1000);
-                    Debug.Log($"[TutorialManager] Added 1000 score for 'weapon' step. Target score is now: {ScoreManager.instance.Score}");
-                }
+
+
                 OnStepStarted?.Invoke(step);
                 hud?.RefreshHUD(steps, currentStepIndex);
                 Debug.Log($"[TutorialManager] Step started: '{step.id}' — {step.title}");

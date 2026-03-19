@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDamageableObserver>, IDamageableObserver
 {
     public float speed = 10.0f;
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
     public UnityEvent OnInitialize;
     public UnityEvent OnDeactivate;
     public UnityEvent OnActivate;
+    public Image hurtImage;
+    public float hurtFadeSpeed = 5f;
 
     private Animator animator;
 
@@ -45,6 +48,16 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
         if (IsDead)
         {
             OnDeactivate.Invoke();
+        }
+    }
+
+    void Update()
+    {
+        if (hurtImage != null && hurtImage.color.a > 0)
+        {
+            Color color = hurtImage.color;
+            color.a = Mathf.Lerp(color.a, 0, hurtFadeSpeed * Time.deltaTime);
+            hurtImage.color = color;
         }
     }
 
@@ -84,6 +97,12 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
         if (isInvincible) return;
         if (IsDead) return;
         hp -= damage;
+        if (hurtImage != null)
+        {
+            Color color = hurtImage.color;
+            color.a = 1f;
+            hurtImage.color = color;
+        }
         if (hp <= 0)
         {
             Die();

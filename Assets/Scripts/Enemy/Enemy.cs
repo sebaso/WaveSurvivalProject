@@ -172,7 +172,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
             //creamos el ragdoll
             GameObject ragdoll = Instantiate(ragdollPrefab[variantIndex], transform.position, transform.rotation);
-            MatchTransforms(transform, ragdoll.transform, nav.velocity);
+            MatchTransforms(transform, ragdoll.transform, nav.velocity.sqrMagnitude);
             //el ragdoll se agrega a si mismo al ragdoll manager
             //retornamos el enemigo al pool
             WaveManager.instance.ReturnEnemyToPool(gameObject);
@@ -194,10 +194,9 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
     }
 
-    private void MatchTransforms(Transform source, Transform destination, Vector3 velocity)
+    private void MatchTransforms(Transform source, Transform destination, float velocity)
     {
-        Animator destAnim = destination.GetComponent<Animator>();
-        if (destAnim == null) destAnim = destination.GetComponentInChildren<Animator>();
+        if (!destination.TryGetComponent<Animator>(out var destAnim)) destAnim = destination.GetComponentInChildren<Animator>();
         if (destAnim != null) destAnim.enabled = false;
 
         Transform[] sourceTransforms = source.GetComponentsInChildren<Transform>();
@@ -220,7 +219,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
         foreach (Rigidbody rb in destination.GetComponentsInChildren<Rigidbody>())
         {
-            rb.linearVelocity = velocity;
+            rb.linearVelocity = new Vector3(velocity, 0, velocity);
         }
     }
 
@@ -292,10 +291,8 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
     private void SpawnVFX(VisualEffectAsset asset, Vector3 localOffset, float destroyDelay)
     {
-        GameObject vfxObj = new GameObject(asset.name + "_Temp");
-        vfxObj.transform.position = transform.TransformPoint(localOffset);
-        vfxObj.transform.rotation = transform.rotation;
-
+        GameObject vfxObj = new(asset.name + "_Temp");
+        vfxObj.transform.SetPositionAndRotation(transform.TransformPoint(localOffset), transform.rotation);
         VisualEffect vfx = vfxObj.AddComponent<VisualEffect>();
         vfx.visualEffectAsset = asset;
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class AchievementMenu : MonoBehaviour
 {
@@ -24,7 +25,5 @@ public class AchievementMenu : MonoBehaviour
             GameObject achievementObj = Instantiate(achievementPrefab, achievementParent);
             achievementObj.GetComponent<AchievementPrefab>().SetAchievement(achievement._name, achievement._description, achievement._imageName, achievement._statCode, achievement._targetAmmount, DataManager.Instance.GetStateWithCode(achievement._statCode)._value);
         }
-
     }
-
 }

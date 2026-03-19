@@ -2046,7 +2046,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 30/30
+  m_text: 6/7
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5175,7 +5175,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Colt 1911
+  m_text: You got nothing, son.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -12555,6 +12555,8 @@ MonoBehaviour:
   OnActivate:
     m_PersistentCalls:
       m_Calls: []
+  hurtImage: {fileID: 0}
+  hurtFadeSpeed: 5
 --- !u!54 &934176237
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19604,7 +19606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117b3b23ac766c1cfbcc20d1e79a1271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SingleDoor
-  price: 50
+  price: 100
   interactRange: 3
 --- !u!114 &1497784066
 MonoBehaviour:
@@ -20431,7 +20433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponBuy
   weapon: {fileID: 11400000, guid: e413f8d8a9aa6ea4294944b32e2c4d45, type: 2}
-  price: 0
+  price: 1000
   interactRange: 2
   owned: 0
 --- !u!4 &1588102276
@@ -27673,6 +27675,7 @@ MonoBehaviour:
         m_CallState: 2
   tutorialGun: {fileID: 1864829898}
   enemyPrefab: {fileID: 6690680711054330374, guid: 04a0d47a1615805449367cf9cce39965, type: 3}
+  enemyPrefab2: {fileID: 5614218197008894055, guid: 7a8c95bfaf193ec4d9c9f64388695cca, type: 3}
   enemySpawnLocation: {fileID: 1389662731}
 --- !u!1 &1871517038
 GameObject:

@@ -156,6 +156,7 @@ public class WaveManager : MonoBehaviour
 
                 StartCoroutine(StartNextWave());
             }
+
         }
     }
     public void ForceNextWave()
@@ -183,6 +184,10 @@ public class WaveManager : MonoBehaviour
         {
             RoundNumeralUI.instance.UpdateRound(currentWaveIndex);
             RoundNumeralUI.instance.FlashWaveEnd();
+        }
+        if (waves[currentWaveIndex + 1] == null)
+        {
+            currentWaveIndex = 18;
         }
 
         wavesArePaused = false;

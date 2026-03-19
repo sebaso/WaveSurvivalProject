@@ -36,7 +36,7 @@ public class ScorePopup : MonoBehaviour
     {
         scoreText = GetComponent<TextMeshProUGUI>();
         scoreText.SetText("+ " + scoreAmount.ToString());
-
+        scoreText.color = Color.yellow;
         textColor = scoreText.color;
         disappearTimer = disappearTimerMax;
 

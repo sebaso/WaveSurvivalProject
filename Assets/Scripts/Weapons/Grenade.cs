@@ -48,7 +48,7 @@ public class Grenade : MonoBehaviour
                 PlayerController pc = col.GetComponent<PlayerController>();
                 if (pc != null && !hitPlayers.Contains(pc))
                 {
-                    pc.TakeDamage(2);
+                    pc.TakeDamage(1);
                     hitPlayers.Add(pc);
                 }
             }
@@ -95,8 +95,7 @@ public class Grenade : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider hit in colliders)
         {
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
-            if (rb != null)
+            if (hit.TryGetComponent<Rigidbody>(out var rb))
             {
                 rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 1f, ForceMode.Impulse);
             }
@@ -108,11 +107,7 @@ public class Grenade : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (!bounced)
-            {
-                timer -= bouncedTimeRemove;
-            }
-
+            timer += bouncedTimeRemove;
         }
         bounced = true;
     }

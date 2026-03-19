@@ -4,27 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-/// <summary>
-/// Renders the tutorial checklist as an in-game HUD overlay.
-///
-/// Requires:
-///   - A Canvas > Panel (the HUD root).
-///   - A StepRow prefab with:
-///       * CheckIcon (Image)     — shown when complete
-///       * PendingIcon (Image)   — shown when incomplete
-///       * TitleText (TMP_Text)  — step title
-///       * KeyText (TMP_Text)    — key hint (e.g. "WASD")
-///   - A CompleteBanner object that is hidden by default.
-///
-/// Attach this component to the same GameObject as TutorialManager.
-/// </summary>
 public class TutorialHUD : MonoBehaviour
 {
     [Header("References")]
-    public GameObject hudRoot;               // Parent panel to show/hide
-    public Transform stepListContainer;      // Vertical layout group
-    public GameObject stepRowPrefab;         // Instantiated per step
-    public GameObject completeBanner;        // "Tutorial Complete!" object
+    public GameObject hudRoot;
+    public Transform stepListContainer;
+    public GameObject stepRowPrefab;
+    public GameObject completeBanner;
 
     [Header("Colors")]
     public Color activeColor = Color.cyan;
@@ -39,12 +25,9 @@ public class TutorialHUD : MonoBehaviour
     [Tooltip("If true, the HUD behaves as a single popup by hiding steps that aren't currently active.")]
     public bool hideInactiveSteps = true;
 
-    // ── Runtime ────────────────────────────────────────────────────────────
     private readonly List<StepRowUI> rows = new();
     private CanvasGroup canvasGroup;
     private Coroutine fadeRoutine;
-
-    // ── Lifecycle ──────────────────────────────────────────────────────────
     private void Awake()
     {
         canvasGroup = hudRoot.GetComponent<CanvasGroup>();
@@ -55,21 +38,14 @@ public class TutorialHUD : MonoBehaviour
             completeBanner.SetActive(false);
     }
 
-    // ── Public API ─────────────────────────────────────────────────────────
-
-    /// <summary>Rebuild the entire checklist UI.</summary>
     public void RefreshHUD(List<TutorialStep> steps, int activeIndex)
     {
         Debug.Log($"[TutorialHUD] RefreshHUD called. activeIndex={activeIndex}, stepCount={steps.Count}, hideInactive={hideInactiveSteps}");
-
-        // Destroy ALL children of the container — not just tracked rows
         for (int i = stepListContainer.childCount - 1; i >= 0; i--)
         {
             Destroy(stepListContainer.GetChild(i).gameObject);
         }
         rows.Clear();
-
-        // Spawn rows only for steps we actually want to show
         for (int i = 0; i < steps.Count; i++)
         {
             TutorialStep step = steps[i];
@@ -85,9 +61,8 @@ public class TutorialHUD : MonoBehaviour
             }
 
             GameObject rowGO = Instantiate(stepRowPrefab, stepListContainer);
-            StepRowUI row = rowGO.GetComponent<StepRowUI>();
 
-            if (row == null)
+            if (!rowGO.TryGetComponent<StepRowUI>(out var row))
             {
                 Debug.LogWarning("[TutorialHUD] stepRowPrefab is missing a StepRowUI component.");
                 Destroy(rowGO);
@@ -103,7 +78,6 @@ public class TutorialHUD : MonoBehaviour
         ShowHUD();
     }
 
-    /// <summary>Show the "Tutorial Complete!" banner and optionally hide the checklist.</summary>
     public void ShowComplete()
     {
         if (completeBanner != null)
@@ -115,8 +89,6 @@ public class TutorialHUD : MonoBehaviour
             fadeRoutine = StartCoroutine(FadeOutAfterDelay());
         }
     }
-
-    // ── Internal ────────────────────────────────────────────────────────────
 
     private void ShowHUD()
     {
@@ -152,11 +124,4 @@ public class TutorialHUD : MonoBehaviour
         hudRoot.SetActive(false);
     }
 }
-
-// ── Row UI Component ────────────────────────────────────────────────────────
-
-/// <summary>
-/// Attach this to the StepRow prefab root.
-/// Wire up the child references in the Inspector.
-/// </summary>
 
