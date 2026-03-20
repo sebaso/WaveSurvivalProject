@@ -980,7 +980,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 4, y: 2.000061}
+  m_AnchoredPosition: {x: 4, y: 2}
   m_SizeDelta: {x: 1913, y: 267}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &284899407
@@ -3731,11 +3731,17 @@ MonoBehaviour:
     _statistics:
     - _code: enemies_killed
       _value: 0
-    - _code: generator_powered_up
+    - _code: powered-up
       _value: 0
     - _code: waves_completed
       _value: 0
     - _code: crates_opened
+      _value: 0
+    - _code: tried_a_funny
+      _value: 0
+    - _code: found_easter
+      _value: 0
+    - _code: win
       _value: 0
     _achievement:
     - _name: Mata Enemigos
@@ -3757,7 +3763,7 @@ MonoBehaviour:
       _targetAmmount: 1000
       _unlocked: 0
     - _name: Let there be Light
-      _statCode: generator_powered_up
+      _statCode: powered-up
       _imageName: killoro
       _description: Prende el generador
       _targetAmmount: 1
@@ -3791,6 +3797,24 @@ MonoBehaviour:
       _imageName: killoro
       _description: Open a loot box
       _targetAmmount: 100
+      _unlocked: 0
+    - _name: No, no puedes dual-wieldear
+      _statCode: tried_a_funny
+      _imageName: killoro
+      _description: Trata de romper el juego
+      _targetAmmount: 1
+      _unlocked: 0
+    - _name: "Feliz a\xF1o, Pepe"
+      _statCode: found_easter
+      _imageName: killoro
+      _description: Encuentra la bolognesa
+      _targetAmmount: 1
+      _unlocked: 0
+    - _name: Good-bye
+      _statCode: win
+      _imageName: killoro
+      _description: Gana el juego
+      _targetAmmount: 1
       _unlocked: 0
 --- !u!4 &1121810403
 Transform:

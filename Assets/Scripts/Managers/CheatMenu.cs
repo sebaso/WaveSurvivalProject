@@ -38,6 +38,10 @@ public class CheatMenu : MonoBehaviour
         {
             WaveManager.instance.ForceNextWave();
         }
+        if (Input.GetKeyDown(KeyCode.F8) && cheatMenu.activeSelf)
+        {
+            ExplosivesDetonator.instance.PlaceExplosives();
+        }
     }
     public void InfiniteAmmo()
     {

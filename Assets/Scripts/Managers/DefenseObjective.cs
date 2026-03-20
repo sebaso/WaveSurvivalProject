@@ -8,6 +8,9 @@ public class DefenseObjective : MonoBehaviour
     public static DefenseObjective instance;
     public bool hasBeenTriggered = false;
     public GameObject generatorWarning;
+    public AudioClip generatorPoweredUpSound, generatorTriedToTurnOnSound;
+    public AudioSource audioSource;
+
 
     void Start()
     {
@@ -53,6 +56,7 @@ public class DefenseObjective : MonoBehaviour
         ObjectiveManager.instance.GenerateDefendLocationObjective();
         hasBeenTriggered = true;
         generatorWarning.SetActive(false);
+        audioSource.PlayOneShot(generatorTriedToTurnOnSound);
 
     }
 

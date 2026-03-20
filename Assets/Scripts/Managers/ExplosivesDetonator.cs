@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class ExplosivesDetonator : MonoBehaviour
 {
+    public static ExplosivesDetonator instance;
     [Header("Interaction Settings")]
     public float interactionDistance = 4f;
     private float sqrInteractionDistance;
@@ -20,6 +21,7 @@ public class ExplosivesDetonator : MonoBehaviour
 
     void Start()
     {
+        instance = this;
         sqrInteractionDistance = interactionDistance * interactionDistance;
 
         if (PlayerController.instance != null)
@@ -66,27 +68,42 @@ public class ExplosivesDetonator : MonoBehaviour
     private IEnumerator Explosion()
     {
         yield return new WaitForSeconds(3);
+
+        if (FadeToBlack.instance != null)
+        {
+            FadeToBlack.instance.FadeOut(1.5f);
+            yield return new WaitForSeconds(1.5f);
+        }
+
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         AudioSource.PlayClipAtPoint(explosionSound, transform.position);
+
         foreach (GameObject obj in toDisable)
         {
-            obj.SetActive(false);
+            if (obj != null) obj.SetActive(false);
         }
         if (toEnable != null)
         {
             toEnable.SetActive(true);
         }
+
+        yield return new WaitForSeconds(1.0f);
+
+        if (FadeToBlack.instance != null)
+        {
+            FadeToBlack.instance.FadeIn(1.5f);
+        }
+
         this.enabled = false;
     }
 
-    private void PlaceExplosives()
+    public void PlaceExplosives()
     {
         ExplosiveInventory.instance.UseExplosives();
         OnExplosivesPlaced?.Invoke();
         StartCoroutine(Explosion());
         ExplosiveInventory.instance.hasExplosives = false;
 
-        // Disable this script to prevent further interaction
 
     }
 }

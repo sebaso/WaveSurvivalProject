@@ -10,6 +10,8 @@ TagManager:
   - MainText
   - DoorBoard
   - DefenceTag
+  - Wall
+  - Ground
   layers:
   - Default
   - TransparentFX

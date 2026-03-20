@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
     public List<GameObject> variantPrefab = new();
     public float speed;
     public int walkingAnimationsCount;
+    public Transform hitPoint;
 
     private Coroutine chaseCoroutine;
     private int initialHp;
@@ -182,7 +183,7 @@ public class Enemy : MonoBehaviour, IDamageable<int>
             }
             if (deathVFX != null)
             {
-                SpawnVFX(deathVFX, Vector3.zero, 30f);
+                SpawnVFX(deathVFX, 30f);
             }
             if (Tutoriel.instance != null && Tutoriel.instance.CurrentStep != null && Tutoriel.instance.CurrentStep.id == "shoot")
             {
@@ -232,6 +233,16 @@ public class Enemy : MonoBehaviour, IDamageable<int>
 
     public void TakeDamage(int damage)
     {
+        TakeDamage(damage, transform.position + Vector3.up * (nav != null ? nav.height * 0.6f : 1f));
+    }
+
+    public void TakeDamage(int damage, Vector3 hitPoint)
+    {
+        if (hitPoint == Vector3.zero)
+        {
+            hitPoint = transform.position + Vector3.up * (nav != null ? nav.height * 0.6f : 1f);
+        }
+
         hp -= damage;
         ScoreManager.instance.AddScore((int)(10f * scoreMultiplier));
         if (hitSounds.Count > 0)
@@ -259,7 +270,11 @@ public class Enemy : MonoBehaviour, IDamageable<int>
         }
         if (hitVFX != null)
         {
-            SpawnVFX(hitVFX, new Vector3(0.044f, 0.711f, 0.11f), 2f);
+            SpawnVFXAtPoint(hitVFX, hitPoint, 2f); //en otro mundo ideal, el VFX simplemente apareceria
+                                                   //y simplemente apareceria en el medio, dando la sensacion de
+                                                   //que el disparo impacta en el enemigo. PERO NO. NO NO CARAJO NO.
+                                                   //DEDIQUEMOSLE TIEMPO A ESTO CUANDO FALTAN MENOS DE 10 HORAS PARA PRESENTAR
+                                                   //PORQUE EL VFX SIMPLEMENTE NO SABE OBEDECER. NO LO HACE. NO LO HACE.
         }
 
         if (hp <= 0)
@@ -289,10 +304,12 @@ public class Enemy : MonoBehaviour, IDamageable<int>
         }
     }
 
-    private void SpawnVFX(VisualEffectAsset asset, Vector3 localOffset, float destroyDelay)
+    private void SpawnVFXAtPoint(VisualEffectAsset asset, Vector3 position, float destroyDelay)
     {
         GameObject vfxObj = new(asset.name + "_Temp");
-        vfxObj.transform.SetPositionAndRotation(transform.TransformPoint(localOffset), transform.rotation);
+        vfxObj.transform.position = position;
+        vfxObj.transform.rotation = transform.rotation;
+
         VisualEffect vfx = vfxObj.AddComponent<VisualEffect>();
         vfx.visualEffectAsset = asset;
 
@@ -300,5 +317,20 @@ public class Enemy : MonoBehaviour, IDamageable<int>
         destroyScript.timeToDestroy = destroyDelay;
 
         vfx.Play();
+    }
+
+    private void SpawnVFX(VisualEffectAsset asset, float destroyDelay)
+    {
+        Vector3 spawnPos;
+        if (hitPoint != null)
+        {
+            spawnPos = hitPoint.position;
+        }
+        else
+        {
+            float h = (nav != null) ? nav.height : 2f;
+            spawnPos = transform.TransformPoint(new Vector3(0, h * 0.6f, 0));
+        }
+        SpawnVFXAtPoint(asset, spawnPos, destroyDelay);
     }
 }

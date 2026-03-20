@@ -18,6 +18,8 @@ public class ObjectiveManager : MonoBehaviour
     public List<Transform> transportObjectives = new();
     public List<Transform> collectObjectives = new();
     public bool hasPower;
+    public AudioSource audioSource;
+    public AudioClip generatorPoweredUpSound;
 
     public enum ObjectiveType
     {
@@ -58,6 +60,7 @@ public class ObjectiveManager : MonoBehaviour
             DeactivateObjective();
             hasPower = true;
             PowerManager.instance.TurnPowerOn();
+            AchievementManager.Instance?.IncreaseStat("powered-up", 1);
         }
     }
     public void RollObjective()
@@ -136,11 +139,17 @@ public class ObjectiveManager : MonoBehaviour
         Debug.Log("Objective Deactivated");
         isObjectiveActive = false;
         objectiveMarker.SetActive(false);
-        waveManager.spawner.KillAllEnemies();
-        waveManager.spawner.spawnQueue.Clear();
-        AchievementManager.Instance?.IncreaseStat("generator_powered_up", 1);
-        waveManager.enemiesLeft = 0;
 
+        WaveManager wm = (waveManager != null) ? waveManager : WaveManager.instance;
+        if (wm != null && wm.spawner != null)
+        {
+            wm.spawner.KillAllEnemies();
+            wm.spawner.spawnQueue.Clear();
+            wm.enemiesLeft = 0;
+
+        }
+
+        AchievementManager.Instance?.IncreaseStat("generator_powered_up", 1);
         currentObjective = null;
     }
 }

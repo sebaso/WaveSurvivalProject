@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
         if (hurtImage != null && hurtImage.color.a > 0)
         {
             Color color = hurtImage.color;
-            color.a = Mathf.Lerp(color.a, 0, hurtFadeSpeed * Time.deltaTime);
+            color.a = Mathf.MoveTowards(color.a, 0, hurtFadeSpeed * Time.deltaTime);
             hurtImage.color = color;
         }
     }
@@ -82,17 +82,17 @@ public class PlayerController : MonoBehaviour, IDamageable<int>, IObservable<IDa
                 Tutoriel.CompleteStep("move");
             }
         }
-        // Convert the world movement direction into local space depending on where we are looking
         Vector3 localDir = transform.InverseTransformDirection(direction);
-
-        // Pass the local velocities to the animator 
-        // localDir.x gives us our left/right strafe relative to aim
-        // localDir.z gives us our forward/backward relative to aim
         animator.SetFloat("Xspeed", localDir.x);
-        animator.SetFloat("Yspeed", localDir.z); // Using Z here because in 3D, Z is forward
+        animator.SetFloat("Yspeed", localDir.z);
     }
 
     public void TakeDamage(int damage)
+    {
+        TakeDamage(damage, transform.position + Vector3.up);
+    }
+
+    public void TakeDamage(int damage, Vector3 hitPoint)
     {
         if (isInvincible) return;
         if (IsDead) return;

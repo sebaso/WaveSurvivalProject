@@ -76,15 +76,16 @@ public class CaseOpeningUI : MonoBehaviour
         {
             if (InteractionUI.instance != null)
             {
-                InteractionUI.instance.Show("Press Space to a mystery case for 1000 points.");
+                InteractionUI.instance.Show("Press Space to buy a mystery case for 500 points.");
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && ScoreManager.instance.Score >= 1000)
+            if (Input.GetKeyDown(KeyCode.Space) && ScoreManager.instance.Score >= 500)
             {
                 Item drop = CaseDropSystem.GetRandomDrop(caseItem);
                 chosenItem = drop;
-                ScoreManager.instance.Score -= 1000;
+                ScoreManager.instance.Score -= 500;
                 BeginRoll(caseItem, drop);
+                AchievementManager.Instance?.IncreaseStat("crates_opened", 1);
             }
         }
     }

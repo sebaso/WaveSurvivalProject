@@ -17,7 +17,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4742638846563842940, guid: ba4d223cb896fc24e80cca9e200ce590, type: 3}
   damage: 2
   fireRate: 0.11
-  baseAccuracy: 90
+  baseAccuracy: 96
   punchThrough: 1
   bulletSpeed: 80
   shootSound: {fileID: 8300000, guid: feebe24eea12121ae90546accaafec80, type: 3}

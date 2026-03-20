@@ -112,7 +112,7 @@ public class WeaponHolder : MonoBehaviour
         {
             if (item.weaponName == weapon.weaponName && !item.consumable)
             {
-                StartCoroutine(DisplayGoofyMessage());
+                AchievementManager.Instance?.IncreaseStat("tried_a_funny", 1);
                 item.ammo += weapon.ammo + weapon.currentAmmoInClip;
 
                 return;

@@ -36,7 +36,6 @@ public class Bullet : MonoBehaviour
         }
         else if (TryGetComponent<Collider>(out var col))
         {
-            // Fallback
             radius = Mathf.Min(col.bounds.extents.x, Mathf.Min(col.bounds.extents.y, col.bounds.extents.z));
         }
     }
@@ -82,13 +81,11 @@ public class Bullet : MonoBehaviour
         }
 
         float moveDistance = speed * Time.deltaTime;
-        
-        // SphereCast fails to detect overlaps at start. 
-        // We start the cast from a bit behind to catch anything we are currently "inside".
+
         Vector3 castOrigin = transform.position - direction * radius;
         float castDist = moveDistance + radius;
 
-        RaycastHit[] hits = Physics.SphereCastAll(castOrigin, radius, direction, castDist, hitMask, QueryTriggerInteraction.Ignore);
+        RaycastHit[] hits = Physics.SphereCastAll(castOrigin, radius, direction, castDist, hitMask, QueryTriggerInteraction.Collide);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
         foreach (var hit in hits)
@@ -96,38 +93,39 @@ public class Bullet : MonoBehaviour
             if (isDeactivated) break;
             if (hit.collider.CompareTag("Player")) continue;
 
-            if (hit.collider.CompareTag("Enemy"))
+            IDamageable<int> damageable = hit.collider.GetComponentInParent<IDamageable<int>>();
+
+            if (damageable != null)
             {
-                IDamageable<int> enemyScript = hit.collider.GetComponentInParent<IDamageable<int>>();
+                if (hitEnemies.Contains(damageable)) continue;
+                hitEnemies.Add(damageable);
 
-                if (enemyScript != null)
+                damageable.TakeDamage(damage, hit.point);
+
+                if (currentPunchThrough > 0)
                 {
-                    if (hitEnemies.Contains(enemyScript)) continue;
-                    hitEnemies.Add(enemyScript);
-
-                    enemyScript.TakeDamage(damage);
-
-                    if (currentPunchThrough > 0)
-                    {
-                        currentPunchThrough--;
-                    }
-                    else
-                    {
-                        transform.position = hit.point;
-                        Deactivate();
-                        break;
-                    }
+                    currentPunchThrough--;
                 }
                 else
                 {
+                if (hit.point != Vector3.zero)
+                {
                     transform.position = hit.point;
-                    Deactivate();
-                    break;
                 }
+                Deactivate();
+                break;
+                }
+            }
+            else if (hit.collider.isTrigger)
+            {
+                continue;
             }
             else
             {
-                transform.position = hit.point;
+                if (hit.point != Vector3.zero)
+                {
+                    transform.position = hit.point;
+                }
                 Deactivate();
                 break;
             }

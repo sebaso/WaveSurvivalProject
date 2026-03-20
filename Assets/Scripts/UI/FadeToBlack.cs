@@ -30,34 +30,51 @@ public class FadeToBlack : MonoBehaviour
     {
 
     }
+    public void FadeOut(float duration)
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeCoroutine(1f, duration));
+    }
+
+    public void FadeIn(float duration)
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeCoroutine(0f, duration));
+    }
+
     public void FadetoBlack()
     {
-        StartCoroutine(FadeToBlackCoroutine());
+        FadeOut(1f / fadeSpeed);
     }
+
     public void FadeFromBlack()
     {
-        StartCoroutine(FadeFromBlackCoroutine());
+        FadeIn(1f / fadeSpeed);
     }
-    private IEnumerator FadeToBlackCoroutine()
+
+    private IEnumerator FadeCoroutine(float targetAlpha, float duration)
     {
-        Color color = image.color;
-        while (color.a < 1)
+        if (image == null) yield break;
+
+        float startAlpha = image.color.a;
+        float timer = 0f;
+
+        Debug.Log($"Starting Fade: current={startAlpha}, target={targetAlpha}, duration={duration}");
+
+        while (timer < duration)
         {
-            color.a += fadeSpeed * Time.deltaTime;
+            timer += Time.deltaTime;
+            float alpha = Mathf.Lerp(startAlpha, targetAlpha, timer / duration);
+            Color color = image.color;
+            color.a = alpha;
             image.color = color;
             yield return null;
         }
-    }
-    private IEnumerator FadeFromBlackCoroutine()
-    {
-        Color color = image.color;
-        color.a = 1;
-        image.color = color;
-        while (color.a > 0)
-        {
-            color.a -= fadeSpeed * Time.deltaTime;
-            image.color = color;
-            yield return null;
-        }
+
+        Color finalColor = image.color;
+        finalColor.a = targetAlpha;
+        image.color = finalColor;
+
+        Debug.Log($"Fade Complete: alpha={image.color.a}");
     }
 }
